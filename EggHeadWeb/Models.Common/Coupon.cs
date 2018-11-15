@@ -1,94 +1,47 @@
-using FluentValidation.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(CouponValidator))]
-	public class Coupon
-	{
-		public virtual EggheadWeb.Models.Common.Admin Admin
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public long? AdminId
-		{
-			get;
-			set;
-		}
+    [Table("Coupon")]
+    public partial class Coupon
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Coupon()
+        {
+            Bookings = new HashSet<Booking>();
+        }
 
-		public virtual ICollection<Booking> Bookings
-		{
-			get;
-			set;
-		}
+        public long Id { get; set; }
 
-		public string Code
-		{
-			get;
-			set;
-		}
+        public long? AdminId { get; set; }
 
-		public string Description
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(20)]
+        public string Code { get; set; }
 
-		public decimal? DiscountAmount
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(500)]
+        public string Description { get; set; }
 
-		public DateTime ExpDate
-		{
-			get;
-			set;
-		}
+        public byte Type { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        public decimal? DiscountAmount { get; set; }
 
-		public DateTime? LastUsedDate
-		{
-			get;
-			set;
-		}
+        public DateTime ExpDate { get; set; }
 
-		public int MaxAvailable
-		{
-			get;
-			set;
-		}
+        public int MaxAvailable { get; set; }
 
-		public int MaxUsesPerCustomer
-		{
-			get;
-			set;
-		}
+        public int MaxUsesPerCustomer { get; set; }
 
-		public DateTime? NExpDate
-		{
-			get;
-			set;
-		}
+        public DateTime? LastUsedDate { get; set; }
 
-		public byte Type
-		{
-			get;
-			set;
-		}
+        public virtual Admin Admin { get; set; }
 
-		public Coupon()
-		{
-			this.Bookings = new HashSet<Booking>();
-		}
-	}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Booking> Bookings { get; set; }
+    }
 }

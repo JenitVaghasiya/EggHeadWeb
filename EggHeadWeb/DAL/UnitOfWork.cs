@@ -1,4 +1,5 @@
 using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,7 +10,7 @@ namespace EggheadWeb.DAL
 {
 	public class UnitOfWork
 	{
-		private EggheadEntities context = new EggheadEntities();
+		private EggheadContext context = new EggheadContext();
 
 		private bool disposed;
 

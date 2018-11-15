@@ -1,41 +1,32 @@
-using FluentValidation.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(GaderValidator))]
-	public class Grade
-	{
-		public virtual ICollection<GradeGroup> GradeGroups
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public int Id
-		{
-			get;
-			set;
-		}
+    [Table("Grade")]
+    public partial class Grade
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Grade()
+        {
+            Students = new HashSet<Student>();
+            GradeGroups = new HashSet<GradeGroup>();
+        }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public byte Id { get; set; }
 
-		public virtual ICollection<Student> Students
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
 
-		public Grade()
-		{
-			this.Students = new HashSet<Student>();
-			this.GradeGroups = new HashSet<GradeGroup>();
-		}
-	}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Student> Students { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GradeGroup> GradeGroups { get; set; }
+    }
 }

@@ -1,60 +1,31 @@
-using System;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	public class BookingShortInfoTemp
-	{
-		public long? classId
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public decimal? Cost
-		{
-			get;
-			set;
-		}
+    [Table("BookingShortInfoTemp")]
+    public partial class BookingShortInfoTemp
+    {
+        public long Id { get; set; }
 
-		public long? CouponId
-		{
-			get;
-			set;
-		}
+        public long? StudentId { get; set; }
 
-		public string Dates
-		{
-			get;
-			set;
-		}
+        public long? classId { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string ServiceType { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [StringLength(250)]
+        public string Name { get; set; }
 
-		public string ServiceType
-		{
-			get;
-			set;
-		}
+        public decimal? Cost { get; set; }
 
-		public long? StudentId
-		{
-			get;
-			set;
-		}
+        [StringLength(500)]
+        public string Dates { get; set; }
 
-		public BookingShortInfoTemp()
-		{
-		}
-	}
+        public long? CouponId { get; set; }
+    }
 }

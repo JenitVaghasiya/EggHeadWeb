@@ -1,154 +1,88 @@
-using FluentValidation.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(AdminValidator))]
-	public class Admin
-	{
-		public string Address
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public virtual ICollection<AdminEmailTemplate> AdminEmailTemplates
-		{
-			get;
-			set;
-		}
+    [Table("Admin")]
+    public partial class Admin
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Admin()
+        {
+            AdminEmailTemplates = new HashSet<AdminEmailTemplate>();
+            AdminFrontends = new HashSet<AdminFrontend>();
+            AdminPaymentInfoes = new HashSet<AdminPaymentInfo>();
+            AdminTasks = new HashSet<AdminTask>();
+            Coupons = new HashSet<Coupon>();
+            PrivateMessages = new HashSet<PrivateMessage>();
+            PrivateMessages1 = new HashSet<PrivateMessage>();
+        }
 
-		public virtual ICollection<AdminFrontend> AdminFrontends
-		{
-			get;
-			set;
-		}
+        public long Id { get; set; }
 
-		public virtual ICollection<AdminPaymentInfo> AdminPaymentInfoes
-		{
-			get;
-			set;
-		}
+        public long? AreaId { get; set; }
 
-		public virtual ICollection<AdminTask> AdminTasks
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string Username { get; set; }
 
-		public virtual EggheadWeb.Models.Common.Area Area
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(200)]
+        public string Password { get; set; }
 
-		public long? AreaId
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string FirstName { get; set; }
 
-		public string City
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string LastName { get; set; }
 
-		public virtual ICollection<Coupon> Coupons
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string PhoneNumber { get; set; }
 
-		public string Email
-		{
-			get;
-			set;
-		}
+        [StringLength(200)]
+        public string Address { get; set; }
 
-		public string EmailPassword
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string City { get; set; }
 
-		public string FirstName
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string State { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Zip { get; set; }
 
-		public bool IsSuperAdmin
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Email { get; set; }
 
-		public string LastName
-		{
-			get;
-			set;
-		}
+        [StringLength(200)]
+        public string EmailPassword { get; set; }
 
-		public string Password
-		{
-			get;
-			set;
-		}
+        public bool IsSuperAdmin { get; set; }
 
-		public string PhoneNumber
-		{
-			get;
-			set;
-		}
+        public virtual Area Area { get; set; }
 
-		public virtual ICollection<PrivateMessage> PrivateMessages
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdminEmailTemplate> AdminEmailTemplates { get; set; }
 
-		public virtual ICollection<PrivateMessage> PrivateMessages1
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdminFrontend> AdminFrontends { get; set; }
 
-		public string State
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdminPaymentInfo> AdminPaymentInfoes { get; set; }
 
-		public string Username
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdminTask> AdminTasks { get; set; }
 
-		public string Zip
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Coupon> Coupons { get; set; }
 
-		public Admin()
-		{
-			this.AdminEmailTemplates = new HashSet<AdminEmailTemplate>();
-			this.AdminPaymentInfoes = new HashSet<AdminPaymentInfo>();
-			this.AdminTasks = new HashSet<AdminTask>();
-			this.AdminFrontends = new HashSet<AdminFrontend>();
-			this.Coupons = new HashSet<Coupon>();
-			this.PrivateMessages = new HashSet<PrivateMessage>();
-			this.PrivateMessages1 = new HashSet<PrivateMessage>();
-		}
-	}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrivateMessage> PrivateMessages { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PrivateMessage> PrivateMessages1 { get; set; }
+    }
 }

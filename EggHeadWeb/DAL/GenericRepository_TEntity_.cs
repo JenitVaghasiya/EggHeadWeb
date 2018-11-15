@@ -1,4 +1,5 @@
 using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,11 +13,11 @@ namespace EggheadWeb.DAL
 	public class GenericRepository<TEntity>
 	where TEntity : class
 	{
-		internal EggheadEntities context;
+		internal EggheadContext context;
 
 		internal DbSet<TEntity> dbSet;
 
-		public GenericRepository(EggheadEntities context)
+		public GenericRepository(EggheadContext context)
 		{
 			this.context = context;
 			this.dbSet = context.Set<TEntity>();

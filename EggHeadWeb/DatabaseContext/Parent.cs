@@ -4,7 +4,6 @@ namespace EggHeadWeb.DatabaseContext
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Parent")]
     public partial class Parent
@@ -65,5 +64,15 @@ namespace EggHeadWeb.DatabaseContext
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
+
+        public string FullName
+        {
+            get
+            {
+                return string.Concat(FirstName, " ", LastName);
+            }
+        }
+
+        public string Note { get; set; }
     }
 }

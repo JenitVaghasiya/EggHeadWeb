@@ -200,14 +200,14 @@ namespace EggheadWeb.Controllers
 		{
 			dynamic viewBag = ViewBag;
 			DbSet<Grade> grades = this.db.Grades;
-			viewBag.Grades = SearchResult.New<Grade>(
+			viewBag.Grades = EggheadWeb.Models.Common.SearchResult.New<Grade>(
 				from g in grades
 				orderby g.Id
 				select g, 1, 2147483647);
 			return base.View();
 		}
 
-		private SearchResult<AreaSearchForm, Area> PerformAreaSearch(AreaSearchForm form, int page, int? itemsPerPage = null)
+		private EggheadWeb.Models.Common.SearchResult<AreaSearchForm, Area> PerformAreaSearch(AreaSearchForm form, int page, int? itemsPerPage = null)
 		{
 			IQueryable<Area> query = this.db.Areas.AsQueryable<Area>();
 			if (!string.IsNullOrWhiteSpace(form.QuickSearch))
@@ -223,12 +223,12 @@ namespace EggheadWeb.Controllers
 				select a;
 			if (!itemsPerPage.HasValue)
 			{
-				return SearchResult.New<AreaSearchForm, Area>(form, query, page);
+				return EggheadWeb.Models.Common.SearchResult.New<AreaSearchForm, Area>(form, query, page);
 			}
-			return SearchResult.New<AreaSearchForm, Area>(form, query, page, itemsPerPage.Value);
+			return EggheadWeb.Models.Common.SearchResult.New<AreaSearchForm, Area>(form, query, page, itemsPerPage.Value);
 		}
 
-		private SearchResult<UserSearchForm, Admin> PerformUserSearch(UserSearchForm form, int page)
+		private EggheadWeb.Models.Common.SearchResult<UserSearchForm, Admin> PerformUserSearch(UserSearchForm form, int page)
 		{
 			IQueryable<Admin> query = this.db.Admins.AsQueryable<Admin>();
 			if (!string.IsNullOrWhiteSpace(form.QuickSearch))

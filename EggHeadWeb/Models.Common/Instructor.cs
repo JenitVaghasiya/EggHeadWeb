@@ -1,167 +1,93 @@
-using FluentValidation.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(InstructorValidator))]
-	public class Instructor
-	{
-		public string Address
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public virtual EggheadWeb.Models.Common.Area Area
-		{
-			get;
-			set;
-		}
+    [Table("Instructor")]
+    public partial class Instructor
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Instructor()
+        {
+            Assigns = new HashSet<Assign>();
+            Assigns1 = new HashSet<Assign>();
+            Camps = new HashSet<Camp>();
+            Camps1 = new HashSet<Camp>();
+            Classes = new HashSet<Class>();
+            Classes1 = new HashSet<Class>();
+            Workshops = new HashSet<Workshop>();
+            Workshops1 = new HashSet<Workshop>();
+        }
 
-		public long AreaId
-		{
-			get;
-			set;
-		}
+        public long Id { get; set; }
 
-		public virtual ICollection<Assign> Assigns
-		{
-			get;
-			set;
-		}
+        public long AreaId { get; set; }
 
-		public virtual ICollection<Assign> Assigns1
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string FirstName { get; set; }
 
-		public virtual ICollection<Camp> Camps
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string LastName { get; set; }
 
-		public virtual ICollection<Camp> Camps1
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string PhoneNumber { get; set; }
 
-		public string City
-		{
-			get;
-			set;
-		}
+        [StringLength(100)]
+        public string Pay { get; set; }
 
-		public virtual ICollection<Class> Classes
-		{
-			get;
-			set;
-		}
+        [StringLength(200)]
+        public string Address { get; set; }
 
-		public virtual ICollection<Class> Classes1
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string City { get; set; }
 
-		public long CreatedBy
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string State { get; set; }
 
-		public DateTime CreatedDate
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Zip { get; set; }
 
-		public string Email
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Email { get; set; }
 
-		public string FirstName
-		{
-			get;
-			set;
-		}
+        [StringLength(4000)]
+        public string Note { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        public bool IsActive { get; set; }
 
-		public bool IsActive
-		{
-			get;
-			set;
-		}
+        public long CreatedBy { get; set; }
 
-		public string LastName
-		{
-			get;
-			set;
-		}
+        public DateTime CreatedDate { get; set; }
 
-		public string Note
-		{
-			get;
-			set;
-		}
+        public virtual Area Area { get; set; }
 
-		public string Pay
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assign> Assigns { get; set; }
 
-		public string PhoneNumber
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assign> Assigns1 { get; set; }
 
-		public string State
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Camp> Camps { get; set; }
 
-		public virtual ICollection<Workshop> Workshops
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Camp> Camps1 { get; set; }
 
-		public virtual ICollection<Workshop> Workshops1
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Class> Classes { get; set; }
 
-		public string Zip
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Class> Classes1 { get; set; }
 
-		public Instructor()
-		{
-			this.Assigns = new HashSet<Assign>();
-			this.Assigns1 = new HashSet<Assign>();
-			this.Workshops = new HashSet<Workshop>();
-			this.Workshops1 = new HashSet<Workshop>();
-			this.Camps = new HashSet<Camp>();
-			this.Camps1 = new HashSet<Camp>();
-			this.Classes = new HashSet<Class>();
-			this.Classes1 = new HashSet<Class>();
-		}
-	}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Workshop> Workshops { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Workshop> Workshops1 { get; set; }
+    }
 }

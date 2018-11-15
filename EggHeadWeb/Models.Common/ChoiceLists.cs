@@ -1,3 +1,4 @@
+using EggHeadWeb.DatabaseContext;
 using MVCControlsToolkit.Core;
 using System;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace EggheadWeb.Models.Common
 {
 	public static class ChoiceLists
 	{
-		public static ChoiceList<Grade, int, string> Grades(EggheadEntities db)
+		public static ChoiceList<Grade, int, string> Grades(EggheadContext db)
 		{
 			return new ChoiceList<Grade, int, string>(
 				from g in db.Grades

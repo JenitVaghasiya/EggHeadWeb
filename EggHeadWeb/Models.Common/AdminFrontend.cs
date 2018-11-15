@@ -1,70 +1,33 @@
-using FluentValidation.Attributes;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[MetadataType(typeof(AdminFrontendAttr))]
-	[Validator(typeof(AdminFrontendFormValidator))]
-	public class AdminFrontend
-	{
-		public virtual EggheadWeb.Models.Common.Admin Admin
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public long AdminId
-		{
-			get;
-			set;
-		}
+    [Table("AdminFrontend")]
+    public partial class AdminFrontend
+    {
+        public int Id { get; set; }
 
-		public virtual EggheadWeb.Models.Common.Frontend Frontend
-		{
-			get;
-			set;
-		}
+        public long AdminId { get; set; }
 
-		public int? FrontendId
-		{
-			get;
-			set;
-		}
+        public int? FrontendId { get; set; }
 
-		public int Id
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string MenuName { get; set; }
 
-		public bool IsActive
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Name { get; set; }
 
-		public string MenuName
-		{
-			get;
-			set;
-		}
+        public bool IsActive { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [Required]
+        public string OverridePageContent { get; set; }
 
-		public string OverridePageContent
-		{
-			get;
-			set;
-		}
+        public virtual Admin Admin { get; set; }
 
-		public AdminFrontend()
-		{
-		}
-	}
+        public virtual Frontend Frontend { get; set; }
+    }
 }

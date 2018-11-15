@@ -1,126 +1,55 @@
-using System;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	public class Payment
-	{
-		public string AdminAmount
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public long? AdminId
-		{
-			get;
-			set;
-		}
+    [Table("Payment")]
+    public partial class Payment
+    {
+        public long Id { get; set; }
 
-		public long? AdminParentId
-		{
-			get;
-			set;
-		}
+        public long? AdminId { get; set; }
 
-		public decimal Amount
-		{
-			get;
-			set;
-		}
+        public long ParentId { get; set; }
 
-		public string AuthCode
-		{
-			get;
-			set;
-		}
+        public decimal Amount { get; set; }
 
-		public string Bill_Address
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string AuthCode { get; set; }
 
-		public string Bill_City
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string TransactionID { get; set; }
 
-		public string Bill_Email
-		{
-			get;
-			set;
-		}
+        [StringLength(100)]
+        public string ServiceName { get; set; }
 
-		public string Bill_FirstName
-		{
-			get;
-			set;
-		}
+        [Column(TypeName = "text")]
+        public string PaymentMessage { get; set; }
 
-		public string Bill_LastName
-		{
-			get;
-			set;
-		}
+        public DateTime? PaymentDate { get; set; }
 
-		public string Bill_State
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Bill_FirstName { get; set; }
 
-		public string Bill_Zip
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Bill_LastName { get; set; }
 
-		public string Description
-		{
-			get;
-			set;
-		}
+        [StringLength(100)]
+        public string Bill_Address { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        [StringLength(100)]
+        public string Bill_City { get; set; }
 
-		public long ParentId
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Bill_Zip { get; set; }
 
-		public DateTime? PaymentDate
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Bill_State { get; set; }
 
-		public string PaymentMessage
-		{
-			get;
-			set;
-		}
-
-		public string ServiceName
-		{
-			get;
-			set;
-		}
-
-		public string TransactionID
-		{
-			get;
-			set;
-		}
-
-		public Payment()
-		{
-		}
-	}
+        [StringLength(50)]
+        public string Bill_Email { get; set; }
+    }
 }

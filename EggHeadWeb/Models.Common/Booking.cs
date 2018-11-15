@@ -1,98 +1,40 @@
-using FluentValidation.Attributes;
-using System;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(BookingFormFormValidator))]
-	public class Booking
-	{
-		public virtual EggheadWeb.Models.Common.Birthday Birthday
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public long? BirthdayId
-		{
-			get;
-			set;
-		}
+    [Table("Booking")]
+    public partial class Booking
+    {
+        public long Id { get; set; }
 
-		public DateTime BookDate
-		{
-			get;
-			set;
-		}
+        public long? CampId { get; set; }
 
-		public virtual EggheadWeb.Models.Common.Camp Camp
-		{
-			get;
-			set;
-		}
+        public long? ClassId { get; set; }
 
-		public long? CampId
-		{
-			get;
-			set;
-		}
+        public long? WorkshopId { get; set; }
 
-		public virtual EggheadWeb.Models.Common.Class Class
-		{
-			get;
-			set;
-		}
+        public long? BirthdayId { get; set; }
 
-		public long? ClassId
-		{
-			get;
-			set;
-		}
+        public long StudentId { get; set; }
 
-		public virtual EggheadWeb.Models.Common.Coupon Coupon
-		{
-			get;
-			set;
-		}
+        public DateTime BookDate { get; set; }
 
-		public long? CouponId
-		{
-			get;
-			set;
-		}
+        public long? CouponId { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        public virtual Birthday Birthday { get; set; }
 
-		public virtual EggheadWeb.Models.Common.Student Student
-		{
-			get;
-			set;
-		}
+        public virtual Camp Camp { get; set; }
 
-		public long StudentId
-		{
-			get;
-			set;
-		}
+        public virtual Class Class { get; set; }
 
-		public virtual EggheadWeb.Models.Common.Workshop Workshop
-		{
-			get;
-			set;
-		}
+        public virtual Coupon Coupon { get; set; }
 
-		public long? WorkshopId
-		{
-			get;
-			set;
-		}
+        public virtual Student Student { get; set; }
 
-		public Booking()
-		{
-		}
-	}
+        public virtual Workshop Workshop { get; set; }
+    }
 }

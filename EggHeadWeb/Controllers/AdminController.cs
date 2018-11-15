@@ -6,6 +6,7 @@ using EggheadWeb.Models.Common;
 using EggheadWeb.Models.UserModels;
 using EggheadWeb.Security;
 using EggheadWeb.Utility;
+using EggHeadWeb.DatabaseContext;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
 using log4net;
@@ -41,7 +42,7 @@ namespace EggheadWeb.Controllers
 			base.LoginUrl = this.Url.RouteUrl("admin", new { action = "" });
 		}
 
-		private IQueryable<Assign> AssignScheduleSearch(ScheduleSearchForm form, ServiceType serviceType)
+		private IQueryable<Assign> AssignScheduleSearch(ScheduleSearchForm form, Models.Common.ServiceType serviceType)
 		{
 			IQueryable<Assign> query = this.db.Assigns.AsQueryable<Assign>();
 			if (form.DateFrom.HasValue)
@@ -60,7 +61,7 @@ namespace EggheadWeb.Controllers
 			}
 			switch (serviceType)
 			{
-				case ServiceType.Class:
+				case Models.Common.ServiceType.Class:
 				{
 					query = 
 						from a in query
@@ -68,7 +69,7 @@ namespace EggheadWeb.Controllers
 						select a;
 					break;
 				}
-				case ServiceType.Camp:
+				case Models.Common.ServiceType.Camp:
 				{
 					query = 
 						from a in query
@@ -76,7 +77,7 @@ namespace EggheadWeb.Controllers
 						select a;
 					break;
 				}
-				case ServiceType.Workshop:
+				case Models.Common.ServiceType.Workshop:
 				{
 					query = 
 						from a in query
@@ -84,7 +85,7 @@ namespace EggheadWeb.Controllers
 						select a;
 					break;
 				}
-				case ServiceType.Birthday:
+				case Models.Common.ServiceType.Birthday:
 				{
 					query = 
 						from a in query
@@ -1353,7 +1354,7 @@ namespace EggheadWeb.Controllers
 			{
 				service = this.GetCamp(id);
 			}
-			model.Bookings = (HashSet<Booking>)service.Bookings;
+			model.Bookings = service.Bookings;
 			model.LocationName = (string)service.Location.DisplayName;
 			model.Days = (string)this.GetDaysOfService(service);
 			model.Time = string.Format("{0} - {1}", ((TimeSpan)service.TimeStart).To12HoursString(), ((TimeSpan)service.TimeEnd).To12HoursString());
@@ -3023,13 +3024,13 @@ namespace EggheadWeb.Controllers
 					nullable.Date = new DateTime(num, month1, birthDate.Day);
 					fakeAssign.Add(nullable);
 				}
-				calendar.Events.AddRange(fakeAssign.Where<Assign>((Assign a) => {
+				calendar.Events.AddRange(fakeAssign.Where(a => {
 					if (a.Date < calendar.FromDate)
 					{
 						return false;
 					}
 					return a.Date <= calendar.ToDate;
-				}).ToList<Assign>());
+				}).ToList());
 			}
 			return calendar;
 		}

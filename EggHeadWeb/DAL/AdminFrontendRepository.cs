@@ -1,5 +1,6 @@
 using EggheadWeb.Models.Common;
 using EggheadWeb.Models.UserModels;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace EggheadWeb.DAL
 {
 	public class AdminFrontendRepository : GenericRepository<AdminFrontend>
 	{
-		public AdminFrontendRepository(EggheadEntities context) : base(context)
+		public AdminFrontendRepository(EggheadContext context) : base(context)
 		{
 		}
 

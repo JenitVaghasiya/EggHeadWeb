@@ -1,68 +1,34 @@
-using FluentValidation.Attributes;
-using System;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(AdminTaskValidator))]
-	public class AdminTask
-	{
-		public virtual EggheadWeb.Models.Common.Admin Admin
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public long AdminId
-		{
-			get;
-			set;
-		}
+    [Table("AdminTask")]
+    public partial class AdminTask
+    {
+        public long Id { get; set; }
 
-		public DateTime CreateDate
-		{
-			get;
-			set;
-		}
+        public long AdminId { get; set; }
 
-		public DateTime? DueDate
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(150)]
+        public string Name { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        public byte Priority { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        public byte Status { get; set; }
 
-		public string Notes
-		{
-			get;
-			set;
-		}
+        public DateTime? DueDate { get; set; }
 
-		public byte Priority
-		{
-			get;
-			set;
-		}
+        [StringLength(200)]
+        public string Notes { get; set; }
 
-		public byte Status
-		{
-			get;
-			set;
-		}
+        [Column(TypeName = "date")]
+        public DateTime CreateDate { get; set; }
 
-		public AdminTask()
-		{
-		}
-	}
+        public virtual Admin Admin { get; set; }
+    }
 }

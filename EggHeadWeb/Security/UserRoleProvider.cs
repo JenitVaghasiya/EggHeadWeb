@@ -1,4 +1,5 @@
 using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -15,7 +16,7 @@ namespace EggheadWeb.Security
 
 		public const string PARENT = "parent";
 
-		private EggheadEntities db;
+		private EggheadContext db;
 
 		public override string ApplicationName
 		{
@@ -29,11 +30,11 @@ namespace EggheadWeb.Security
 			}
 		}
 
-		public UserRoleProvider() : this(new EggheadEntities())
+		public UserRoleProvider() : this(new EggheadContext())
 		{
 		}
 
-		public UserRoleProvider(EggheadEntities db)
+		public UserRoleProvider(EggheadContext db)
 		{
 			this.db = db;
 		}

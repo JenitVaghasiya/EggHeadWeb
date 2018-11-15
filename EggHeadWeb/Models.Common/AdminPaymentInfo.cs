@@ -1,56 +1,31 @@
-using FluentValidation.Attributes;
-using System;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(AdminPaymentInfoValidatior))]
-	public class AdminPaymentInfo
-	{
-		public virtual EggheadWeb.Models.Common.Admin Admin
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public long AdminId
-		{
-			get;
-			set;
-		}
+    [Table("AdminPaymentInfo")]
+    public partial class AdminPaymentInfo
+    {
+        public long Id { get; set; }
 
-		public string APILoginID
-		{
-			get;
-			set;
-		}
+        public long AdminId { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(100)]
+        public string APILoginID { get; set; }
 
-		public DateTime? LastUpdateDate
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(100)]
+        public string TransactionKey { get; set; }
 
-		public string MD5HashPhrase
-		{
-			get;
-			set;
-		}
+        [StringLength(100)]
+        public string MD5HashPhrase { get; set; }
 
-		public string TransactionKey
-		{
-			get;
-			set;
-		}
+        public DateTime? LastUpdateDate { get; set; }
 
-		public AdminPaymentInfo()
-		{
-		}
-	}
+        public virtual Admin Admin { get; set; }
+    }
 }

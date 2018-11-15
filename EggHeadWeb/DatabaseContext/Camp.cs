@@ -4,7 +4,7 @@ namespace EggHeadWeb.DatabaseContext
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Camp")]
     public partial class Camp
@@ -70,5 +70,41 @@ namespace EggHeadWeb.DatabaseContext
         public virtual Instructor Instructor1 { get; set; }
 
         public virtual Location Location { get; set; }
+
+        public List<Assign> AssignList { get; set; }
+
+        public decimal? NCost { get; set; }
+
+        public DateTime? NDisplayUntil { get; set; }
+
+        public int? NMaxEnroll { get; set; }
+
+        public string Dates
+        {
+            get;
+            set;
+        }
+
+        public List<int> GradeIds
+        {
+            get;
+            set;
+        }
+
+        public void UpdateCustomProperties()
+        {
+            AssignList = (
+                from t in Assigns
+                orderby t.Date
+                select t).ToList();
+            AssignList.ForEach(t => t.NDate = new DateTime?(t.Date));
+            this.GradeIds = GradeGroup.Grades.Select(t=> (int)t.Id).ToList();
+            this.Dates = string.Join(", ", (
+                from a in Assigns
+                select a.Date.ToShortDateString()).ToArray<string>());
+            NDisplayUntil = DisplayUntil;
+            NMaxEnroll = new int?(MaxEnroll);
+            NCost = new decimal?(Cost);
+        }
     }
 }

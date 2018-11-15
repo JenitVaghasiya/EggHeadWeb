@@ -1,80 +1,40 @@
-using FluentValidation.Attributes;
-using System;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(PrivateMessageValidatior))]
-	public class PrivateMessage
-	{
-		public virtual EggheadWeb.Models.Common.Admin Admin
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public virtual EggheadWeb.Models.Common.Admin Admin1
-		{
-			get;
-			set;
-		}
+    [Table("PrivateMessage")]
+    public partial class PrivateMessage
+    {
+        public long Id { get; set; }
 
-		public long? FromAdminId
-		{
-			get;
-			set;
-		}
+        public long? FromAdminId { get; set; }
 
-		public string FromAdminName
-		{
-			get;
-			set;
-		}
+        public long? ToAdminId { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(100)]
+        public string MessageSubject { get; set; }
 
-		public string MessageContent
-		{
-			get;
-			set;
-		}
+        [Column(TypeName = "text")]
+        [Required]
+        public string MessageContent { get; set; }
 
-		public string MessageSubject
-		{
-			get;
-			set;
-		}
+        public DateTime SendDate { get; set; }
 
-		public DateTime SendDate
-		{
-			get;
-			set;
-		}
+        public bool Unread { get; set; }
 
-		public long? ToAdminId
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string FromAdminName { get; set; }
 
-		public string ToAdminName
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string ToAdminName { get; set; }
 
-		public bool Unread
-		{
-			get;
-			set;
-		}
+        public virtual Admin Admin { get; set; }
 
-		public PrivateMessage()
-		{
-		}
-	}
+        public virtual Admin Admin1 { get; set; }
+    }
 }

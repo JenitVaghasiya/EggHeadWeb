@@ -1,5 +1,6 @@
 using EggheadWeb.Models.AdminModels;
 using EggheadWeb.Security;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace EggheadWeb.Models.Common
 {
 	public static class SelectLists
 	{
-		public static SelectList AdminEmailTemplates(EggheadEntities db)
+		public static SelectList AdminEmailTemplates(EggheadContext db)
 		{
 			IQueryable<AdminEmailTemplate> query = 
 				from l in db.AdminEmailTemplates
@@ -28,7 +29,7 @@ namespace EggheadWeb.Models.Common
 				select new { Value = l.Id, Text = l.Name }, "Value", "Text");
 		}
 
-		public static SelectList Admins(EggheadEntities db)
+		public static SelectList Admins(EggheadContext db)
 		{
 			return new SelectList(
 				from t in db.Admins
@@ -37,7 +38,7 @@ namespace EggheadWeb.Models.Common
 				select new { Value = a.Id, Text = (a.FirstName + " ") + a.LastName }, "Value", "Text");
 		}
 
-		public static SelectList AdminsForBarChars(EggheadEntities db)
+		public static SelectList AdminsForBarChars(EggheadContext db)
 		{
 			SelectList select = new SelectList(
 				from t in db.Admins
@@ -52,7 +53,7 @@ namespace EggheadWeb.Models.Common
 			return new SelectList(list, "Value", "Text");
 		}
 
-		public static SelectList AdminsForSendMessage(EggheadEntities db)
+		public static SelectList AdminsForSendMessage(EggheadContext db)
 		{
 			long id = (HttpContext.Current.User as LoginUser).Admin.Id;
 			IOrderedQueryable<Admin> query = 
@@ -66,7 +67,7 @@ namespace EggheadWeb.Models.Common
 				select new { Value = l.Id, Text = (l.FirstName + " ") + l.LastName }, "Value", "Text");
 		}
 
-		public static SelectList Areas(EggheadEntities db)
+		public static SelectList Areas(EggheadContext db)
 		{
 			return new SelectList(
 				from a in db.Areas
@@ -97,7 +98,7 @@ namespace EggheadWeb.Models.Common
 			return new SelectList(objArray);
 		}
 
-		public static SelectList FrontendMenus(EggheadEntities db)
+		public static SelectList FrontendMenus(EggheadContext db)
 		{
 			IQueryable<Frontend> query = 
 				from i in db.Frontends
@@ -114,7 +115,7 @@ namespace EggheadWeb.Models.Common
 			return new SelectList(variable, "Value", "Text");
 		}
 
-		public static SelectList Grades(EggheadEntities db)
+		public static SelectList Grades(EggheadContext db)
 		{
 			return new SelectList(
 				from g in db.Grades
@@ -122,7 +123,7 @@ namespace EggheadWeb.Models.Common
 				select new { Value = g.Id, Text = g.Name }, "Value", "Text");
 		}
 
-		public static SelectList Instructors(EggheadEntities db, long? id = null)
+		public static SelectList Instructors(EggheadContext db, long? id = null)
 		{
 			IQueryable<Instructor> query = 
 				from i in db.Instructors
@@ -150,7 +151,7 @@ namespace EggheadWeb.Models.Common
 				select new { Value = i.Id, Text = (i.FirstName + " ") + i.LastName }, "Value", "Text", (object)id.Value);
 		}
 
-		public static SelectList ItemsPerPages(EggheadEntities db)
+		public static SelectList ItemsPerPages(EggheadContext db)
 		{
 			APVariable itemPerPages = db.APVariables.FirstOrDefault<APVariable>((APVariable t) => t.Name == "SEARCH_RESULT_ITEMS_PER_PAGE");
 			if (itemPerPages == null)
@@ -165,7 +166,7 @@ namespace EggheadWeb.Models.Common
 				select new { Value = (i == "All" ? 2147483647 : Convert.ToInt32(i)), Text = i }, "Value", "Text");
 		}
 
-		public static SelectList Locations(EggheadEntities db, bool? enrollable = null)
+		public static SelectList Locations(EggheadContext db, bool? enrollable = null)
 		{
 			IQueryable<Location> query = 
 				from l in db.Locations
@@ -194,7 +195,7 @@ namespace EggheadWeb.Models.Common
 				select new { Value = l.Id, Text = l.DisplayName }, "Value", "Text");
 		}
 
-		public static SelectList LocationsForFrontEnd(EggheadEntities db, long areaId)
+		public static SelectList LocationsForFrontEnd(EggheadContext db, long areaId)
 		{
 			IQueryable<Location> query = 
 				from l in db.Locations
@@ -233,7 +234,7 @@ namespace EggheadWeb.Models.Common
 			return new SelectList(variable, "Value", "Text");
 		}
 
-		public static SelectList UnassignedAreas(EggheadEntities db)
+		public static SelectList UnassignedAreas(EggheadContext db)
 		{
 			return new SelectList(
 				from a in db.Areas

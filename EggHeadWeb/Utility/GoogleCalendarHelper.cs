@@ -1,4 +1,3 @@
-using EggheadWeb.Models.Common;
 using Google.GData.Calendar;
 using Google.GData.Client;
 using Google.GData.Extensions;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using EggHeadWeb.DatabaseContext;
 
 namespace EggheadWeb.Utility
 {
@@ -127,7 +127,7 @@ namespace EggheadWeb.Utility
 			return extenProperty.Value == uniqueId;
 		}
 
-		public void SynsScheduleEvents(Class klass, Camp camp, Models.Common.Birthday birhday, Workshop workshop)
+		public void SynsScheduleEvents(Class klass, Camp camp, EggHeadWeb.DatabaseContext.Birthday birhday, Workshop workshop)
 		{
 			try
 			{
@@ -173,7 +173,7 @@ namespace EggheadWeb.Utility
 					string parentName = birhday.ParentName;
 					TimeSpan partyTime = birhday.PartyTime;
 					TimeSpan timeSpan = birhday.PartyTime;
-					this.UpdateEventEntryForClass(calendarID, "Egghead_BirhdayID", str, parentName, partyTime, timeSpan.Add(new TimeSpan(1, 0, 0)), birhday.Address, birhday.Assigns.ToList<Assign>());
+					this.UpdateEventEntryForClass(calendarID, "Egghead_BirhdayID", str, parentName, partyTime, timeSpan.Add(new TimeSpan(1, 0, 0)), birhday.Address, birhday.Assigns.ToList());
 				}
 				if (workshop != null)
 				{

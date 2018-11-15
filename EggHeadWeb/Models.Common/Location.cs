@@ -1,145 +1,80 @@
-using FluentValidation.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(LocationValidator))]
-	public class Location
-	{
-		public string Address
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public virtual EggheadWeb.Models.Common.Area Area
-		{
-			get;
-			set;
-		}
+    [Table("Location")]
+    public partial class Location
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Location()
+        {
+            Camps = new HashSet<Camp>();
+            Classes = new HashSet<Class>();
+            Parents = new HashSet<Parent>();
+            Workshops = new HashSet<Workshop>();
+        }
 
-		public long AreaId
-		{
-			get;
-			set;
-		}
+        public long Id { get; set; }
 
-		public virtual ICollection<Camp> Camps
-		{
-			get;
-			set;
-		}
+        public long AreaId { get; set; }
 
-		public bool CanRegistOnline
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(200)]
+        public string Name { get; set; }
 
-		public string City
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(200)]
+        public string DisplayName { get; set; }
 
-		public virtual ICollection<Class> Classes
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string PhoneNumber { get; set; }
 
-		public string ContactPerson
-		{
-			get;
-			set;
-		}
+        [StringLength(200)]
+        public string Address { get; set; }
 
-		public string DisplayName
-		{
-			get;
-			set;
-		}
+        [StringLength(100)]
+        public string Email { get; set; }
 
-		public string Email
-		{
-			get;
-			set;
-		}
+        [StringLength(100)]
+        public string ContactPerson { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        public bool IsActive { get; set; }
 
-		public bool IsActive
-		{
-			get;
-			set;
-		}
+        public bool CanRegistOnline { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [StringLength(4000)]
+        public string Note { get; set; }
 
-		public string Note
-		{
-			get;
-			set;
-		}
+        public long UpdatedBy { get; set; }
 
-		public virtual ICollection<Parent> Parents
-		{
-			get;
-			set;
-		}
+        [Column(TypeName = "date")]
+        public DateTime UpdatedDate { get; set; }
 
-		public string PhoneNumber
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string City { get; set; }
 
-		public string State
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string State { get; set; }
 
-		public long UpdatedBy
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Zip { get; set; }
 
-		public DateTime UpdatedDate
-		{
-			get;
-			set;
-		}
+        public virtual Area Area { get; set; }
 
-		public virtual ICollection<Workshop> Workshops
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Camp> Camps { get; set; }
 
-		public string Zip
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Class> Classes { get; set; }
 
-		public Location()
-		{
-			this.Parents = new HashSet<Parent>();
-			this.Workshops = new HashSet<Workshop>();
-			this.Camps = new HashSet<Camp>();
-			this.Classes = new HashSet<Class>();
-		}
-	}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Parent> Parents { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Workshop> Workshops { get; set; }
+    }
 }

@@ -1,42 +1,27 @@
-using System;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	public class EmailTemplate
-	{
-		public int Id
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public string MailBody
-		{
-			get;
-			set;
-		}
+    [Table("EmailTemplate")]
+    public partial class EmailTemplate
+    {
+        public int Id { get; set; }
 
-		public string MailSubject
-		{
-			get;
-			set;
-		}
+        public int Type { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
 
-		public int Type
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(200)]
+        public string MailSubject { get; set; }
 
-		public EmailTemplate()
-		{
-		}
-	}
+        [Required]
+        public string MailBody { get; set; }
+    }
 }

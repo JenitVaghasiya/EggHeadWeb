@@ -478,7 +478,7 @@ namespace EggheadWeb.Controllers
 
 		[AllowAnonymous]
 		[HttpPost]
-		public ActionResult Login(LoginForm model)
+		public ActionResult Login(Models.Common.LoginForm model)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -655,7 +655,7 @@ namespace EggheadWeb.Controllers
 		public virtual ActionResult SendEmail(string toAddresses, string toNames, string preAttachFile)
 		{
 			((dynamic)ViewBag).IsSuperAdmin = base.User.Admin.IsSuperAdmin;
-			SendEmailForm sendEmailForm = new SendEmailForm()
+            Models.Common.SendEmailForm sendEmailForm = new Models.Common.SendEmailForm()
 			{
 				From = base.User.Admin.Email,
 				ToAddress = toAddresses,
@@ -667,7 +667,7 @@ namespace EggheadWeb.Controllers
 
 		[ActionName("send-email")]
 		[HttpPost]
-		public ActionResult SendEmail(SendEmailForm model)
+		public ActionResult SendEmail(Models.Common.SendEmailForm model)
 		{
 			ActionResult actionResult;
 			try
@@ -792,7 +792,7 @@ namespace EggheadWeb.Controllers
 
 		[ActionName("email-update")]
 		[HttpPost]
-		public ActionResult UpdateEmail(UpdateEmailPasswordForm form)
+		public ActionResult UpdateEmail(Models.Common.UpdateEmailPasswordForm form)
 		{
 			ActionResult action;
 			if (!ModelState.IsValid)

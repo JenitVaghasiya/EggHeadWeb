@@ -1,4 +1,5 @@
 using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EggheadWeb.DAL
 {
 	public class ClassRepository : GenericRepository<Class>
 	{
-		public ClassRepository(EggheadEntities context) : base(context)
+		public ClassRepository(EggheadContext context) : base(context)
 		{
 		}
 

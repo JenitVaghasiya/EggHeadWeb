@@ -1,54 +1,35 @@
-using FluentValidation.Attributes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[MetadataType(typeof(FrontendAttr))]
-	[Validator(typeof(FrontendFormValidator))]
-	public class Frontend
-	{
-		public virtual ICollection<AdminFrontend> AdminFrontends
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public int Id
-		{
-			get;
-			set;
-		}
+    [Table("Frontend")]
+    public partial class Frontend
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Frontend()
+        {
+            AdminFrontends = new HashSet<AdminFrontend>();
+        }
 
-		public bool IsActive
-		{
-			get;
-			set;
-		}
+        public int Id { get; set; }
 
-		public string MenuName
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string MenuName { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
 
-		public string PageContent
-		{
-			get;
-			set;
-		}
+        public bool IsActive { get; set; }
 
-		public Frontend()
-		{
-			this.AdminFrontends = new HashSet<AdminFrontend>();
-		}
-	}
+        public string PageContent { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AdminFrontend> AdminFrontends { get; set; }
+    }
 }

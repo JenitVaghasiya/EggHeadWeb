@@ -1,54 +1,29 @@
-using FluentValidation.Attributes;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-using System.Web.Mvc;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[MetadataType(typeof(AdminEmailTemplateAttrs))]
-	[ValidateInput(false)]
-	[Validator(typeof(AdminEmailTemplateValidator))]
-	public class AdminEmailTemplate
-	{
-		public virtual EggheadWeb.Models.Common.Admin Admin
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public long AdminId
-		{
-			get;
-			set;
-		}
+    [Table("AdminEmailTemplate")]
+    public partial class AdminEmailTemplate
+    {
+        public int Id { get; set; }
 
-		public int Id
-		{
-			get;
-			set;
-		}
+        public long AdminId { get; set; }
 
-		public string MailBody
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
 
-		public string MailSubject
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(200)]
+        public string MailSubject { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [Required]
+        public string MailBody { get; set; }
 
-		public AdminEmailTemplate()
-		{
-		}
-	}
+        public virtual Admin Admin { get; set; }
+    }
 }

@@ -1,4 +1,5 @@
 using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -30,7 +31,7 @@ namespace EggheadWeb.Models.AdminModels
 			set;
 		}
 
-		public EggheadWeb.Models.Common.Parent Parent
+		public Parent Parent
 		{
 			get;
 			set;

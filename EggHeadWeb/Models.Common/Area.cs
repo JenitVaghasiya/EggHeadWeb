@@ -1,73 +1,49 @@
-using FluentValidation.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[Validator(typeof(AreaValidator))]
-	public class Area
-	{
-		public virtual ICollection<Admin> Admins
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public virtual ICollection<Birthday> Birthdays
-		{
-			get;
-			set;
-		}
+    [Table("Area")]
+    public partial class Area
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Area()
+        {
+            Admins = new HashSet<Admin>();
+            Birthdays = new HashSet<Birthday>();
+            Instructors = new HashSet<Instructor>();
+            Locations = new HashSet<Location>();
+        }
 
-		public string Description
-		{
-			get;
-			set;
-		}
+        public long Id { get; set; }
 
-		public string DisplayName
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string Name { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string DisplayName { get; set; }
 
-		public virtual ICollection<Instructor> Instructors
-		{
-			get;
-			set;
-		}
+        [StringLength(200)]
+        public string Description { get; set; }
 
-		public virtual ICollection<Location> Locations
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string State { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Admin> Admins { get; set; }
 
-		public string State
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Birthday> Birthdays { get; set; }
 
-		public Area()
-		{
-			this.Admins = new HashSet<Admin>();
-			this.Instructors = new HashSet<Instructor>();
-			this.Locations = new HashSet<Location>();
-			this.Birthdays = new HashSet<Birthday>();
-		}
-	}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Instructor> Instructors { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Location> Locations { get; set; }
+    }
 }

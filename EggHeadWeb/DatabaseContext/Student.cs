@@ -44,5 +44,26 @@ namespace EggHeadWeb.DatabaseContext
         public virtual Grade Grade { get; set; }
 
         public virtual Parent Parent { get; set; }
+
+        public string GenderText
+        {
+            get
+            {
+                string gender = this.Gender;
+                string str = gender;
+                if (gender != null)
+                {
+                    if (str == "M")
+                    {
+                        return "Male";
+                    }
+                    if (str == "F")
+                    {
+                        return "Female";
+                    }
+                }
+                return "[Unknown]";
+            }
+        }
     }
 }

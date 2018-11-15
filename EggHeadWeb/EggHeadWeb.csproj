@@ -54,6 +54,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\FluentValidation.dll</HintPath>
+    </Reference>
     <Reference Include="Google.GData.AccessControl">
       <HintPath>..\packages\Google.GData.AccessControl.2.2.0.0\lib\Google.GData.AccessControl.dll</HintPath>
     </Reference>
@@ -66,10 +70,16 @@
       <HintPath>..\packages\PayPal.1.9.1\lib\net45\PayPal.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Primitives, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.3.0\lib\net45\System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -171,9 +181,6 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="Mvc.Mailer">
       <HintPath>..\packages\Mvc.Mailer.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentValidation">
-      <HintPath>..\packages\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -315,64 +322,40 @@
     <Compile Include="Models.AdminModels\SystemEmailSetting.cs" />
     <Compile Include="Models.AdminModels\UserSearchForm.cs" />
     <Compile Include="Models.AdminModels\WorkshopItem.cs" />
-    <Compile Include="Models.Common\Admin.cs" />
-    <Compile Include="Models.Common\AdminEmailTemplate.cs" />
     <Compile Include="Models.Common\AdminEmailTemplateAttrs.cs" />
     <Compile Include="Models.Common\AdminEmailTemplateValidator.cs" />
-    <Compile Include="Models.Common\AdminFrontend.cs" />
     <Compile Include="Models.Common\AdminFrontendAttr.cs" />
     <Compile Include="Models.Common\AdminFrontendFormValidator.cs" />
-    <Compile Include="Models.Common\AdminPaymentInfo.cs" />
     <Compile Include="Models.Common\AdminPaymentInfoValidatior.cs" />
-    <Compile Include="Models.Common\AdminTask.cs" />
     <Compile Include="Models.Common\AdminTaskValidator.cs" />
     <Compile Include="Models.Common\AdminValidator.cs" />
-    <Compile Include="Models.Common\APVariable.cs" />
     <Compile Include="Models.Common\APVariableAttr.cs" />
     <Compile Include="Models.Common\ApVariableKeys.cs" />
     <Compile Include="Models.Common\APVariableValidator.cs" />
-    <Compile Include="Models.Common\Area.cs" />
     <Compile Include="Models.Common\AreaValidator.cs" />
-    <Compile Include="Models.Common\Assign.cs" />
     <Compile Include="Models.Common\AssignValidator.cs" />
     <Compile Include="Models.Common\BirtdayAttrs.cs" />
-    <Compile Include="Models.Common\Birthday.cs" />
     <Compile Include="Models.Common\BirthdayValidator.cs" />
-    <Compile Include="Models.Common\Booking.cs" />
     <Compile Include="Models.Common\BookingFormFormValidator.cs" />
-    <Compile Include="Models.Common\BookingShortInfoTemp.cs" />
-    <Compile Include="Models.Common\Camp.cs" />
     <Compile Include="Models.Common\CampValidator.cs" />
     <Compile Include="Models.Common\ChangePasswordForm.cs" />
     <Compile Include="Models.Common\ChoiceLists.cs" />
-    <Compile Include="Models.Common\Class.cs" />
     <Compile Include="Models.Common\ClassCampAttrs.cs" />
     <Compile Include="Models.Common\ClassValidator.cs" />
-    <Compile Include="Models.Common\Coupon.cs" />
     <Compile Include="Models.Common\CouponType.cs" />
     <Compile Include="Models.Common\CouponValidator.cs" />
-    <Compile Include="Models.Common\EggheadEntities.cs" />
-    <Compile Include="Models.Common\EmailTemplate.cs" />
     <Compile Include="Models.Common\EmailType.cs" />
-    <Compile Include="Models.Common\Frontend.cs" />
     <Compile Include="Models.Common\FrontendAttr.cs" />
     <Compile Include="Models.Common\FrontendFormValidator.cs" />
     <Compile Include="Models.Common\GaderValidator.cs" />
-    <Compile Include="Models.Common\Grade.cs" />
-    <Compile Include="Models.Common\GradeGroup.cs" />
     <Compile Include="Models.Common\GradeSelect.cs" />
-    <Compile Include="Models.Common\Instructor.cs" />
     <Compile Include="Models.Common\InstructorItemValidator.cs" />
     <Compile Include="Models.Common\InstructorValidator.cs" />
     <Compile Include="Models.Common\ISearchResult.cs" />
-    <Compile Include="Models.Common\Location.cs" />
     <Compile Include="Models.Common\LocationValidator.cs" />
     <Compile Include="Models.Common\LoginForm.cs" />
     <Compile Include="Models.Common\MainTaskbarItem.cs" />
-    <Compile Include="Models.Common\Parent.cs" />
     <Compile Include="Models.Common\ParentValidator.cs" />
-    <Compile Include="Models.Common\Payment.cs" />
-    <Compile Include="Models.Common\PrivateMessage.cs" />
     <Compile Include="Models.Common\PrivateMessageValidatior.cs" />
     <Compile Include="Models.Common\ResetPasswordForm.cs" />
     <Compile Include="Models.Common\ResetPasswordFormValidator.cs" />
@@ -382,7 +365,6 @@
     <Compile Include="Models.Common\SendEmailForm.cs" />
     <Compile Include="Models.Common\SendEmailFormValidatior.cs" />
     <Compile Include="Models.Common\ServiceType.cs" />
-    <Compile Include="Models.Common\Student.cs" />
     <Compile Include="Models.Common\StudentAttrs.cs" />
     <Compile Include="Models.Common\StudentValidator.cs" />
     <Compile Include="Models.Common\SystemEmailTemplateType.cs" />
@@ -390,7 +372,6 @@
     <Compile Include="Models.Common\TaskPriority.cs" />
     <Compile Include="Models.Common\UpdateEmailPasswordForm.cs" />
     <Compile Include="Models.Common\UpdateEmailPasswordFormValidator.cs" />
-    <Compile Include="Models.Common\Workshop.cs" />
     <Compile Include="Models.Common\WorkshopAttrs.cs" />
     <Compile Include="Models.Common\WorkshopValidator.cs" />
     <Compile Include="Models.UserModels\BookingShortInfo.cs" />

@@ -1,53 +1,38 @@
-using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	public class GradeGroup
-	{
-		public virtual ICollection<Camp> Camps
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public virtual ICollection<Class> Classes
-		{
-			get;
-			set;
-		}
+    [Table("GradeGroup")]
+    public partial class GradeGroup
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public GradeGroup()
+        {
+            Camps = new HashSet<Camp>();
+            Classes = new HashSet<Class>();
+            Workshops = new HashSet<Workshop>();
+            Grades = new HashSet<Grade>();
+        }
 
-		public virtual ICollection<Grade> Grades
-		{
-			get;
-			set;
-		}
+        public long Id { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        [StringLength(50)]
+        public string Name { get; set; }
 
-		public string Name
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Camp> Camps { get; set; }
 
-		public virtual ICollection<Workshop> Workshops
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Class> Classes { get; set; }
 
-		public GradeGroup()
-		{
-			this.Grades = new HashSet<Grade>();
-			this.Workshops = new HashSet<Workshop>();
-			this.Camps = new HashSet<Camp>();
-			this.Classes = new HashSet<Class>();
-		}
-	}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Workshop> Workshops { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Grade> Grades { get; set; }
+    }
 }

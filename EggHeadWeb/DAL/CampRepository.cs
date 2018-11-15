@@ -1,4 +1,5 @@
 using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace EggheadWeb.DAL
 {
 	public class CampRepository : GenericRepository<Camp>
 	{
-		public CampRepository(EggheadEntities context) : base(context)
+		public CampRepository(EggheadContext context) : base(context)
 		{
 		}
 

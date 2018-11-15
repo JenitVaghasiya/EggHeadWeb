@@ -1,5 +1,6 @@
 using EggheadWeb.Common;
 using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using Google.Contacts;
 using Google.GData.Client;
 using Google.GData.Contacts;

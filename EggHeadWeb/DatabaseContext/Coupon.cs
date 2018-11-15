@@ -43,5 +43,7 @@ namespace EggHeadWeb.DatabaseContext
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
+
+        public DateTime? NExpDate { get; set; }
     }
 }

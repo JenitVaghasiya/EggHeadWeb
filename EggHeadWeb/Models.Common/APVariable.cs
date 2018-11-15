@@ -1,28 +1,19 @@
-using FluentValidation.Attributes;
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[MetadataType(typeof(APVariableAttr))]
-	[Validator(typeof(APVariableValidator))]
-	public class APVariable
-	{
-		public string Name
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public string Value
-		{
-			get;
-			set;
-		}
+    [Table("APVariable")]
+    public partial class APVariable
+    {
+        [Key]
+        [StringLength(50)]
+        public string Name { get; set; }
 
-		public APVariable()
-		{
-		}
-	}
+        [Required]
+        public string Value { get; set; }
+    }
 }

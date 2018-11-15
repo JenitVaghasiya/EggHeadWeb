@@ -6,6 +6,7 @@ using EggheadWeb.Models.Common;
 using EggheadWeb.Models.UserModels;
 using EggheadWeb.Security;
 using EggheadWeb.Utility;
+using EggHeadWeb.DatabaseContext;
 using log4net;
 using Microsoft.CSharp.RuntimeBinder;
 using Mvc.Mailer;
@@ -212,7 +213,7 @@ namespace EggheadWeb.Controllers
 
 		[ActionName("password-change")]
 		[HttpPost]
-		public ActionResult ChangePassword(ChangePasswordForm model)
+		public ActionResult ChangePassword(Models.Common.ChangePasswordForm model)
 		{
 			if (ModelState.IsValid)
 			{

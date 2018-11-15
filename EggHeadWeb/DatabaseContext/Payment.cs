@@ -1,10 +1,8 @@
 namespace EggHeadWeb.DatabaseContext
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("Payment")]
     public partial class Payment
@@ -51,5 +49,11 @@ namespace EggHeadWeb.DatabaseContext
 
         [StringLength(50)]
         public string Bill_Email { get; set; }
+
+        public long? AdminParentId { get; set; }
+
+        public string AdminAmount { get; set; }
+
+        public string Description { get; set; }
     }
 }

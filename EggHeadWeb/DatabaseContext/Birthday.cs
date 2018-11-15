@@ -4,7 +4,7 @@ namespace EggHeadWeb.DatabaseContext
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Birthday")]
     public partial class Birthday
@@ -58,5 +58,14 @@ namespace EggHeadWeb.DatabaseContext
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Booking> Bookings { get; set; }
+
+        public long InstructorId { get; set; }
+
+        public long? AssistantId { get; set; }
+        public void UpdateCustomProperties()
+        {
+            InstructorId = Assigns.First().InstructorId;
+            AssistantId = Assigns.First().AssistantId;
+        }
     }
 }

@@ -1,128 +1,67 @@
-using FluentValidation.Attributes;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.CompilerServices;
-
-namespace EggheadWeb.Models.Common
+namespace EggHeadWeb.DatabaseContext
 {
-	[MetadataType(typeof(BirtdayAttrs))]
-	[Validator(typeof(BirthdayValidator))]
-	public class Birthday
-	{
-		public string Address
-		{
-			get;
-			set;
-		}
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-		public int Age
-		{
-			get;
-			set;
-		}
+    [Table("Birthday")]
+    public partial class Birthday
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Birthday()
+        {
+            Assigns = new HashSet<Assign>();
+            Bookings = new HashSet<Booking>();
+        }
 
-		public virtual EggheadWeb.Models.Common.Area Area
-		{
-			get;
-			set;
-		}
+        public long Id { get; set; }
 
-		public long AreaId
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string ParentName { get; set; }
 
-		public virtual ICollection<Assign> Assigns
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string ContactNumber { get; set; }
 
-		public long? AssistantId
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string Email { get; set; }
 
-		public virtual ICollection<Booking> Bookings
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(200)]
+        public string Address { get; set; }
 
-		public string ChildName
-		{
-			get;
-			set;
-		}
+        [Required]
+        [StringLength(50)]
+        public string ChildName { get; set; }
 
-		public string ContactNumber
-		{
-			get;
-			set;
-		}
+        public int Age { get; set; }
 
-		public string Email
-		{
-			get;
-			set;
-		}
+        public DateTime PartyDate { get; set; }
 
-		public long Id
-		{
-			get;
-			set;
-		}
+        public TimeSpan PartyTime { get; set; }
 
-		public DateTime? InputDate
-		{
-			get;
-			set;
-		}
+        [Required]
+        public string Notes { get; set; }
 
-		public long InstructorId
-		{
-			get;
-			set;
-		}
+        public long AreaId { get; set; }
 
-		public string Notes
-		{
-			get;
-			set;
-		}
+        public DateTime? InputDate { get; set; }
 
-		public string ParentName
-		{
-			get;
-			set;
-		}
+        public virtual Area Area { get; set; }
 
-		public DateTime PartyDate
-		{
-			get;
-			set;
-		}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assign> Assigns { get; set; }
 
-		public TimeSpan PartyTime
-		{
-			get;
-			set;
-		}
-
-		public Birthday()
-		{
-			this.Assigns = new HashSet<Assign>();
-			this.Bookings = new HashSet<Booking>();
-		}
-
-		public void UpdateCustomProperties()
-		{
-			this.InstructorId = this.Assigns.First<Assign>().InstructorId;
-			this.AssistantId = this.Assigns.First<Assign>().AssistantId;
-		}
-	}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Booking> Bookings { get; set; }
+    }
+    public void UpdateCustomProperties()
+    {
+        this.InstructorId = this.Assigns.First<Assign>().InstructorId;
+        this.AssistantId = this.Assigns.First<Assign>().AssistantId;
+    }
 }

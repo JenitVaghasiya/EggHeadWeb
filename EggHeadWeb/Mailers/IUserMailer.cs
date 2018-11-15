@@ -1,5 +1,5 @@
-using EggheadWeb.Models.Common;
 using EggheadWeb.Models.UserModels;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Net.Mail;
 
