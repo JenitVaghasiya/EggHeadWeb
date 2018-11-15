@@ -1,8 +1,8 @@
 using EggheadWeb.Common;
 using EggheadWeb.Mailers;
-using EggheadWeb.Models.Common;
 using EggheadWeb.Security;
 using EggheadWeb.Utility;
+using EggHeadWeb.DatabaseContext;
 using Microsoft.CSharp.RuntimeBinder;
 using Mvc.Mailer;
 using System;

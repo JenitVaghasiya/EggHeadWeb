@@ -1,4 +1,4 @@
-using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using Mvc.Mailer;
 using System;
 using System.Collections.Generic;
@@ -19,14 +19,14 @@ namespace EggheadWeb.Common
 		{
 		}
 
-		public static SmtpClientWrapper CreateStmtClientWrapperForAdmin(EggheadEntities db, Admin admin)
+		public static SmtpClientWrapper CreateStmtClientWrapperForAdmin(EggheadContext db, Admin admin)
 		{
 			SmtpClientWrapper stmpClient = new SmtpClientWrapper(EmailUtil.GetSystemSmtpClient(db));
 			stmpClient.InnerSmtpClient.Credentials = new NetworkCredential(admin.Email, CryptoUtil.Decrypt(admin.EmailPassword, admin.Username));
 			return stmpClient;
 		}
 
-		public static SmtpClient GetSystemSmtpClient(EggheadEntities db)
+		public static SmtpClient GetSystemSmtpClient(EggheadContext db)
 		{
 			List<APVariable> apVariables = db.APVariables.ToList<APVariable>();
 			SmtpClient systemSmtpClient = new SmtpClient()

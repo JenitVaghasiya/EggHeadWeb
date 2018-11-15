@@ -1,4 +1,4 @@
-using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,7 +10,7 @@ namespace EggheadWeb.Security
 {
 	public class UserProvider : MembershipProvider
 	{
-		internal EggheadEntities db;
+		internal EggheadContext db;
 
 		public override string ApplicationName
 		{
@@ -118,11 +118,11 @@ namespace EggheadWeb.Security
 			set;
 		}
 
-		public UserProvider() : this(new EggheadEntities())
+		public UserProvider() : this(new EggheadContext())
 		{
 		}
 
-		public UserProvider(EggheadEntities db)
+		public UserProvider(EggheadContext db)
 		{
 			this.db = db;
 		}
@@ -186,7 +186,7 @@ namespace EggheadWeb.Security
 			throw new NotImplementedException();
 		}
 
-		public LoginUser GetUser(EggheadEntities db, IIdentity identity, string role)
+		public LoginUser GetUser(EggheadContext db, IIdentity identity, string role)
 		{
 			string str = role;
 			string str1 = str;
@@ -242,9 +242,9 @@ namespace EggheadWeb.Security
 			throw new NotImplementedException();
 		}
 
-		public bool ValidateAdmin(EggheadEntities db, string username, string password)
+		public bool ValidateAdmin(EggheadContext db, string username, string password)
 		{
-			db = new EggheadEntities();
+			db = new EggheadContext();
 			Admin admin = db.Admins.FirstOrDefault<Admin>((Admin a) => a.Username == username);
 			if (admin == null)
 			{
@@ -253,7 +253,7 @@ namespace EggheadWeb.Security
 			return BCrypt.Net.BCrypt.Verify(password, admin.Password);
 		}
 
-		public bool ValidateParent(EggheadEntities db, string username, string password)
+		public bool ValidateParent(EggheadContext db, string username, string password)
 		{
 			Parent parent = db.Parents.FirstOrDefault<Parent>((Parent p) => p.Email == username);
 			if (parent == null)

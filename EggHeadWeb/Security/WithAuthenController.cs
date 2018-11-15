@@ -1,5 +1,5 @@
-using EggheadWeb.Models.Common;
 using EggheadWeb.Utility;
+using EggHeadWeb.DatabaseContext;
 using PayPal.Api;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace EggheadWeb.Security
 
 		public UrlHelper Url = new UrlHelper(System.Web.HttpContext.Current.Request.RequestContext);
 
-		protected EggheadEntities db = new EggheadEntities();
+		protected EggheadContext db = new EggheadContext();
 
 		protected RequestFlow flow;
 

@@ -48,8 +48,11 @@
     <Reference Include="AuthorizeNet">
       <HintPath>..\packages\AuthorizeNet.dll</HintPath>
     </Reference>
-    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.4.1.10715.0\lib\EntityFramework.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Google.GData.AccessControl">
       <HintPath>..\packages\Google.GData.AccessControl.2.2.0.0\lib\Google.GData.AccessControl.dll</HintPath>
@@ -64,8 +67,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -247,6 +251,32 @@
     <Compile Include="DAL\ClassRepository.cs" />
     <Compile Include="DAL\GenericRepository_TEntity_.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="DatabaseContext\Admin.cs" />
+    <Compile Include="DatabaseContext\AdminEmailTemplate.cs" />
+    <Compile Include="DatabaseContext\AdminFrontend.cs" />
+    <Compile Include="DatabaseContext\AdminPaymentInfo.cs" />
+    <Compile Include="DatabaseContext\AdminTask.cs" />
+    <Compile Include="DatabaseContext\APVariable.cs" />
+    <Compile Include="DatabaseContext\Area.cs" />
+    <Compile Include="DatabaseContext\Assign.cs" />
+    <Compile Include="DatabaseContext\Birthday.cs" />
+    <Compile Include="DatabaseContext\Booking.cs" />
+    <Compile Include="DatabaseContext\BookingShortInfoTemp.cs" />
+    <Compile Include="DatabaseContext\Camp.cs" />
+    <Compile Include="DatabaseContext\Class.cs" />
+    <Compile Include="DatabaseContext\Coupon.cs" />
+    <Compile Include="DatabaseContext\EggheadContext.cs" />
+    <Compile Include="DatabaseContext\EmailTemplate.cs" />
+    <Compile Include="DatabaseContext\Frontend.cs" />
+    <Compile Include="DatabaseContext\Grade.cs" />
+    <Compile Include="DatabaseContext\GradeGroup.cs" />
+    <Compile Include="DatabaseContext\Instructor.cs" />
+    <Compile Include="DatabaseContext\Location.cs" />
+    <Compile Include="DatabaseContext\Parent.cs" />
+    <Compile Include="DatabaseContext\Payment.cs" />
+    <Compile Include="DatabaseContext\PrivateMessage.cs" />
+    <Compile Include="DatabaseContext\Student.cs" />
+    <Compile Include="DatabaseContext\Workshop.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

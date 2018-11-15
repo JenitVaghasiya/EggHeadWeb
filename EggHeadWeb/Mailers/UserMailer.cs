@@ -1,6 +1,6 @@
 using EggheadWeb.Common;
-using EggheadWeb.Models.Common;
 using EggheadWeb.Models.UserModels;
+using EggHeadWeb.DatabaseContext;
 using Mvc.Mailer;
 using System;
 using System.Linq;
@@ -11,11 +11,11 @@ namespace EggheadWeb.Mailers
 {
 	public class UserMailer : MailerBase, IUserMailer
 	{
-		private EggheadEntities db;
+		private EggheadContext db;
 
-		public UserMailer(EggheadEntities db)
+		public UserMailer(EggheadContext db)
 		{
-			this.db = new EggheadEntities();
+			this.db = new EggheadContext();
 			db.APVariables.ToList<APVariable>();
 		}
 

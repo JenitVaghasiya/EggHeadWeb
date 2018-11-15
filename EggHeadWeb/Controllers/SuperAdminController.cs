@@ -1,7 +1,6 @@
 using EggheadWeb.Common;
 using EggheadWeb.Mailers;
 using EggheadWeb.Models.AdminModels;
-using EggheadWeb.Models.Common;
 using EggheadWeb.Security;
 using log4net;
 using Mvc.Mailer;
@@ -13,6 +12,7 @@ using System.Linq;
 using System.Reflection;
 using System.Web.Mvc;
 using BCrypt.Net;
+using EggHeadWeb.DatabaseContext;
 
 namespace EggheadWeb.Controllers
 {
@@ -619,14 +619,14 @@ namespace EggheadWeb.Controllers
 				{
 					if (user.AreaId.HasValue)
 					{
-						if (this.db.Areas.First<Area>((Area t) => (long?)t.Id == user.AreaId).Admins.Count > 0)
+						if (this.db.Areas.First(t => (long?)t.Id == user.AreaId).Admins.Count > 0)
 						{
 							base.SetViewMessage(WithAuthenController.MessageType.Error, Messages.TerritoryDuplicate, new object[0]);
 							action = base.View(user);
 							return action;
 						}
 					}
-					if (this.db.Admins.Any<Admin>((Admin t) => t.Id != user.Id && (t.Username == user.Username)))
+					if (db.Admins.Any(t => t.Id != user.Id && (t.Username == user.Username)))
 					{
 						string adminUsernameDuplicate = Messages.AdminUsernameDuplicate;
 						object[] username = new object[] { user.Username };
@@ -634,7 +634,7 @@ namespace EggheadWeb.Controllers
 						action = base.View(user);
 						return action;
 					}
-					else if (!this.db.Admins.Any<Admin>((Admin t) => t.Email == user.Email))
+					else if (!this.db.Admins.Any(t => t.Email == user.Email))
 					{
 						Admin admin = new Admin()
 						{

@@ -1,4 +1,4 @@
-using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
@@ -7,7 +7,7 @@ namespace EggheadWeb.Security
 {
 	public class LoginUser : IPrincipal
 	{
-		public EggheadWeb.Models.Common.Admin Admin
+		public Admin Admin
 		{
 			get;
 			set;
@@ -37,7 +37,7 @@ namespace EggheadWeb.Security
 			this.JustDecompileGenerated_Identity_k__BackingField = value;
 		}
 
-		public EggheadWeb.Models.Common.Parent Parent
+		public Parent Parent
 		{
 			get;
 			set;
