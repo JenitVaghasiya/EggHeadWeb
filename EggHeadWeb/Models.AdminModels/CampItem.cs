@@ -1,4 +1,5 @@
 using EggheadWeb.Models.Common;
+using EggHeadWeb.DatabaseContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -120,7 +121,7 @@ namespace EggheadWeb.Models.AdminModels
 		public CampItem()
 		{
 			this.GradeSelects = (
-				from k in (new EggheadEntities()).Grades
+				from k in (new EggheadContext()).Grades
 				select new GradeSelect()
 				{
 					GradeId = (long)k.Id,

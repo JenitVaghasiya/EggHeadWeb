@@ -13,6 +13,7 @@ using System.Reflection;
 using System.Web.Mvc;
 using BCrypt.Net;
 using EggHeadWeb.DatabaseContext;
+using EggheadWeb.Models.Common;
 
 namespace EggheadWeb.Controllers
 {
