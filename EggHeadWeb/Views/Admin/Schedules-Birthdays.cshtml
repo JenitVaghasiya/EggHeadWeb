@@ -1,0 +1,117 @@
+﻿@using EggheadWeb.Models.Common
+@using EggheadWeb.Common;
+@using EggheadWeb.Utility;
+@using EggheadWeb.Models.AdminModels
+@model SearchResult<ScheduleSearchForm, Birthday>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+    var BirthdayByDays = ViewBag.BirthdayByDays as Dictionary<DayOfWeek, List<Birthday>>;
+}
+<table class="display stylized search-result-table-with-group">
+    <colgroup>
+        <col width="125px" />
+        <col width="120px" />
+        <col width="150px" />
+        <col width="180px" />
+        <col width="110px" />
+        <col width="50px" />
+        <col width="80px" />
+        <col width="80px" />
+        <col width="70px" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+                Parent Name
+            </th>
+            <th>
+                Contact Number
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Child
+            </th>
+            <th>
+                Age
+            </th>
+            <th>
+                Party Date
+            </th>
+            <th>
+                Time
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var list in BirthdayByDays)
+        {
+            if (list.Value.Count == 0)
+            {
+                continue;
+            }
+
+            foreach (var c in list.Value)
+            {
+            <tr>
+                <td>
+                    @Convert.ToInt32(list.Key)
+                </td>
+                <td>
+                    @list.Key.ToString()
+                </td>
+                <td>
+                    @c.ParentName
+                </td>
+                <td>
+                    @c.ContactNumber
+                </td>
+                <td>
+                    @c.Email
+                </td>
+                <td>
+                    @c.Address
+                </td>
+                <td>
+                    @c.ChildName
+                </td>
+                <td>
+                    @c.Age
+                </td>
+                <td>
+                    @StringUtil.GetFullDate(c.PartyDate)
+                </td>
+                <td>
+                    @c.PartyTime.To12HoursString()
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = c.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "birthday-delete" })'  data-id = '@c.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.DisplayForModel("Paging", new
+{
+    PagingFormId = "schedulespaging",
+    UniqueId = "Birthday",
+    PrePagingMethod = "setBirthdayServiceType",
+})

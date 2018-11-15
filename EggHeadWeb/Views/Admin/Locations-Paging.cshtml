@@ -1,0 +1,106 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model SearchResult<LocationSearchForm, Location>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+
+<table class="display stylized search-result-table email-table">
+    <colgroup>
+        <col width="40px" />
+        <col width="100px" />
+        <col width="240px" />
+        <col width="180px" />
+        <col width="130px" />
+        <col width="150px" />
+        <col width="70px" />
+        <col width="70px" />
+        <col width="140px" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="checkbox">
+                <input type="checkbox" class="checkall" />
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Contact
+            </th>
+            <th>
+                Active
+            </th>
+            <th class="center">
+                Online
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" data-email-to-address='@item.Email' data-email-to-name= '@item.ContactPerson' />
+                </td>
+                <td>
+                    @item.DisplayName
+                </td>
+                <td>
+                    @item.Address
+                    <br />
+                    @item.City, @item.State @item.Zip
+                </td>
+                <td class="email">
+                    @item.Email
+                </td>
+                <td>
+                    @item.PhoneNumber
+                </td>
+                <td>
+                    @item.ContactPerson
+                </td>
+                <td style="vertical-align: top;">
+                    @Html.DisplayFor(t => item.IsActive, "ActiveValue")
+                </td>
+                <td style="vertical-align: top;">
+                    @Html.DisplayFor(t => item.CanRegistOnline, "ActiveValue")
+                </td>
+                <td style="vertical-align: top;">
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "locations-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" title="Email" class="image-button image-button-email" style="width: 16px;
+                        padding-left: 0px;" data-email-to-address='@item.Email' data-email-to-name= '@item.ContactPerson' />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("locations", "Admin", FormMethod.Get, new { @id = "locationpaging" }))
+{
+    @Html.HiddenFor(m => m.Form.QuickSearch)
+    @Html.HiddenFor(m => m.Form.IsActive)
+    @Html.HiddenFor(m => m.Form.CanEnrollOnline)
+}
+@Html.DisplayForModel("Paging", new
+{
+    Submit = true,
+    PagingFormId = "locationpaging"
+})

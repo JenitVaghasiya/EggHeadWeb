@@ -1,0 +1,268 @@
+﻿@using EggheadWeb.Models.Common;
+@{
+    var classes = ViewBag.ReletatedClasses as List<Class>;
+    var camps = ViewBag.ReletatedCamps as List<Camp>;
+    var workshops = ViewBag.ReletatedWorskhops as List<Workshop>;
+    var birthdays = ViewBag.ReletatedBirthdays as List<Birthday>;
+}
+@if (classes != null)
+{
+    <h5>
+        Classes:
+    </h5>
+    <table class="display stylized">
+        <colgroup>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Location
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    Time(S)
+                </th>
+                <th>
+                    Time(E)
+                </th>
+                <th>
+                    Instructor
+                </th>
+                <th>
+                    Dates
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in classes)
+            {
+                <tr>
+                    <td>
+                        @item.Location.Name
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.TimeStart.ToString("hh\\:mm")
+                    </td>
+                    <td>
+                        @item.TimeEnd.ToString("hh\\:mm")
+                    </td>
+                    <td>
+                        @item.Instructor.FirstName @item.Instructor.LastName
+                    </td>
+                    <td>
+                        @item.DateListText
+                    </td>
+                    <td>
+                        <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "class-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (camps != null)
+{
+    <h5>
+        Camps:
+    </h5>
+    <table class="display stylized">
+        <colgroup>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Location
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    Time(S)
+                </th>
+                <th>
+                    Time(E)
+                </th>
+                <th>
+                    Instructor
+                </th>
+                <th>
+                    Dates
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in camps)
+            {
+                <tr>
+                    <td>
+                        @item.Location.Name
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.TimeStart.ToString("hh\\:mm")
+                    </td>
+                    <td>
+                        @item.TimeEnd.ToString("hh\\:mm")
+                    </td>
+                    <td>
+                        @item.Instructor.FirstName @item.Instructor.LastName
+                    </td>
+                    <td>
+                        @item.DateListText
+                    </td>
+                    <td>
+                        <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "camp-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (workshops != null)
+{
+    <h5>
+        Workshops:
+    </h5>
+    <table class="display stylized">
+        <colgroup>
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Location
+                </th>
+                <th>
+                    Class
+                </th>
+                <th>
+                    Time(S)
+                </th>
+                <th>
+                    Time(E)
+                </th>
+                <th>
+                    Instructor
+                </th>
+                <th>
+                    Dates
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in workshops)
+            {
+                <tr>
+                    <td>
+                        @item.Location.Name
+                    </td>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.TimeStart.ToString("hh\\:mm")
+                    </td>
+                    <td>
+                        @item.TimeEnd.ToString("hh\\:mm")
+                    </td>
+                    <td>
+                        @item.Instructor.FirstName @item.Instructor.LastName
+                    </td>
+                    <td>
+                        @item.DateListText
+                    </td>
+                    <td>
+                        <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@if (birthdays != null)
+{
+    <h5>
+        Birthdays:
+    </h5>
+    <table class="display stylized">
+    <colgroup>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Parent Names
+            </th>
+            <th>
+                Contact Number
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Child
+            </th>
+            <th>
+                Age
+            </th>
+            <th>
+                Party Date
+            </th>
+            <th>
+                Time
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var c in birthdays)
+        {
+            <tr>
+                <td>
+                    @c.ParentName
+                </td>
+                <td>
+                    @c.ContactNumber
+                </td>
+                <td>
+                    @c.Email
+                </td>
+                <td>
+                    @c.ChildName
+                </td>
+                <td>
+                    @c.Age
+                </td>
+                <td>
+                    @c.PartyDate.ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    @c.PartyTime.ToString("hh\\:mm")
+                </td>
+                <td>
+                     <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = c.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}

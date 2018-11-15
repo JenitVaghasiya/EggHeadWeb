@@ -1,0 +1,48 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model UserSearchForm
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "Users";
+    ViewBag.CurrentMenu = 6;
+    ViewBag.NoRecordSelectMsg = "Please Select User(s).";
+
+    var users = (SearchResult<UserSearchForm, Admin>)ViewBag.Users;
+}
+@using (Html.BeginForm("", "", FormMethod.Get, new { @id = "searchForm" }))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "users-edit", Email = true })
+    </div>
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+            <col width="150px" />
+            <col width="*" />
+        </colgroup>
+        <tr>
+            <td>
+                Quick Search:
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.QuickSearch, new { @class = "half" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Is Super Admin
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.IsSuperAdmin, SelectLists.BooleanStatus(), Constants.SELECT)
+            </td>
+        </tr>
+    </table>
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="submit" class="btn btn-green big" value="Search" />
+        <input type="button" class="btn reset" value="Reset" />
+    </p>
+}
+<div class="paging-container">
+    @Html.Partial("users-paging", users)
+</div>

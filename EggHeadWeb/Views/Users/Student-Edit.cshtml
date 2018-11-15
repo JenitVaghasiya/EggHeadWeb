@@ -1,0 +1,87 @@
+﻿@using EggheadWeb.Models.Common;
+@model EggheadWeb.Models.UserModels.StudentItem
+@{
+    var grades = SelectLists.Grades(new EggheadEntities());
+}
+<div class="contact-form-wrapper">
+    @using (Html.BeginForm("student-edit", "Users", FormMethod.Post))
+    {
+        @Html.Partial("_UserInformMessages")
+        <fieldset style="min-height: 320px;">
+            <legend>EDIT STUDENT INFORMATION</legend>
+            @Html.HiddenFor(model => model.Id)
+            <table style="width: 100%;">
+                <tr>
+                    <td style="vertical-align: middle; text-align: right; width: 150px;">
+                        First Name:
+                    </td>
+                    <td style="width: 200px;">
+                        @Html.EditorFor(model => model.FirstName)
+                        @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Last Name:
+                    </td>
+                    <td style="width: 100px;">
+                        @Html.EditorFor(model => model.LastName)
+                        @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Grade:
+                    </td>
+                    <td style="width: 100px;">
+                        @Html.DropDownListFor(m => m.GradeId, grades, "-­‐Select Grade-­‐")
+                        @Html.ValidationMessageFor(model => model.GradeId, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Gender:
+                        <td style="width: 100px;">
+                            @Html.RadioButtonFor(model => model.Gender, "M", new { @id = "gender_male" })
+                            <label for="gender_male" style='display: inline; line-height: 16px; vertical-align: bottom;
+                                margin-top: 15px;'>
+                                Male</label>
+                            @Html.RadioButtonFor(model => model.Gender, "F", new { @id = "gender_female" })
+                            <label for="gender_female" style='display: inline; line-height: 16px; vertical-align: bottom;
+                                margin-top: 15px;'>
+                                Female</label>
+                            @Html.ValidationMessageFor(model => model.Gender, string.Empty, new { @style = "color:Red;" })
+                        </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Birth Date:
+                    </td>
+                    <td style="width: 100px;">
+                        @Html.EditorFor(model => model.BirthDate)
+                        @Html.ValidationMessageFor(model => model.BirthDate, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Special Notes:
+                    </td>
+                    <td style="width: 100px;">
+                        @Html.TextAreaFor(model => model.Notes, new { @style = "width:400px; height:50px;" })
+                        @Html.ValidationMessageFor(model => model.Notes, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                    </td>
+                    <td style="width: 100px;">
+                        <div style="text-align: right; width: 410px;">
+                            <input type="button" class="btn btn-blue" id="student-info-edit-button-save" value="Save" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <br class="clear" />
+        </fieldset>
+    }
+</div>

@@ -1,0 +1,203 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@model AdminTask
+@{
+    var admin = ((EggheadWeb.Security.LoginUser)User).Admin;
+    var runningTasks = ViewBag.RunningTasks as List<AdminTask>;
+    var completedTasks = ViewBag.CompletedTasks as List<AdminTask>;
+}
+@using (Html.BeginRouteForm(admin.IsSuperAdmin ? "SuperAdmin" : "Admin", new { action = "task-edit" }, FormMethod.Post, new { @id = "task-form" }))
+{
+    <div class="tabs">
+        <ul>
+            <li><a class="corner-tl" href="#todo">To-Do</a></li>
+            <li><a href="#done">Completed</a></li>
+            <li><a class="corner-tr" href="#addnew">Add Task</a></li>
+        </ul>
+        <div id="todo">
+            <table class="display stylized search-result-table" style="table-layout: fixed;">
+                <colgroup>
+                    <col width="30px;" />
+                    <col width="110px" />
+                    <col width="70px" />
+                    <col width="70px" />
+                    <col width="40px" />
+                    <col width="40px" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="taskes">
+                        </th>
+                        <th>
+                            Task
+                        </th>
+                        <th>
+                            Priority
+                        </th>
+                        <th>
+                            Due
+                        </th>
+                        <th class="checkbox">
+                            Done
+                        </th>
+                        <th class="taskes">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (runningTasks != null)
+                    {
+                        foreach (var item in runningTasks.OrderBy(t => t.DueDate))
+                        {
+                            var style = "";
+                            if (item.DueDate.HasValue && item.DueDate < DateTime.Today)
+                            {
+                                style = "style=color:Red;";
+                            }
+                        
+                        <tr @(style) >
+                            <td style="vertical-align:top;" title="@item.Notes">
+                                <div style="padding-top: 2px;">
+                                    <img src="../../Content/admin/img/information.png" />
+                                </div>
+                            </td>
+                            <td style="word-wrap: break-word;">
+                                @item.Name
+                            </td>
+                            <td>
+                                @(((TaskPriority)item.Priority).ToString())
+                            </td>
+                            <td>
+                                @(item.DueDate.HasValue ? item.DueDate.Value.ToString("MM/dd/yy") : string.Empty)
+                            </td>
+                            <td>
+                                <input type="checkbox" class="mark-completed" onchange="updateTaskStatus(@item.Id, @((byte)TaksStatus.Completed));" />
+                            </td>
+                            <td>
+                                <input type="button" title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;"  onclick="deleteTask(@item.Id);"/>
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="done">
+            <table class="display stylized search-result-table" style="table-layout: fixed;">
+                <colgroup>
+                    <col width="30px;" />
+                    <col width="110px" />
+                    <col width="70px" />
+                    <col width="70px" />
+                    <col width="40px" />
+                    <col width="40px" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th class="taskes">
+                        </th>
+                        <th>
+                            Task
+                        </th>
+                        <th>
+                            Priority
+                        </th>
+                        <th>
+                            Due
+                        </th>
+                        <th class="checkbox">
+                            In-progress
+                        </th>
+                        <th class="taskes">
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (completedTasks != null)
+                    {
+                        foreach (var item in completedTasks.OrderBy(t => t.DueDate))
+                        {
+                            var style = "";
+                            if (item.DueDate.HasValue && item.DueDate < DateTime.Today)
+                            {
+                                style = "style=color:Red;";
+                            }
+                        <tr @(style)>
+                            <td style="vertical-align: top;" title="@item.Notes">
+                                <div>
+                                    <img src="../../Content/admin/img/information.png" />
+                                </div>
+                            </td>
+                            <td style="word-wrap: break-word;">
+                                @item.Name
+                            </td>
+                            <td>
+                                @(((TaskPriority)item.Priority).ToString())
+                            </td>
+                            <td>
+                                @(item.DueDate.HasValue ? item.DueDate.Value.ToString("MM/dd/yy") : string.Empty)
+                            </td>
+                            <td>
+                                <input type="checkbox"  class="mark-inprogress" onchange="updateTaskStatus(@item.Id, @((byte)TaksStatus.InProgress));" />
+                            </td>
+                            <td>
+                                <input type="button" title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;"  onclick="deleteTask(@item.Id);"/>
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="addnew">
+            @Html.HiddenFor(t => t.Id)
+            @Html.HiddenFor(t => t.AdminId)
+            @Html.HiddenFor(t => t.Status)
+            <table>
+                <tr>
+                    <td colspan="2">
+                        <p>
+                            <label class="required">
+                                Task:</label>
+                            @Html.ValidationMessageFor(m => m.Name)<br />
+                            @Html.TextBoxFor(m => m.Name, new { @style = "width:300px;" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label class="required">
+                                Priority:</label>
+                            @Html.ValidationMessageFor(m => m.Priority)<br />
+                            @Html.DropDownListFor(m => m.Priority, SelectLists.TaksPriorities(), Constants.SELECT, new { @style = "width:150px;" })
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label class="required">
+                                Due:</label>
+                            @Html.ValidationMessageFor(m => m.DueDate)<br />
+                            @Html.TextBoxFor(m => m.DueDate, new { @class = "date", @style = "width:80px;" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p>
+                            <label class="required">
+                                Notes</label>
+                            @Html.ValidationMessageFor(m => m.Notes)<br />
+                            @Html.TextAreaFor(m => m.Notes, new { @class = "small", @style = "width:300px;" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="button" id="save-task" class="btn" style="float: right;" value="Add" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}

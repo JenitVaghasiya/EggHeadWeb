@@ -1,0 +1,424 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@{
+    ViewBag.Title = "Private Messages";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var inboxMessages = this.ViewBag.InboxMessages as List<PrivateMessage>;
+    var sentMessages = this.ViewBag.SentMessages as List<PrivateMessage>;
+
+    var admin = ((EggheadWeb.Security.LoginUser)User).Admin;
+}
+@model PrivateMessage
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("form#reply-form").hide();
+        $("#reply-link").hide();
+
+        $("#reply-link").live("click", function () {
+            $("form#reply-form").toggle();
+            $("#replyContent").focus();
+        });
+
+        $(".refresh-messages").click(function () {
+            $.ajax({
+                url: '@Url.RouteUrl(admin.IsSuperAdmin ? "SuperAdmin" : "Admin", new { action = "private-message-refresh" })',
+                type: 'POST',
+                success: function (result) {
+                    $("#inbox").html($(result).find("#inbox").html());
+                    $("#sent-items").html($(result).find("#sent-items").html());
+                    $(".pm-count").each(function (index) {
+                        $(this).text($(result).find("#pm-count").val());
+                    });
+                },
+                error: function (jqXHR, status, errorThrow) {
+                    if (jqXHR.status >= 600) {
+                        var html = jqXHR.responseText;
+                    }
+                }
+            });
+        });
+
+        $(".message-link").live("click", function () {
+
+            var id = $(this).data("id");
+
+            var $detailDiv = $(this).closest("div.message-list").next("div.detail");
+
+            $.ajax({
+                url: '@Url.RouteUrl(admin.IsSuperAdmin ? "SuperAdmin" : "Admin", new { action = "get-private-message" })',
+                type: 'POST',
+                data: { id: id },
+                success: function (result) {
+                    if (result.ReturnStatus = 'true') {
+                        if ($detailDiv.find(".from").length) {
+                            if (result.FromAdminId == "") {
+                                $detailDiv.find(".from").html(result.From + '&nbsp;<span style="color:Red;">[Deleted]</span>');
+                            }
+                            else {
+                                $detailDiv.find(".from").html(result.From);
+                            }
+                        }
+                        if ($detailDiv.find(".to").length) {
+                            if (result.ToAdminId == "") {
+                                $detailDiv.find(".to").html(result.To + '&nbsp;<span style="color:Red;">[Deleted]</span>');
+                            }
+                            else {
+                                $detailDiv.find(".to").html(result.To);
+                            }
+                        }
+
+                        $detailDiv.find(".subject").text(result.MessageSubject);
+                        $detailDiv.find(".receiveDate").text(result.ReceiveDate);
+                        $detailDiv.find(".message-content").html(result.MessageContent)
+
+                        if ($detailDiv.next("div.reply").length) {
+                            if (result.FromAdminId != "") {
+                                $detailDiv.next("div.reply").find("#reply-link").show();
+                                $detailDiv.next("div.reply").find("#toAdminId").val(result.FromAdminId);
+                                $detailDiv.next("div.reply").find("#reply-subject").val('Re:' + result.MessageSubject);
+                            }
+                            else {
+                                $("form#reply-form").hide();
+                                $("#reply-link").hide();
+                            }
+                        }
+                    }
+                    else {
+                        $detailDiv.find(".from").text('');
+                        $detailDiv.find(".subject").text('')
+                        $detailDiv.find(".receiveDate").text('')
+                        $detailDiv.find(".message-content").html('')
+
+                        if ($detailDiv.next("div.reply").length) {
+                            $detailDiv.next("div.reply").find("#reply-link").hide();
+                            $detailDiv.next("div.reply").find("#toAdminId").val('');
+                            $detailDiv.next("div.reply").find("#reply-subject").val('');
+                        }
+                    }
+                },
+                error: function (jqXHR, status, errorThrow) {
+                    if (jqXHR.status >= 600) {
+                        var html = jqXHR.responseText;
+                    }
+                }
+            });
+        });
+
+        $(".message-send").click(function () {
+            var $this = $(this);
+
+            $this.closest("form").ajaxSubmit(
+                function (html) {
+                    if (html.ReturnStatus == 'true') {
+                        $this.closest("form").find(".messagesubject").val('');
+                        $this.closest("form").find(".messageContent").val('');
+                        alert("Message has ben sent successfully.");
+                    }
+                    else {
+                        alert("Message has ben sent fail.");
+                    }
+                },
+                function (html) {
+                    $(this).closest(".wrapper > div").html(html);
+                });
+        });
+    });
+</script>
+<div class="tabs">
+    <ul>
+        <li><a class="corner-tl refresh-messages" href="#tabs-inbox">Inbox</a></li>
+        <li><a href="#tabs-senditem" class="refresh-messages">Sent Items</a></li>
+        <li><a class="corner-tr" href="#tabs-new-message">Compose</a></li>
+    </ul>
+    <div id="tabs-inbox">
+        <div class="colgroup leading">
+            <div class="message-list column width4 first">
+                <div style="margin-top: 10px;">
+                    <span class="label label-blue">Inbox</span>
+                </div>
+                <hr />
+                <table class="stylized">
+                    <colgroup>
+                        <col width="150px" />
+                        <col width="200px" />
+                        <col width="150px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                From
+                            </th>
+                            <th>
+                                Subject
+                            </th>
+                            <th>
+                                Received Date
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="inbox" style="height: 400px; overflow: auto">
+                    <table class="stylized">
+                        <colgroup>
+                            <col width="150px" />
+                            <col width="200px" />
+                            <col width="150px" />
+                        </colgroup>
+                        <tbody>
+                            @foreach (var message in inboxMessages)
+                            {
+                                var style = "";
+
+                                if (message.Unread)
+                                {
+                                    style = "style = font-weight:bold;";
+                                }
+                                <tr @(style)>
+                                    <td>
+                                        @if (message.FromAdminId.HasValue)
+                                        { @StringUtil.GetFullName(message.Admin.FirstName, message.Admin.LastName)
+                                        }
+                                        else
+                                        { @message.FromAdminName <span style="color: Red;">[Deleted]</span> }
+                                    </td>
+                                    <td>
+                                        @if (@message.Unread)
+                                        { <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
+                                        }
+                                        else
+                                        { <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
+                                        }
+                                    </td>
+                                    <td>
+                                        @message.SendDate.ToString("M/dd/yyyy")
+                                        @if (@message.Unread)
+                                        { <span style="color: Green;">&nbsp;&nbsp;New! </span> }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="column width4 detail">
+                <div style="margin-top: 10px;">
+                    <span class="label label-blue">Details</span>
+                </div>
+                <hr />
+                <table class="no-style full">
+                    <colgroup>
+                        <col width="100px" />
+                        <col width="*" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>From</b>
+                            </td>
+                            <td>
+                                <span class="from"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Subject</b>
+                            </td>
+                            <td>
+                                <span class="subject"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Receive Date</b>
+                            </td>
+                            <td>
+                                <span class="receiveDate"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="msgcontent code" style="height: 100px;">
+                    <p class="message-content">
+                    </p>
+                </div>
+            </div>
+            <div class="column width4 reply">
+                <div style="text-align: right; margin-top: 10px;">
+                    <a id="reply-link" href="#">Reply</a>
+                </div>
+                @using (Html.BeginRouteForm(admin.IsSuperAdmin ? "SuperAdmin" : "Admin", new { action = "reply-private-message" }, FormMethod.Post, new { @id = "reply-form" }))
+                {
+                    <fieldset>
+                        <legend>Repy message</legend>
+                        @Html.HiddenFor(m => m.ToAdminId, new { @id = "toAdminId" })
+                        @Html.HiddenFor(m => m.MessageSubject, new { @id = "reply-subject", @class = "messagesubject" })
+                        <div>
+                            @Html.ValidationMessageFor(m => m.MessageContent)<br />
+                            @Html.TextAreaFor(m => m.MessageContent, new { @id = "replyContent", @class = "messageContent medium full" })
+                        </div>
+                        <input type="button" class="message-send btn" value="Send" style="float: right; margin-top: 10px;" />
+                    </fieldset>
+                }
+            </div>
+        </div>
+    </div>
+    <div id="tabs-senditem">
+        <div class="colgroup leading">
+            <div class="message-list column width4 first">
+                <div style="margin-top: 10px;">
+                    <span class="label label-blue">Sent Items</span>
+                </div>
+                <hr />
+                <table class="stylized">
+                    <colgroup>
+                        <col width="150px" />
+                        <col width="200px" />
+                        <col width="100px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                To
+                            </th>
+                            <th>
+                                Subject
+                            </th>
+                            <th>
+                                Received Date
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+                <div id="sent-items" style="height: 400px; overflow: auto">
+                    <table class="stylized">
+                        <colgroup>
+                            <col width="150px" />
+                            <col width="200px" />
+                            <col width="100px" />
+                        </colgroup>
+                        <tbody>
+                            @foreach (var message in sentMessages)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (message.ToAdminId.HasValue)
+                                        {
+                                            @StringUtil.GetFullName(message.Admin1.FirstName, message.Admin1.LastName)
+                                        }
+                                        else
+                                        {
+                                            @message.ToAdminName 
+                                            <span style="color: Red;">[Deleted]</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
+                                    </td>
+                                    <td>
+                                        @message.SendDate.ToString("M/dd/yyyy")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="column width4 detail">
+                <div style="margin-top: 10px;">
+                    <span class="label label-blue">Details</span>
+                </div>
+                <hr />
+                <table class="no-style full">
+                    <colgroup>
+                        <col width="100px" />
+                        <col width="*" />
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>To</b>
+                            </td>
+                            <td>
+                                <span class="to"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Subject</b>
+                            </td>
+                            <td>
+                                <span class="subject"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Receive Date</b>
+                            </td>
+                            <td>
+                                <span class="receiveDate"></span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="msgcontent code" style="height: 100px;">
+                    <p class="message-content">
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="tabs-new-message">
+        <div class="colgroup leading">
+            <div class="column width6">
+                @using (Html.BeginRouteForm(admin.IsSuperAdmin ? "SuperAdmin" : "Admin", new { action = "reply-private-message" }, FormMethod.Post, new { @id = "new-message-form" }))
+                {
+                    <div style="margin-top: 10px;">
+                        <span class="label label-blue">New message</span>
+                    </div>
+                    <hr />
+                    <table class="no-style full">
+                        <colgroup>
+                            <col width="100px" />
+                            <col width="*" />
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label class="required">
+                                        To:</label>
+                                </td>
+                                <td>
+                                    @Html.DropDownListFor(m => m.ToAdminId, SelectLists.AdminsForSendMessage(new EggheadEntities()), Constants.SELECT_RECEPIENT, new { @style = "width: 250px;" })
+                                    <br />
+                                    @Html.ValidationMessageFor(m => m.ToAdminId)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="required">
+                                        Subject:</label>
+                                </td>
+                                <td>
+                                    @Html.TextBoxFor(m => m.MessageSubject, new { @id = "message-subject", @class = "messagesubject full" })
+                                    @Html.ValidationMessageFor(m => m.MessageSubject)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label class="required">
+                                        Message:</label>
+                                </td>
+                                <td>
+                                    @Html.TextAreaFor(m => m.MessageContent, new { @class = "messageContent medium full" })
+                                    @Html.ValidationMessageFor(m => m.MessageContent)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="button" class="message-send btn" value="Send" style="float: right; margin-top: 10px;" />
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model InstructorSearchForm
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.BreadCrumbs = new string[] { "Contacts" };
+    ViewBag.Title = "Instructors";
+    ViewBag.CurrentMenu = 3;
+    ViewBag.NoRecordSelectMsg = "Please select instructor(s).";
+
+    var instructors = (SearchResult<InstructorSearchForm, Instructor>)ViewBag.Instructors;
+}
+@using (Html.BeginForm("", "", FormMethod.Get, new { @id = "searchForm" }))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "instructors-detail", Print = true, Email = true, ExcelExport = true, ExcelAction = "instructors-excel" })
+    </div>
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+            <col width="150px" />
+            <col width="*" />
+        </colgroup>
+        <tr>
+            <td>
+                <label>
+                    Quick Search:</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.QuickSearch, new { @class = "full" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    Is Active:</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.IsActive, SelectLists.BooleanStatus(), Constants.SELECT)
+            </td>
+        </tr>
+    </table>
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="submit" class="btn btn-green big" value="Search" />
+        <input type="button" class="btn reset" value="Reset" />
+    </p>
+}
+@if (instructors != null)
+{
+    <div>
+        @Html.Partial("instructors-paging", instructors)
+    </div>
+}

@@ -1,0 +1,191 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model PayrollItem
+@functions{
+    string GetDetailAction(ServiceType type)
+    {
+        return type.ToString().ToLower() + "-detail";
+    }
+
+    long GetId(Assign assign)
+    {
+        switch (assign.Type)
+        {
+            case ServiceType.Class:
+                return assign.Class.Id;
+            case ServiceType.Camp:
+                return assign.Camp.Id;
+            case ServiceType.Birthday:
+                return assign.Birthday.Id;
+            case ServiceType.Workshop:
+                return assign.Workshop.Id;
+            default:
+                return 0;
+        }
+    }
+}
+<div>
+    <a class="expandable" href="#"><b>@Model.InstructorName</b></a>
+    <div class="listingDetails">
+        <div class="tabs">
+            <ul>
+                <li><a class="corner-tl" href="#tabs-teach-@Model.InstructorId">Teach(@Model.TeachCount)</a></li>
+                <li><a href="#tabs-assist-@Model.InstructorId">Assist(@Model.AssistCount)</a></li>
+                <li><a href="#tabs-birthday-@Model.InstructorId">Birthday(@Model.BirthdayCount)</a></li>
+                <li><a class="corner-tr" href="#tabs-workshop-@Model.InstructorId">Workshop(@Model.WorkshopCount)</a></li>
+            </ul>
+            <div class="pad" id="tabs-teach-@Model.InstructorId">
+                <table class="no-style full">
+                    <colgroup>
+                        <col width="250px" />
+                        <col width="400px" />
+                        <col width="50px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                Class
+                            </th>
+                            <th class="ta-left">
+                                Dates
+                            </th>
+                            <th class="ta-right">
+                                Total
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.TeachDetails)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(item.Type), id = item.ServiceId })">@item.ServiceName</a>
+                                </td>
+                                <td class="ta-left">
+                                    @item.Dates
+                                </td>
+                                <td class="ta-right">
+                                    @item.Count
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="pad" id="tabs-assist-@Model.InstructorId">
+                <table class="no-style full">
+                    <colgroup>
+                        <col width="250px" />
+                        <col width="400px" />
+                        <col width="50px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                Camp
+                            </th>
+                            <th class="ta-left">
+                                Dates
+                            </th>
+                            <th class="ta-right">
+                                Total
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.AssistDetails)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(item.Type), id = item.ServiceId })">@item.ServiceName</a>
+                                </td>
+                                <td class="ta-left">
+                                    @item.Dates
+                                </td>
+                                <td class="ta-right">
+                                    @item.Count
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="pad" id="tabs-birthday-@Model.InstructorId">
+                <table class="no-style full">
+                    <colgroup>
+                        <col width="250px" />
+                        <col width="400px" />
+                        <col width="50px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                Child
+                            </th>
+                            <th class="ta-left">
+                                Date
+                            </th>
+                            <th class="ta-right">
+                                Total
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.BirthdayDetails)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(item.Type), id = item.ServiceId })">@item.ServiceName</a>
+                                </td>
+                                <td class="ta-left">
+                                    @item.Dates
+                                </td>
+                                <td class="ta-right">
+                                    @item.Count
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div class="pad" id="tabs-workshop-@Model.InstructorId">
+                <table class="no-style full">
+                    <colgroup>
+                        <col width="250px" />
+                        <col width="400px" />
+                        <col width="50px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                Workshop
+                            </th>
+                            <th class="ta-left">
+                                Dates
+                            </th>
+                            <th class="ta-right">
+                                Total
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.WorkshopDetails)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(item.Type), id = item.ServiceId })">@item.ServiceName</a>
+                                </td>
+                                <td class="ta-left">
+                                    @item.Dates
+                                </td>
+                                <td class="ta-right">
+                                    @item.Count
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

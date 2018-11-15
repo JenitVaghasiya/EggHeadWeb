@@ -1,0 +1,229 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model EggheadWeb.Models.AdminModels.ScheduleSearchForm
+@{
+    var db = new EggheadEntities();
+
+    ViewBag.BreadCrumbs = new string[] { "Reports" };
+    ViewBag.Title = "Schedules";
+    ViewBag.CurrentMenu = 1;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var classes = (SearchResult<ScheduleSearchForm, Class>)ViewBag.Classes;
+    var camps = (SearchResult<ScheduleSearchForm, Camp>)ViewBag.Camps;
+    var birthdays = (SearchResult<ScheduleSearchForm, Birthday>)ViewBag.Birthdays;
+    var workshops = (SearchResult<ScheduleSearchForm, Workshop>)ViewBag.Workshops;
+
+    var classByDays = ViewBag.ClassByDays as Dictionary<DayOfWeek, List<Class>>;
+    var campByDays = ViewBag.CampByDays as Dictionary<DayOfWeek, List<Camp>>;
+    var birthdayByDays = ViewBag.BirthdayByDays as Dictionary<DayOfWeek, List<Birthday>>;
+    var workshopByDays = ViewBag.WorkshopByDays as Dictionary<DayOfWeek, List<Workshop>>;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#alldays").change(function () {
+            $(".weekday").attr("checked", $(this).is(":checked"));
+        });
+
+        $(".weekday").change(function () {
+            $("#alldays").attr("checked", $(".weekday:not(:checked)").length <= 0);
+        }).trigger("change");
+
+        // Customize Reset button behaviors
+        $("#reset-button").click(function () {
+            var form = $(this).closest("form");
+            form.find("input:text,textarea").val("").end()
+            .find("input:checkbox").attr("checked", true).end()
+            .find("select option:selected").removeAttr('selected').end()
+            .append("<input type='hidden' name='research' value='false'>").end();
+
+            form.submit();
+        });
+
+        // Change Add button title
+        $('#main-button-add').attr('title', 'Book');
+    });
+
+    function setClassServiceType(form) {
+        form.find("#service-type").val('@ServiceType.Class');
+    }
+
+    function setCampServiceType(form) {
+        form.find("#service-type").val('@ServiceType.Camp');
+    }
+
+    function setBirthdayServiceType(form) {
+        form.find("#service-type").val('@ServiceType.Birthday');
+    }
+
+    function setWorkshopServiceType(form) {
+        form.find("#service-type").val('@ServiceType.Workshop');
+    } 
+    
+</script>
+@using (Html.BeginForm("schedules", "Admin", FormMethod.Get, new { @id = "searchForm" }))
+{
+    @Html.HiddenFor(m => m.ClassPage)
+    @Html.HiddenFor(m => m.CampPage)
+    @Html.HiddenFor(m => m.BirthdayPage)
+    @Html.HiddenFor(m => m.WorkshopPage)
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Print = true, ExcelExport = true, ExcelAction = "schedules-excel", Add = true, AddAction = "booking-class" })
+    </div>
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+            <col width="100px" />
+            <col width="*" />
+        </colgroup>
+        <tr>
+            <td class="width1">
+                <label>
+                    Dates range:</label>
+            </td>
+            <td>
+                @Html.EditorFor(m => m.DateFrom)
+                ~
+                @Html.EditorFor(m => m.DateTo)
+            </td>
+        </tr>
+        <tr>
+            <td class="width1">
+                <label>
+                    Days:</label>
+            </td>
+            <td>
+                <input id="alldays" type="checkbox" />
+                <label for="alldays">
+                    All</label>&nbsp;
+                @Html.CheckBoxFor(m => m.Sunday, new { @class = "weekday" }) @Html.LabelFor(m => m.Sunday) &nbsp;
+                @Html.CheckBoxFor(m => m.Monday, new { @class = "weekday" }) @Html.LabelFor(m => m.Monday) &nbsp;
+                @Html.CheckBoxFor(m => m.Tuesday, new { @class = "weekday" }) @Html.LabelFor(m => m.Tuesday)&nbsp;
+                @Html.CheckBoxFor(m => m.Wednesday, new { @class = "weekday" }) @Html.LabelFor(m => m.Wednesday)&nbsp;
+                @Html.CheckBoxFor(m => m.Thursday, new { @class = "weekday" }) @Html.LabelFor(m => m.Thursday)&nbsp;
+                @Html.CheckBoxFor(m => m.Friday, new { @class = "weekday" }) @Html.LabelFor(m => m.Friday)&nbsp;
+                @Html.CheckBoxFor(m => m.Saturday, new { @class = "weekday" }) @Html.LabelFor(m => m.Saturday)&nbsp;
+            </td>
+        </tr>
+    </table>
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+
+        </colgroup>
+        <tr>
+             <td class="width1">
+                <label>
+                    Location:</label>
+            </td>
+             <td class="width1">
+                @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "search-filter-location-dropdownlist" })
+            </td>
+             <td class="width1">
+                <label>
+                    Instructor:</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(new EggheadEntities()), Constants.SELECT_INSTRUCTOR, new { @class = "search-filter-instructor-dropdown" })
+            </td>
+        </tr>
+    </table>
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="submit" id="search-button" class="btn btn-green big" value="Search" />
+        <input type="button" id="reset-button" class="btn" value="Reset" />
+    </p>
+    @Html.HiddenFor(m => m.Type, new { @id = "service-type" })
+}
+<div class="tabs">
+    <ul>
+        @if (classes != null)
+        {
+            <li><a class="corner-tl" href="#tabs-classes">Classes (@classByDays.Sum(t => t.Value.Count))</a></li>
+        }
+        @if (camps != null)
+        {
+            <li><a class="" href="#tabs-camps">Camps (@camps.TotalItems)</a></li>
+        }
+        @if (birthdays != null)
+        {
+            <li><a class="" href="#tabs-birthdays">Birthdays (@birthdayByDays.Sum(t => t.Value.Count))</a></li>
+        }
+        @if (workshops != null)
+        {
+            <li><a class="corner-tr" href="#tabs-workshops">Workshops (@workshopByDays.Sum(t => t.Value.Count))</a></li>
+        }
+    </ul>
+    @if (classes != null)
+    {
+        <div id="tabs-classes" class="paging-container">
+            @if (classByDays.Sum(t => t.Value.Count) > 0)
+            {
+                @Html.Partial("schedules-classes", classes)
+            }
+            else
+            {
+                <div class="box box-error">
+                    No classes found
+                </div>
+            }
+        </div>
+    }
+    @if (camps != null)
+    {
+        <div id="tabs-camps" class="paging-container">
+              @if (camps.TotalItems > 0)
+            {
+                @Html.Partial("schedules-camps", camps)
+            }
+            else
+            {
+                <div class="box box-error">
+                    No camps found
+                </div>
+            }
+        </div>
+    }
+    @if (birthdays != null)
+    {
+        <div id="tabs-birthdays" class="paging-container">
+            @if (birthdayByDays.Sum(t => t.Value.Count) > 0)
+            {
+                @Html.Partial("schedules-birthdays", birthdays)
+            }
+            else
+            {
+                <div class="box box-error">
+                    No birthdays found
+                </div>
+            }
+        </div>
+    }
+    @if (workshops != null)
+    {
+        <div id="tabs-workshops" class="paging-container">
+            @if (workshopByDays.Sum(t => t.Value.Count) > 0)
+            {
+                @Html.Partial("schedules-workshops", workshops)
+            }
+            else
+            {
+                <div class="box box-error">
+                    No workshops found
+                </div>
+            }
+        </div>
+    }
+</div>
+@using (Html.BeginForm("schedules-paging", "Admin", FormMethod.Get, new { @id = "schedulespaging" }))
+{
+    @Html.HiddenFor(m => m.DateFrom)
+    @Html.HiddenFor(m => m.DateTo)
+    @Html.HiddenFor(m => m.Monday)
+    @Html.HiddenFor(m => m.Tuesday)
+    @Html.HiddenFor(m => m.Wednesday)
+    @Html.HiddenFor(m => m.Thursday)
+    @Html.HiddenFor(m => m.Friday)
+    @Html.HiddenFor(m => m.Saturday)
+    @Html.HiddenFor(m => m.Sunday)
+
+    @Html.HiddenFor(m => m.Type, new { @id = "service-type" })
+}

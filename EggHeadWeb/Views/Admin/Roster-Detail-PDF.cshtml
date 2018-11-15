@@ -1,0 +1,59 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model  RosterDetailPdf
+<table cellpadding="2">
+    <colgroup>
+        <col width="240px" />
+        <col width="240px" />
+        <col width="240px" />
+        <col width="240px" />
+    </colgroup>
+    <tr>
+        <td>
+            <b>LOCATIONS:</b> @Model.LocationName
+        </td>
+        <td>
+            <b>DAYS:</b> @Model.Days
+        </td>
+        <td>
+            <b>TIME:</b> @Model.Time
+        </td>
+        <td>
+            <b>PRINTED:</b> @Model.Printed
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <b>ADDRESS:</b> @Model.Address
+        </td>
+        <td colspan="2">
+            <b>CLASS:</b> @Model.Class
+        </td>
+    </tr>
+</table>
+<br />
+@{
+    int i = 0;
+}
+<table>
+    <tr border="1">
+        @foreach (var header in Model.Headers)
+        {
+            <th style="width: 50px;">
+                @header
+            </th>
+        }
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr border="1">
+            @foreach (string value in item)
+            {
+                <td style="display: table; width: 50px;">
+                    @value
+                </td>
+            }
+        </tr>
+    }
+</table>

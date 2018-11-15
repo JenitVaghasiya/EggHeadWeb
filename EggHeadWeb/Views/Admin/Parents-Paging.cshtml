@@ -1,0 +1,88 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model SearchResult<ParentSearchForm, Parent>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+<table class="display stylized search-result-table email-table" data-fixed-left="1"
+    data-fixed-right="1">
+    <colgroup>
+        <col class="c-checkbox" />
+        <col class="c-name" />
+        <col class="c-email" />
+        <col class="c-phonenumber" />
+        <col class="c-location" />
+        <col class="c-date" />
+        <col class="c-task-full" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="checkbox">
+                <input type="checkbox" class="checkall" />
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Last Login
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkitem" data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName'  />
+                </td>
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+                <td class="email">
+                    @item.Email
+                </td>
+                <td>
+                    @item.PhoneNumer
+                </td>
+                <td>
+                    @item.Location.DisplayName
+                </td>
+                <td>
+                    @(item.LastLoginDateTime.HasValue ? item.LastLoginDateTime.Value.ToString("MM/dd/yyyy") : string.Empty)
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "parents-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "parents-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" title="Email" class="image-button image-button-email" style="width: 16px;
+                        padding-left: 0px;"  data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName'/>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("parents", "Admin", FormMethod.Get, new { @id = "parentspaging" }))
+{
+    @Html.HiddenFor(m => m.Form.QuickSearch)
+    @Html.HiddenFor(m => m.Form.LocationId)
+}
+@Html.DisplayForModel("Paging", new
+{
+    Submit = true,
+    PagingFormId = "parentspaging"
+})

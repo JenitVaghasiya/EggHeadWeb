@@ -1,0 +1,150 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model  Booking
+@{
+    ViewBag.BreadCrumbs = new string[] { "Rosters" };
+    ViewBag.Title = "Roster Detail";
+    ViewBag.CurrentMenu = 1;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.NoRecordSelectMsg = "Please select student(s).";
+    var bookings = ViewBag.Service.Bookings as ICollection<Booking>;
+    var unRegistStudents = ViewBag.UnregistStudents as SelectList;
+}
+<div class="box" style="margin-top: 0; margin-bottom: 0;">
+    @Html.Partial("MainTaskbar", new MainTaskbarItem { Email = true, Print = true, ExcelAction = "roster-detail-excel?id=" + @ViewBag.Service.Id + "&type=" + (Model.ClassId.HasValue ? "Class" : "Camp"),  
+    PdfExport = true, PdfAction = "roster-detail-pdf?id=" + @ViewBag.Service.Id + "&type=" + (Model.ClassId.HasValue ? "Class" : "Camp")})
+</div>
+<table class="stylized half " style="margin-top: 0; margin-bottom: 0">
+    <colgroup>
+        <col class="width1" />
+        <col class="width4" />
+    </colgroup>
+    <tr>
+        <td>
+            Name:
+        </td>
+        <td>
+            <a href= '@Url.RouteUrl("Admin", new { action = "class-detail", id = @ViewBag.Service.Id })'>
+                @ViewBag.Service.Name</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Location:
+        </td>
+        <td>
+            <a href= '@Url.RouteUrl("Admin", new { action = "locations-detail", id = @ViewBag.Service.LocationId })'>
+                @ViewBag.Service.Location.DisplayName</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Instructor:
+        </td>
+        <td>
+            <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = @ViewBag.Service.Instructor.Id })'>
+                @ScheduleUtil.GetShortInstructorName(@ViewBag.Service.Instructor)</a>
+        </td>
+    </tr>
+</table>
+<h5>
+    Student List</h5>
+@using (Html.BeginRouteForm("Admin", new { action = "roster-detail" }, FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.HiddenFor(m => m.ClassId)
+        @Html.HiddenFor(m => m.CampId)
+        @Html.HiddenFor(m => m.BookDate)
+        @Html.DropDownListFor(m => m.StudentId, unRegistStudents, "--Select Student--")
+        @Html.ValidationMessageFor(m => m.StudentId)
+        &nbsp;&nbsp;
+        <input type="submit" class="btn btn-green big" value="Add Student" />
+    </div>
+}
+<table class="display stylized search-result-table email-table">
+    <colgroup>
+        <col width="40px" />
+        <col class="c-name" />
+        <col class="c-age" />
+        <col class="c-gender" />
+        <col class="c-name" />
+        <col class="c-phonenumber" />
+        <col class="c-email" />
+        <col class="c-task-medium" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="checkbox">
+                <input type="checkbox" class="checkall" />
+            </th>
+            <th>
+                Student
+            </th>
+            <th>
+                Age
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Parent
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Regist Date
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in bookings)
+        {
+            var item = booking.Student;
+            
+            <tr>
+                <td>
+                    <input type="checkbox" data-email-to-address='@item.Parent.Email' data-email-to-name= '@item.Parent.FirstName @item.Parent.LastName'  />
+                </td>
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+                <td>
+                    @{
+                               int age = DateTime.Today.Year - item.BirthDate.Year;
+                               if (DateTime.Today < item.BirthDate.AddYears(age))
+                               {
+                                   age--;
+                               }
+                    }
+                    @age
+                </td>
+                <td>
+                    @item.GenderText
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "parents-detail", id = item.ParentId })'>
+                        @item.Parent.FirstName @item.Parent.LastName</a>
+                </td>
+                <td>
+                    @item.Parent.PhoneNumer
+                </td>
+                <td class="email">
+                    @item.Parent.Email
+                </td>
+                <td>
+                    @booking.BookDate.ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "roster-delete" })' data-id='@booking.Id' title="Delete" class="image-button image-button-delete" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

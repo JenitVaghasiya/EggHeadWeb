@@ -1,0 +1,51 @@
+﻿@model List<EggheadWeb.Models.Common.Class>
+@{
+    ViewBag.Title = "Classes";
+    Layout = "~/Views/Shared/_ParentUserLayout.cshtml";
+}
+<div class="page-wrapper">
+    @Html.Partial("_UserLeftMenu")
+    <div id="partialView" class="ajax-container">
+        <div class="twelve columns mb20">
+            <div class="enroll_container">
+                <fieldset style="min-height: 320px;">
+                    <legend>ENROLL IN A CLASS</legend>
+                    <div class="enroll_div">
+                        <div class="enroll_left">
+                            <div class="schedule_container">
+                                @foreach (var onelass in Model)
+                                {
+                                    <div class="schedules">
+                                        @Html.Partial("Class", onelass)
+                                        <div class="sch_main">
+                                            <div>
+                                                Select Child :
+                                                @Html.DropDownList("studentDropDownList" + onelass.Id,
+                                                new SelectList(ViewBag.Students as System.Collections.IEnumerable, "StudentId", "Name"), new { @class = "studentsdropdownlist sel_child", @style = "display:inline;" })
+                                                &nbsp;&nbsp;&nbsp;
+                                                <input type="button" data-action='@Url.Action("enroll-class")' data-id= "@onelass.Id" value="Enroll Now" class="enroll-button button1"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                        <div class="enroll_right">
+                            <div id="enroll-info">
+                                @Html.Partial("Booking-list")
+                            </div>
+                            <div style="color: #707070;" class="cart_btn">
+                                <div style="width: 100%; float: left; margin: 10px 0 0 0;">
+                                    <input type="button" title="Checkout &amp; Pay" value="Checkout &amp; Pay" id="pay_btn" action='@Url.Action("init-enroll-confirm")'
+                                           class="btn btn-blue">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <br class='clear' />
+        </div>
+    </div>
+    <br class='clear' />
+</div>

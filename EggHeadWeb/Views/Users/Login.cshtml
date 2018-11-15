@@ -1,0 +1,82 @@
+﻿@model EggheadWeb.Models.Common.LoginForm
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_ParentLoginLayout.cshtml";
+}
+<div class="page-wrapper">
+    <h3>
+        TERRITORY: @ViewBag.LocationName
+    </h3>
+    <div class="col-md-6" style="margin-right: 20px;">
+        <fieldset style="min-height:200px;" class="login">
+            <legend>NEW EGGHEADS</legend>
+            <div style="min-height: 160px;">
+                All Eggheads must be registered to see classes in your area.
+                <div style="height:15px;"></div>
+                Once registered you can see the classes and camps available in your area. Creating
+                an account is <b>Fast</b> and <b>Easy</b>!
+            </div>
+            <div style="height: 30px;">
+                <a href="@Url.Action("Register")">Click here to create an account</a>
+            </div>
+        </fieldset>
+    </div>
+    <div class="col-md-6" style="margin-left: 20px;">
+        @using (Html.BeginForm("Login", "Users", FormMethod.Post))
+{
+    <fieldset style="min-height:200px;" class="login">
+        <legend>RETURNING EGGHEADS</legend>
+        <div style="min-height: 160px;">
+            <table>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Email:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Username, new { @style = "width: 300px;" })
+                        @Html.ValidationMessageFor(m => m.Username, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr style="height: 10px;">
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Password:
+                    </td>
+                    <td>
+                        @Html.PasswordFor(m => m.Password, new { @style = "width: 300px;" })
+                        @Html.ValidationMessageFor(m => m.Password, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td style="color: Red;">
+                        @Html.ValidationSummary(true, string.Empty)
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="submit" value="LOGIN" style='float: right; margin-top:5px' class="btn" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="height: 30px; margin-right: 35px;">
+            <a href="@Url.Action("password-reset")">Forgot your password?</a>
+        </div>
+    </fieldset>
+}
+    </div>
+    <br class='clearfix' />
+
+    <div class="full" style="float:left; width:95%">
+        <div id="right-control">
+            <div class="yellow-text">GIVE US A CALL:</div>
+            <div class="phone-number">@ViewBag.PhoneNumber</div>
+        </div>
+    </div>
+    <div class='clearfix'></div>
+</div>

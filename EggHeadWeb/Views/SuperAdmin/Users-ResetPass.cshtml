@@ -1,0 +1,67 @@
+﻿@using EggheadWeb.Models.AdminModels
+@using EggheadWeb.Models.Common
+@model Admin
+@{
+    ViewBag.BreadCrumbs = new string[] { "Users" };
+    ViewBag.Title = "Reset Password";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var db = new EggheadEntities();
+}
+@using (Html.BeginForm("users-resetpass", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl(new { action = "users", research = Model.Id > 0 ? "true" : "false" })" />
+    </div>
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.Id)
+    <div class="colgroup leading">
+        <table>
+            <tr>
+                <td>
+                    @if (ViewBag.Message != null)
+                    {
+                        <div style="color: Blue;">
+                            @ViewBag.Message
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.ValidationMessage("", new { @style = "color:Red;" })
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <label for="email">
+                            Email: @Model.Email
+                        </label>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <label for="username">
+                            Username: @Model.Username
+                        </label>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <label for="password" class="@(Model.Id <= 0 ? "required" : "")">
+                            Password:
+                        </label>
+                        @Html.ValidationMessageFor(m => m.Password)<br />
+                        @Html.PasswordFor(m => m.Password, new { @class = "full" })
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+}

@@ -1,0 +1,219 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model RosterSearchForm
+@{
+    ViewBag.BreadCrumbs = new string[] { "Reports" };
+    ViewBag.Title = "Rosters";
+    ViewBag.CurrentMenu = 1;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var db = new EggheadEntities();
+
+    var classes = (SearchResult<RosterSearchForm, Class>)ViewBag.Classes;
+    var camps = (SearchResult<RosterSearchForm, Camp>)ViewBag.Camps;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#main-button-print").unbind("click");
+
+        $("#main-button-print").click(function () {
+            getSelectedRostersAndPrint();
+        });
+
+        $("#main-button-excel").unbind("click");
+        $("#main-button-excel").click(function () {
+            getSelectedRostersAndExport('@Url.Action("rosters-excel")');
+        });
+
+        $("#main-button-pdf").unbind("click");
+        $("#main-button-pdf").click(function () {
+            getSelectedRostersAndExport('@Url.Action("rosters-pdf")');
+        });
+
+        $(".roster-detail-print").live("click", function () {
+            getRosterDataAndPrint($(this).data("type"), $(this).data("id"));
+        });
+    });
+
+    function setClassServiceType(form) {
+        form.find("#service-type").val('@ServiceType.Class');
+    }
+
+    function setCampServiceType(form) {
+        form.find("#service-type").val('@ServiceType.Camp');
+    }
+
+
+    function getRosterDataAndPrint(type, id) {
+        if (type == '' || id == '') {
+            return;
+        }
+
+        $.ajax({
+            url: '@Url.Action("roster-detail-print")',
+            type: 'GET',
+            data: { type: type, id: id },
+            success: function (result) {
+                var target = $("<div></div>").html(result);
+                target.jqprint();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                alert("error");
+            }
+        });
+    }
+
+    function getSelectedRostersAndExport(action) {
+        var selectedRosters = getSelectedRosters();
+
+        if ((selectedRosters.ClassIds == '') && selectedRosters.CampIds == '') {
+            alert("Please Select Class(es) or Camp(s).");
+            return;
+        }
+
+        document.location.href = action + "?classIds=" + selectedRosters.ClassIds + "&campIds=" + selectedRosters.CampIds;
+    }
+
+    function getSelectedRostersAndPrint() {
+        var selectedRosters = getSelectedRosters();
+
+        if ((selectedRosters.ClassIds == '') && selectedRosters.CampIds == '') {
+            alert("Please Select Class(es) or Camp(s).");
+            return;
+        }
+
+        $.ajax({
+            url: '@Url.Action("rosters-print")',
+            type: 'GET',
+            data: { classIds: selectedRosters.ClassIds, campIds: selectedRosters.CampIds },
+            success: function (result) {
+                var target = $("<div></div>").html(result);
+                target.jqprint();
+            },
+            error: function (jqXHR, status, errorThrow) {
+                alert("error");
+            }
+        });
+    }
+
+    function getSelectedRosters() {
+        classIds = $(".roster-classes").find("td input:checked").map(function () {
+            return $.trim($(this).data('id'));
+        }).get().join(";");
+
+        campIds = $(".roster-camps").find("td input:checked").map(function () {
+            return $.trim($(this).data('id'));
+        }).get().join(";");
+
+        return { ClassIds: classIds, CampIds: campIds };
+    }
+     
+</script>
+@using (Html.BeginForm("rosters", "Admin", FormMethod.Get, new { @id = "searchForm" }))
+{
+    @Html.HiddenFor(m => m.ClassPage)
+    @Html.HiddenFor(m => m.CampPage)
+
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Print = true, ExcelExport = true, PdfExport = true })
+    </div>
+    
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+            <col width="100px" />
+            <col width="200px" />
+            <col width="150px" />
+            <col width="*" />
+        </colgroup>
+        <tr>
+            <td>
+                <label>
+                    Location:</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "search-filter-location-dropdownlist" })
+            </td>
+            <td>
+                <label>
+                    Start Date:</label>
+            </td>
+            <td>
+                @Html.EditorFor(m => m.StartDate)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    Instructor:</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(db), Constants.SELECT_INSTRUCTOR, new { @class = "search-filter-instructor-dropdown" })
+            </td>
+            <td>
+                <label>
+                    Class/Camp Name:</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.ClassName, new { @class = "full" })
+            </td>
+        </tr>
+    </table>
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="submit" class="btn btn-green big" value="Search" />
+        <input type="button" class="btn reset" value="Reset" />
+    </p>
+    @Html.HiddenFor(m => m.Type, new { @id = "service-type" })
+}
+<div class="tabs">
+    <ul>
+        @if (classes != null)
+        {
+            <li><a class="corner-tl" href="#tabs-classes">Classes (@classes.TotalItems)</a></li>
+        }
+        @if (camps != null)
+        {
+            <li><a class="corner-tr" href="#tabs-camps">Camps (@camps.TotalItems)</a></li>
+        }
+    </ul>
+    @if (classes != null)
+    {
+        <div id="tabs-classes" class="paging-container">
+            @if (classes.TotalItems > 0)
+            {
+                @Html.Partial("rosters-classes", classes)
+            }
+            else
+            {
+                <div class="box box-error">
+                    No classes found
+                </div>
+            }
+        </div>
+    }
+    @if (camps != null)
+    {
+        <div id="tabs-camps" class="paging-container">
+            @if (camps.TotalItems > 0)
+            {
+                @Html.Partial("rosters-camps", camps)
+            }
+            else
+            {
+                <div class="box box-error">
+                    No camps found
+                </div>
+            }
+        </div>
+    }
+</div>
+@using (Html.BeginForm("rosters-paging", "Admin", FormMethod.Get, new { @id = "rosterspaging" }))
+{
+    @Html.HiddenFor(m => m.LocationId)
+    @Html.HiddenFor(m => m.InstructorId)
+    @Html.HiddenFor(m => m.StartDate)
+    @Html.HiddenFor(m => m.ClassName)
+    
+    @Html.HiddenFor(m => m.Type, new { @id = "service-type" })
+}

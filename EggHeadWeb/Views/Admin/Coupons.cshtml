@@ -1,0 +1,42 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model CouponSearchForm
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "Coupons";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var coupons = (SearchResult<CouponSearchForm, Coupon>)ViewBag.Coupons;
+}
+<div class="box" style="margin-top: 0; margin-bottom: 0;">
+    @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "coupons-detail", ExcelExport = true, ExcelAction = "coupons-excel" })
+</div>
+@using (Html.BeginForm("", "", FormMethod.Get))
+{
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+            <col width="150px" />
+            <col width="*" />
+        </colgroup>
+        <tr>
+            <td>
+                <label>
+                    Quick Search:</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.QuickSearch, new { @class = "full" })
+            </td>
+        </tr>
+    </table>
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="submit" class="btn btn-green big" value="Search" />
+        <input type="button" class="btn reset" value="Reset" />
+    </p>
+}
+@if (coupons != null)
+{
+    <div>
+        @Html.Partial("coupons-paging", coupons)
+    </div>
+}

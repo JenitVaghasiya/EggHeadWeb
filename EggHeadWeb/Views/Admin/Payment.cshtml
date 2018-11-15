@@ -1,0 +1,37 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model AdminPaymentInfo
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "Payment Info";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("payment", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+    </div>
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.AdminId)
+    <p>
+        <label for="apiloginid" class="required">
+            User Name:</label>
+        @Html.ValidationMessageFor(m => m.APILoginID)<br />
+        @Html.TextBoxFor(m => m.APILoginID, new { @class = "half" })
+    </p>
+    <p>
+        <label for="transactionkey" class="required">
+            Password:</label>
+        @Html.ValidationMessageFor(m => m.TransactionKey)<br />
+        @Html.TextBoxFor(m => m.TransactionKey, new { @type = "password", @class = "half" })
+    </p>
+    <p>
+        <label for="md5hashphrase" class="required">
+            Signature:
+        </label>
+        @Html.ValidationMessageFor(m => m.MD5HashPhrase)<br />
+        @Html.TextBoxFor(m => m.MD5HashPhrase, new { @class = "half" })
+    </p>
+}

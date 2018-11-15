@@ -1,0 +1,43 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model Area
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings", "Territories" };
+    ViewBag.Title = Model.Id > 0 ? "Edit Territory " : "New Territory";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("territories-detail", "SuperAdmin", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+        <input type="button" class="btn" style="float: right" value="Cancel"
+        data-redirect="@Url.RouteUrl("", new { action = "territories", research = "true" })" />
+    </div>
+    @Html.HiddenFor(m => m.Id)
+    @Html.ValidationSummary(true)
+    <p>
+        <label for="displayName" class="required">
+            Territory Name:</label>
+        @Html.ValidationMessageFor(m => m.DisplayName)<br />
+        @Html.TextBoxFor(m => m.DisplayName, new { @class = "half" })
+    </p>
+    <p>
+        <label for="name" class="required">
+            URL Name:</label>
+        @Html.ValidationMessageFor(m => m.Name)<br />
+        @Html.TextBoxFor(m => m.Name, new { @class = "half" })
+    </p>
+    <p>
+        <label for="state" class="required">
+            State:</label>
+        @Html.ValidationMessageFor(m => m.State)<br />
+        @Html.TextBoxFor(m => m.State, new { @class = "half" })
+    </p>
+    <p>
+        <label class="required">
+            Description:</label>
+        @Html.ValidationMessageFor(m => m.Description)<br />
+        @Html.TextAreaFor(m => m.Description, new { @class = "half" })
+    </p>
+}

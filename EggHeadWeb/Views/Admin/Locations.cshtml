@@ -1,0 +1,61 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels
+@using EggheadWeb.Models.Common
+@model LocationSearchForm
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Locations";
+    ViewBag.CurrentMenu = 2;
+    ViewBag.NoRecordSelectMsg = "Please Select Location(s).";
+
+    var locations = (SearchResult<LocationSearchForm, Location>)ViewBag.Locations;
+}
+@using (Html.BeginForm("", "", FormMethod.Get, new { @id = "searchForm" }))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Print = true, Email = true, Add = true, ExcelExport = true, ExcelAction = "locations-excel", AddAction = "locations-detail" })
+    </div>
+     <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+            <col width="150px" />
+            <col width="*"/>
+        </colgroup>
+        <tr>
+            <td>
+               <label> Quick Search:</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.QuickSearch, new { @class = "full" })
+                @Html.ValidationMessageFor(m => m.QuickSearch)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label> Active:</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.IsActive, SelectLists.BooleanStatus(), Constants.SELECT)
+                @Html.ValidationMessageFor(m => m.IsActive)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                 <label>Online Enrollment:</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.CanEnrollOnline, SelectLists.BooleanStatus(), Constants.SELECT)
+                @Html.ValidationMessageFor(m => m.CanEnrollOnline)
+            </td>
+        </tr>
+    </table>
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="submit" class="btn btn-green big" value="Search" />
+        <input type="button" class="btn reset" value="Reset" />
+    </p>
+}
+@if (locations != null)
+{
+    <div class="paging-container print-element" data-print-title="location.html">
+        @Html.Partial("locations-paging", locations)
+    </div>
+}

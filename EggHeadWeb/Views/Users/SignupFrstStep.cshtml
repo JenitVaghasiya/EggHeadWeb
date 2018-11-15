@@ -1,0 +1,161 @@
+﻿@using EggheadWeb.Models.Common;
+@model EggheadWeb.Models.UserModels.ParentItem
+@{
+    var userLocations = this.ViewBag.Locations as SelectList;
+}
+<div class="page-wrapper">
+    <div class="process-state-step1">
+    </div>
+    <div class="" style="width:800px; margin-left:90px">
+        @using (Html.BeginForm("SignupFrstStep", "Users", FormMethod.Post))
+        {
+                <span style="font-weight:bold">PARENT/GUARDIAN INFORMATION</span>
+                <table class="two-columns">
+                    <tr>
+                        <td style='vertical-align: middle; text-align: right'>
+                            Location:
+                        </td>
+                        <td style='vertical-align: middle; text-align: right'>
+                            @Html.DropDownListFor(model => model.LocationId, userLocations, "-­‐Select School/Location-­‐")
+                        </td>
+                        <td />
+                        <td />
+                    </tr>
+                    <tr class="validation-row">
+                        <td />
+                        <td>
+                            @Html.ValidationMessageFor(model => model.LocationId, string.Empty, new { @style = "color:Red;" })
+                        </td>
+                        <td />
+                        <td />
+                    </tr>
+                    <tr>
+                        <td style='vertical-align: middle; text-align: right'>
+                            First Name:
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.FirstName)
+                        </td>
+                        <td style='vertical-align: middle; text-align: right'>
+                            Last Name:
+                        </td>
+                        <td>
+                            @Html.EditorFor(model => model.LastName)
+                        </td>
+                    </tr>
+                    <tr class="validation-row">
+                        <td />
+                        <td>
+                            @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @style = "color:Red;" })
+                        </td>
+                        <td />
+                        <td>
+                            @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Phone Number:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.PhoneNumer, new { @class = "input-phone-number" })
+                    </td>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Address:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Address)
+                    </td>
+                </tr>
+                <tr class="validation-row">
+                    <td />
+                    <td>
+                        @Html.ValidationMessageFor(model => model.PhoneNumer, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                    <td />
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Address, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        City:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.City)
+                    </td>
+                    <td style='vertical-align: middle; text-align: right'>
+                        State:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.State)
+                    </td>
+                </tr>
+                <tr class="validation-row">
+                    <td />
+                    <td>
+                        @Html.ValidationMessageFor(model => model.City, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                    <td />
+                    <td>
+                        @Html.ValidationMessageFor(model => model.State, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Zip:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Zip)
+                    </td>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Email:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Email)
+                    </td>
+                </tr>
+                <tr class="validation-row">
+                    <td />
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Zip, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                    <td />
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Email, string.Empty, new { @style = "color:Red;" })
+                        @Html.ValidationSummary(true, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Password:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Password)
+                    </td>
+                    <td />
+                    <td />
+                </tr>
+                <tr class="validation-row">
+                    <td />
+                    <td>
+                        @Html.ValidationMessageFor(model => model.Password, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                    <td />
+                    <td />
+                </tr>
+                <tr>
+                    <td></td>
+                    <td />
+                    <td />
+                    <td />
+                </tr>
+            </table>
+            <div style="text-align: right;">
+                <input type="button"
+                       class="btn btn-big" id="step1-step2" value="NEXT" />
+            </div>
+        }
+    </div>
+    <br class="clear" />
+</div>

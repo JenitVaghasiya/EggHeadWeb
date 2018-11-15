@@ -1,0 +1,72 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Security;
+@{
+    var isSuperAdmin = this.User.IsInRole(UserRoleProvider.SUPER_ADMIN);
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "FrontEnd";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var grades = (SearchResult<object, Frontend>)ViewBag.Frontends;
+   
+}
+<a href='@Url.RouteUrl("SuperAdmin", new { action = "terms" })'>Edit Frontend Terms
+    & Condition</a>
+<br />
+<br />
+<div class="box" style="margin-top: 0; margin-bottom: 0;">
+    @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "frontend-detail" })
+</div>
+<br />
+<table class="display stylized scrolltable">
+    <colgroup>
+        <col width="150px" />
+        <col width="250px" />
+        <col width="450px" />
+        <col width="60px" align="center" />
+        <col class="task-medium" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Frontend Name
+            </th>
+            <th>
+                Menu Text
+            </th>
+            <th>
+                Page Content
+            </th>
+            <th>
+                Active
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in grades.PageItems)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.MenuName
+                </td>
+                <td>
+                    @Html.Raw(item.PageContent)
+                </td>
+                <td align="center">
+                    @Html.DisplayFor(i => item.IsActive, "ActiveValue")
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl(new { action = "frontend-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl(new { action = "frontend-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

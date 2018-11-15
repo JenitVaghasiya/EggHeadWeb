@@ -1,0 +1,44 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model  List<RosterDetailPdf>
+@{
+    var classRosters = ViewBag.ClassRosters as List<RosterDetailPdf>;
+    var campRosters = ViewBag.CampRosters as List<RosterDetailPdf>;
+    var totalRoster = classRosters.Count + campRosters.Count;
+    int index = 1;
+}
+<style type="text/css">
+    body
+    {
+        font-family: Calibri;
+        font-size: 11px;
+    }
+    
+    .break
+    {
+        page-break-after: always;
+    }
+</style>
+@foreach (var roster in classRosters)
+{
+    @Html.Partial("Roster-Detail-Print", roster);
+                                                if (index < totalRoster)
+                                                {
+    <p class="break">
+    </p>
+                                                }
+                                                index++;
+
+}
+@foreach (var roster in campRosters)
+{
+    @Html.Partial("Roster-Detail-Print", roster);
+                                                if (index < totalRoster)
+                                                {
+    <p class="break">
+    </p>
+                                                }
+                                                index++;
+
+}

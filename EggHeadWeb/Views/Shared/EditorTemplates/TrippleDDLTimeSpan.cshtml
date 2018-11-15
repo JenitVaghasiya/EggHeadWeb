@@ -1,0 +1,57 @@
+﻿@{
+    int firstHour = (int)(ViewData["firstHour"] ?? 1);
+    int lastHour = (int)(ViewData["lastHour"] ?? 12);
+    int minuteIntervals = (int)(ViewData["minuteIntervals"] ?? 5);
+
+    var hours = Enumerable.Range(firstHour, (lastHour - firstHour + 1))
+    .Select(i => new SelectListItem
+    {
+        Value = i.ToString("D2"),
+        Text = i.ToString("D1"),
+    });
+
+    var minutes = Enumerable.Range(0, (int)Math.Floor(60f / minuteIntervals)).Select(x => x * minuteIntervals)
+    .Select(i => new SelectListItem
+    {
+        Value = i.ToString("D2"),
+        Text = i.ToString("D1"),
+    });
+
+    var sufixes = new SelectList(new object[] {
+                new {Value="AM", Text="AM"},
+                new {Value="PM", Text="PM"}
+            },
+           "Value", "Text", "PM");
+
+    var result = ViewData.ModelState[ViewData.TemplateInfo.HtmlFieldPrefix];
+
+    if (result != null && result.Value != null)
+    {
+        var values = result.Value.RawValue as string[];
+        hours = new SelectList(hours, "Value", "Text", values[0]);
+        minutes = new SelectList(minutes, "Value", "Text", values[1]);
+        sufixes = new SelectList(sufixes, "Value", "Text", values[2]);
+
+        result.Value = null;
+    }
+    else
+    {
+        var currentValue = ViewData.Model;
+
+        if (currentValue != null)
+        {
+            var dateTime = new DateTime(currentValue.Ticks);
+
+            hours = new SelectList(hours, "Value", "Text", dateTime.ToString("hh"));
+            minutes = new SelectList(minutes, "Value", "Text", dateTime.ToString("mm"));
+            sufixes = new SelectList(sufixes, "Value", "Text", dateTime.ToString("tt"));
+        }
+    }
+}
+<div class="timespanddl" style="display: table-cell;">
+    @Html.DropDownList("", hours, "HH", new { id = @ViewData.TemplateInfo.HtmlFieldPrefix + "_h" })
+    &nbsp;
+    @Html.DropDownList("", minutes, "MM", new { id = @ViewData.TemplateInfo.HtmlFieldPrefix + "_m" })
+    &nbsp;
+    @Html.DropDownList("", sufixes, null, new { id = @ViewData.TemplateInfo.HtmlFieldPrefix + "_suf" })
+</div>

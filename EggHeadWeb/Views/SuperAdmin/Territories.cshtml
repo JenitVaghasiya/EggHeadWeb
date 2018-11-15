@@ -1,0 +1,43 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model AreaSearchForm
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "Territories";
+    ViewBag.CurrentMenu = 6;
+    ViewBag.NoRecordSelectMsg = "Please Select Territory(es).";
+
+    var territories = (SearchResult<AreaSearchForm, Area>)ViewBag.Territories;
+}
+@using (Html.BeginForm("", "", FormMethod.Get))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, ExcelExport = true, ExcelAction = "territories-excel", AddAction = "territories-detail" })
+    </div>
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+            <col width="150px" />
+            <col width="*" />
+        </colgroup>
+        <tr>
+            <td>
+                Quick Search:
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.QuickSearch, new { @class = "half" })
+            </td>
+        </tr>
+    </table>
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="submit" class="btn btn-green big" value="Search" />
+        <input type="button" class="btn reset" value="Reset" />
+    </p>
+}
+@if (territories != null)
+{
+    <div>
+        @Html.Partial("territories-paging", territories)
+    </div>
+}

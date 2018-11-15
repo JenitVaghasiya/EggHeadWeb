@@ -1,0 +1,109 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model SearchResult<CouponSearchForm, Coupon>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+<table class="display stylized search-result-table" data-fixed-left="1" data-fixed-right="1">
+    <colgroup>
+        <col class="c-coupon-code" />
+        <col class="c-coupon-description" />
+        <col class="c-coupon-discount" />
+        <col class="c-coupon-amount" />
+        <col class="c-coupon-amount" />
+        <col class="c-coupon-date" />
+        <col class="c-coupon-date" />
+        <col class="taskes-medium" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Code
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Discount
+            </th>
+            <th align="center">
+                Max Avaiable
+            </th>
+            <th align="center">
+                Used Amount
+            </th>
+            <th align="center">
+                Last Used Date
+            </th>
+            <th align="center">
+                Expiration Date
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            var bookingInfo = (from t in item.Bookings
+                               group t by new { t.Student.ParentId, t.BookDate } into g
+                               select new { ParentId = g.Key.ParentId, BookDate = g.Key.BookDate, BookingCount = g.Count() }).ToList();
+
+            <tr>
+                <td>
+                    @item.Code
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td align="center">
+                    @if (item.Type == (byte)CouponType.FixedAmount)
+                    {
+                        @item.DiscountAmount.Value.ToString("00.00") @:($)
+                    }
+                    else
+                    {
+                        @item.DiscountAmount.Value.ToString("00.00") @:(%)
+                                                                                                                                                                                                                                                                    }
+                </td>
+                <td align="center">
+                    @item.MaxAvailable
+                </td>
+                <td align="center">
+                    <a href='@Url.RouteUrl("Admin", new { action = "coupons-detail", id = item.Id })#status'>
+                        @bookingInfo.Count()</a>
+                </td>
+                <td align="center">
+                    @if (bookingInfo.Count() == 0)
+                    {
+                        @: ~
+                    }
+                    else
+                    {
+                        @bookingInfo.Max(t => t.BookDate).ToString("MM/dd/yyyy");
+                    }
+                </td>
+                <td align="center">
+                    @item.ExpDate.ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "coupons-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "coupons-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("coupons", "Admin", FormMethod.Get, new { @id = "couponpaging" }))
+{
+    @Html.HiddenFor(m => m.Form.QuickSearch)
+}
+@Html.DisplayForModel("Paging", new
+{
+    Submit = true,
+    PagingFormId = "couponpaging"
+})

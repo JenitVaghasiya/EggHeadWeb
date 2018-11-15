@@ -1,0 +1,111 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Utility;
+<div class="twelve columns contact-form-wrapper">
+    @Html.Partial("_UserInformMessages")
+    <fieldset style="min-height: 320px;">
+        <legend>MY SCHEDULE</legend>
+        <table class="scheduletable">
+            <colgroup>
+                <col width="150px" />
+                <col width="150px" />
+                <col width="100px" />
+                <col width="100px" />
+                <col width="180px" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        Class
+                    </th>
+                    <th>
+                        Time(S)
+                    </th>
+                    <th>
+                        Time(E)
+                    </th>
+                    <th>
+                        Dates
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var classCamp in ViewBag.Classes as List<EggheadWeb.Models.Common.Class>)
+                {
+                    <tr>
+                        <td>
+                            @classCamp.Location.Name
+                        </td>
+                        <td>
+                            <a href= '@Url.Action("classes")'>
+                                @classCamp.OnlineName</a>
+                        </td>
+                        <td>
+                            @classCamp.TimeStart.To12HoursString()
+                        </td>
+                        <td>
+                            @classCamp.TimeEnd.To12HoursString()
+                        </td>
+                        <td>
+                            @ScheduleUtil.GetDateListText(classCamp)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <br />
+        <table class="scheduletable">
+            <colgroup>
+                <col width="150px" />
+                <col width="150px" />
+                <col width="100px" />
+                <col width="100px" />
+                <col width="180px" />
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        Camp
+                    </th>
+                    <th>
+                        Time(S)
+                    </th>
+                    <th>
+                        Time(E)
+                    </th>
+                    <th>
+                        Dates
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var classCamp in ViewBag.Camps as List<EggheadWeb.Models.Common.Camp>)
+                {
+                    <tr>
+                        <td>
+                            @classCamp.Location.Name
+                        </td>
+                        <td>
+                            <a href= '@Url.Action("camps")'>
+                            @classCamp.OnlineName
+                        </td>
+                        <td>
+                            @classCamp.TimeStart.To12HoursString()
+                        </td>
+                        <td>
+                            @classCamp.TimeEnd.To12HoursString()
+                        </td>
+                        <td>
+                            @ScheduleUtil.GetDateListText(classCamp)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </fieldset>
+</div>

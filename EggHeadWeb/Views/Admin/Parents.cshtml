@@ -1,0 +1,53 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model ParentSearchForm
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.BreadCrumbs = new string[] { "Contacts" };
+    ViewBag.Title = "Parents";
+    ViewBag.CurrentMenu = 3;
+    ViewBag.NoRecordSelectMsg = "Please select parent(s).";
+    var db = new EggheadEntities();
+    var parents = (SearchResult<ParentSearchForm, Parent>)ViewBag.Parents;
+}
+@using (Html.BeginForm("", "", FormMethod.Get))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Print = true, Email = true, ExcelAction = "parents-excel", Add = true, AddAction = "parents-detail" })
+    </div>
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+        <colgroup>
+            <col width="150px" />
+            <col width="*" />
+        </colgroup>
+        <tr>
+            <td>
+                <label>
+                    Quick Search:</label>
+            </td>
+            <td>
+                @Html.TextBoxFor(m => m.QuickSearch, new { @class = "full" })
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>
+                    Location:</label>
+            </td>
+            <td>
+                @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "width2 search-filter-location-dropdownlist" })
+            </td>
+        </tr>
+    </table>
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="submit" class="btn btn-green big" value="Search" />
+        <input type="button" class="btn reset" value="Reset" />
+    </p>
+}
+@if (parents != null)
+{
+    <div class="paging-container">
+        @Html.Partial("parents-paging", parents)
+    </div>
+}

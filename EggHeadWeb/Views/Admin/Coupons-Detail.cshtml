@@ -1,0 +1,121 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model Coupon
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings", "Coupons" };
+    ViewBag.Title = Model.Id > 0 ? "Edit Coupon" : "New Coupon";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var BookingInfo = ViewBag.BookingInfo as List<CouponBookingInfo>;
+}
+@using (Html.BeginForm("coupons-detail", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl("Admin", new { action = "coupons", research = "true" })" />
+    </div>
+    <div class="tabs">
+        <ul>
+            <li><a class="corner-tl" href="#detail">Detail</a></li>
+            <li><a class="corner-tr" href="#status">Using status</a></li>
+        </ul>
+        <div id="detail">
+            @Html.HiddenFor(m => m.Id)
+            @Html.HiddenFor(m => m.AdminId)
+            @Html.ValidationSummary(true)
+            <p>
+                <label for="code" class="required">
+                    Code:</label>
+                @Html.ValidationMessageFor(m => m.Code)<br />
+                @Html.TextBoxFor(m => m.Code, new { @class = "width1" })
+            </p>
+            <p>
+                <label for="description" class="required">
+                    Description:</label>
+                @Html.ValidationMessageFor(m => m.Description)<br />
+                @Html.TextBoxFor(m => m.Description, new { @class = "half" })
+            </p>
+            <p>
+                <label for="type" class="required">
+                    Type:</label>
+                @Html.ValidationMessageFor(m => m.Type)<br />
+                @Html.DropDownListFor(m => m.Type, SelectLists.CouponTypes(), string.Empty)
+            </p>
+            <p>
+                <label for="bypercent" class="required">
+                    Amount:</label>
+                @Html.ValidationMessageFor(m => m.DiscountAmount)<br />
+                @Html.TextBoxFor(m => m.DiscountAmount, new { @class = "width1" })
+            </p>
+            <p>
+                <label for="expDate" class="required">
+                    Expiration Date:</label>
+                @Html.ValidationMessageFor(m => m.NExpDate)<br />
+                @Html.EditorFor(m => m.NExpDate)
+            </p>
+            <p>
+                <label for="expDate" class="required">
+                    Number Available:</label>
+                @Html.ValidationMessageFor(m => m.MaxAvailable)<br />
+                @Html.TextBoxFor(m => m.MaxAvailable, new { @class = "width1" })
+            </p>
+            <p>
+                <label for="expDate" class="required">
+                    Max Uses Per Parent:</label>
+                @Html.ValidationMessageFor(m => m.MaxUsesPerCustomer)<br />
+                @Html.TextBoxFor(m => m.MaxUsesPerCustomer, new { @class = "width1" })
+            </p>
+        </div>
+        <div id="status">
+            <table class="display stylized search-result-table">
+                <colgroup>
+                    <col class="c-name" />
+                    <col class="c-date" />
+                    <col  />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>
+                            Parent
+                        </th>
+                        <th>
+                            Used Date
+                        </th>
+                        <th>
+                            Used Classes/Camps
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (BookingInfo != null)
+                    {
+                        foreach (var item in BookingInfo)
+                        {
+                        <tr>
+                            <td>
+                                @item.Parent.FirstName @item.Parent.LastName
+                            </td>
+                            <td>
+                                @item.BookDate.ToString("MM/dd/yyyy")
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrWhiteSpace(@item.Classes))
+                                {
+                                    <b>Classes:</b> @:&nbsp; @item.Classes
+                                    <br />
+                                }
+                                @if (!string.IsNullOrWhiteSpace(@item.Camps))
+                                {
+                                    
+                                    <b>Camps:</b> @:&nbsp; @item.Camps
+                                                                                                }
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

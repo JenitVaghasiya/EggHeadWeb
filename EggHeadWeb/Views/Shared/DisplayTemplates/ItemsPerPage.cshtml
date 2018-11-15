@@ -1,0 +1,4 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common
+<span style = "float:right;">Show @Html.DropDownList("itemsPerPage", SelectLists.ItemsPerPages(new EggheadEntities()))
+    Items </span>

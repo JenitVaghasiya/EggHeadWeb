@@ -1,0 +1,119 @@
+﻿@using EggheadWeb.Models.UserModels
+@using EggheadWeb.Models.Common;
+@model Student
+@{ ViewBag.Title = "Edit child inforation"; }
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#save").click(function () {
+            var $this = $(this);
+
+            $this.closest("form").ajaxSubmit(
+                function (html) {
+                    var $container = $(".paging-container").html(html);
+                    $container.find(".nyroModal").trigger("nyroModalEvent");
+                    $container.find(".search-result-table").trigger("sortEvent");
+                    $(".nyroModalClose").trigger("click");
+                },
+                function (html) {
+                    $(this).closest(".wrapper > div").html(html);
+                });
+        });
+
+        resetValidation();
+    });
+</script>
+<style type="text/css">
+    .dialog-title
+    {
+        background: -moz-linear-gradient(center bottom , #5092DC 20%, #6BA3E2 80%) repeat scroll 0 0 transparent;
+    }
+    .dialog-title h1
+    {
+        color: #FFFFFF;
+        font-size: 1.6em;
+        line-height: 1.2em;
+        margin: 0;
+        padding: 12px 0;
+        text-shadow: 0 -1px 1px #2A7AD2;
+        top: 0;
+    }
+</style>
+<div class='dialog-title'>
+    <h1>@(Model.Id <= 0 ? "New student" : "Edit student")</h1>
+</div>
+@using (Html.BeginRouteForm("Admin", new { action = "students-detail" }, FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="button" title="Save" class="image-button-32 button-32-save" id="save" />
+        <input type="button" class="btn nyroModalClose" style="float: right" value="Cancel" />
+    </div>
+    @Html.ValidationSummary(true)
+    <table style="width: 100%">
+        <colgroup>
+            <col width="50%" />
+            <col width="50%" />
+        </colgroup>
+        <tr>
+            <td colspan='2'>
+                <p>
+                    <label class="required">
+                        First Name:</label>
+                    @Html.ValidationMessageFor(m => m.FirstName)<br />
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "full" })
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2'>
+                <p>
+                    <p>
+                        <label class="required">
+                            Last Name:</label>
+                        @Html.ValidationMessageFor(m => m.LastName)<br />
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "full" })
+                    </p>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <label class="Required">
+                        Gender:</label>
+                    @Html.ValidationMessageFor(m => m.Gender)<br />
+                    @Html.DropDownListFor(m => m.Gender, SelectLists.Genders(), string.Empty)
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label class="Required">
+                        Grade:</label>
+                    @Html.ValidationMessageFor(m => m.GradeId)<br />
+                    @Html.DropDownListFor(m => m.GradeId, SelectLists.Grades(new EggheadEntities()), string.Empty)
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2'>
+                <p>
+                    <label class="Required">
+                        BirthDate:</label>
+                    @Html.ValidationMessageFor(m => m.BirthDate)<br />
+                    @Html.EditorFor(m => m.BirthDate, "TrippleDDLDateTime")
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2'>
+                <p>
+                    <label for="area">
+                        Special Notes:</label>
+                    @Html.ValidationMessageFor(m => m.Notes)<br />
+                    @Html.TextAreaFor(m => m.Notes, new { @class = "small full" })
+                </p>
+            </td>
+        </tr>
+    </table>
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.ParentId)
+}

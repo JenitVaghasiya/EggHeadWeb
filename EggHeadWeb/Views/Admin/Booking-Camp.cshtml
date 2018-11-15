@@ -1,0 +1,235 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using MVCControlsToolkit.Controls;
+@model Camp
+@{
+    ViewBag.BreadCrumbs = new string[] { "Booking" };
+    ViewBag.Title = "Camp";
+    ViewBag.CurrentMenu = 5;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var db = new EggheadEntities();
+}
+<style type="text/css">
+    #grade-list div
+    {
+        display: inline;
+        margin-right: 10px;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+        <div style="float: right">
+            <select id="serviceType">
+                <option data-redirect="@(Url.RouteUrl("Admin", new { action = "booking-class" }))">Class</option>
+                <option selected="selected">Camp</option>
+                <option data-redirect="@(Url.RouteUrl("Admin", new { action = "booking-birthday" }))">
+                    Birthday</option>
+                <option data-redirect="@(Url.RouteUrl("Admin", new { action = "booking-workshop" }))">
+                    Workshop</option>
+            </select>
+        </div>
+    </div>
+    <table>
+        <colgroup>
+            <col class="width3" />
+            <col class="width3" />
+        </colgroup>
+        <tr>
+            <td>
+                <p>
+                    <label for="location" class="required">
+                        Location:</label>
+                    @Html.ValidationMessageFor(m => m.LocationId)<br />
+                    @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "half" })
+                </p>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <label for="name" class="required">
+                        Nickname:</label>
+                    @Html.ValidationMessageFor(m => m.Name)<br />
+                    @Html.TextBoxFor(m => m.Name, new { @class = "half" })
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label for="onlineName" class="required">
+                        Online Name:</label>
+                    @Html.ValidationMessageFor(m => m.OnlineName)<br />
+                    @Html.TextBoxFor(m => m.OnlineName, new { @class = "half" })
+                </p>
+            </td>
+        </tr>
+    </table>
+    <div class="tabs">
+        <ul>
+            <li><a class="corner-tl" href="#tabs-detail">Detail</a></li>
+            <li><a href="#tabs-instructor">Instructor</a></li>
+            <li><a href="#tabs-registration">Registration</a></li>
+            <li><a class="corner-tr" href="#tabs-description">Description</a></li>
+        </ul>
+        <div id="tabs-detail">
+            <table>
+                <colgroup>
+                    <col class="width3" />
+                    <col class="width3" />
+                </colgroup>
+                <tr>
+                    <td colspan='2'>
+                        <p>
+                            <label for="grades" class="required">
+                                Grades:</label>
+                            @Html.ValidationMessageFor(m => m.GradeIds)<br />
+                        </p>
+                        <div id='grade-list'>
+                            @(Html.CheckBoxListFor<Camp, Grade, byte, string>(m => m.GradeIds, ChoiceLists.Grades(db)))
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan='2'>
+                        <p>
+                            <label for="dates" class="required">
+                                Dates:</label>
+                            @Html.ValidationMessageFor(m => m.Dates)<br />
+                            @Html.TextAreaFor(m => m.Dates, new { @class = "multiple-date", @readonly = "readonly" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="timeStart" class="required">
+                                Time Start:</label>
+                            @Html.ValidationMessageFor(m => m.TimeStart)<br />
+                            @Html.EditorFor(m => m.TimeStart)
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="timeEnd" class="required">
+                                Time End:</label>
+                            @Html.ValidationMessageFor(m => m.TimeEnd)<br />
+                            @Html.EditorFor(m => m.TimeEnd)
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="tabs-instructor">
+            <table>
+                <colgroup>
+                    <col class="width3" />
+                    <col class="width3" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="instructor" class="required">
+                                Instructor:</label>
+                            @Html.ValidationMessageFor(m => m.InstructorId)<br />
+                            @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(db), Constants.SELECT_INSTRUCTOR)
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="assistant">
+                                Assistant:</label>
+                            @Html.ValidationMessageFor(m => m.AssistantId)<br />
+                            @Html.DropDownListFor(m => m.AssistantId, SelectLists.Instructors(db), Constants.SELECT_ASSISTANT)
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="tabs-registration">
+            <table>
+                <colgroup>
+                    <col class="width3" />
+                    <col class="width3" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="allowOnlineRegistration">
+                                Online Registration:</label>
+                            @Html.ValidationMessageFor(m => m.CanRegistOnline)<br />
+                            @Html.CheckBoxFor(m => m.CanRegistOnline)
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="openTo">
+                                Open To All:</label>
+                            @Html.ValidationMessageFor(m => m.IsOpen)<br />
+                            @Html.CheckBoxFor(m => m.IsOpen)
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="onlineDeadline">
+                                Display Online Until:</label>
+                            @Html.ValidationMessageFor(m => m.NDisplayUntil)<br />
+                            @Html.EditorFor(m => m.NDisplayUntil)
+                        </p>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="maxEnroll" class="required">
+                                Max Enroll #:</label>
+                            @Html.ValidationMessageFor(m => m.NMaxEnroll)<br />
+                            @Html.TextBoxFor(m => m.NMaxEnroll)
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="totalCost" class="required">
+                                Total Cost ($):</label>
+                            @Html.ValidationMessageFor(m => m.NCost)<br />
+                            @Html.TextBoxFor(m => m.NCost)
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="tabs-description">
+            <table>
+                <colgroup>
+                    <col class="width4" />
+                    <col class="width4" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="onlineDescription">
+                                Online Description:</label>
+                            @Html.ValidationMessageFor(m => m.OnlineDescription)<br />
+                            @Html.TextAreaFor(m => m.OnlineDescription, new { @class = "wysiwyg small width3" })
+                        </p>
+                    </td>
+                    <td style='padding-left: 20px;'>
+                        <p>
+                            <label for="notes">
+                                Notes:</label>
+                            @Html.ValidationMessageFor(m => m.Notes)<br />
+                            @Html.TextAreaFor(m => m.Notes, new { @class = "wysiwyg small width4", @style = "height: 204px;" })
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}

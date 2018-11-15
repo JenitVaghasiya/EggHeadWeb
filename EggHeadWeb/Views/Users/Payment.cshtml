@@ -1,0 +1,185 @@
+﻿@using EggheadWeb.Models.Common;
+@model Payment
+@{
+    var returnUrl = Url.RouteUrl("Users", new { action = "checkout-complete" }, "http");
+    var totalFrees = (decimal)ViewBag.TotalFees;
+}
+<script type="text/javascript">
+    function SelectCC(ccnum) {
+        var first = ccnum.charAt(0);
+        var second = ccnum.charAt(1);
+        var third = ccnum.charAt(2);
+        var fourth = ccnum.charAt(3);
+        if (first == "4") {
+            //Visa
+            $("#mastercard").attr("src", '@Url.Content("~/Content/images/mastercard-card-bw.png")');
+            $("#amex").attr("src", '@Url.Content("~/Content/images/amex-card-bw.png")');
+            $("#discover").attr("src", '@Url.Content("~/Content/images/discover-card-bw.png")');
+            $("#visa").attr("src", '@Url.Content("~/Content/images/visa-card.png")');
+            $("#cctype").value = "1";
+        }
+        else if ((first == "3") && ((second == "4") || (second == "7"))) {
+            //American Express
+            $("#mastercard").attr("src", '@Url.Content("~/Content/images/mastercard-card-bw.png")');
+            $("#visa").attr("src", '@Url.Content("~/Content/images/visa-card-bw.png")');
+            $("#discover").attr("src", '@Url.Content("~/Content/images/discover-card-bw.png")');
+            $("#amex").attr("src", '@Url.Content("~/Content/images/amex-card.png")');
+            $("#cctype").value = "3";
+        }
+        else if ((first == "5")) {
+            //Mastercard
+            $("#amex").attr("src", '@Url.Content("~/Content/images/amex-card-bw.png")');
+            $("#visa").attr("src", '@Url.Content("~/Content/images/visa-card-bw.png")');
+            $("#discover").attr("src", '@Url.Content("~/Content/images/discover-card-bw.png")');
+            $("#mastercard").attr("src", '@Url.Content("~/Content/images/mastercard-card.png")');
+            $("#cctype").value = "2";
+        }
+        else if ((first == "6") && (second == "0") && (third == "1") && (fourth == "1")) {
+            //Discover
+            $("#amex").attr("src", '@Url.Content("~/Content/images/amex-card-bw.png")');
+            $("#visa").attr("src", '@Url.Content("~/Content/images/visa-card-bw.png")');
+            $("#mastercard").attr("src", '@Url.Content("~/Content/images/mastercard-card-bw.png")');
+            $("#discover").attr("src", '@Url.Content("~/Content/images/discover-card.png")');
+            $("#cctype").value = "4";
+        }
+        else {
+            $("#amex").attr("src", '@Url.Content("~/Content/images/amex-card-bw.png")');
+            $("#visa").attr("src", '@Url.Content("~/Content/images/visa-card-bw.png")');
+            $("#mastercard").attr("src", '@Url.Content("~/Content/images/mastercard-card-bw.png")');
+            $("#discover").attr("src", '@Url.Content("~/Content/images/discover-card-bw.png")');
+            $("#cctype").value = "";
+        }
+    }
+</script>
+<div class="twelve columns contact-form-wrapper">
+    <fieldset style="min-height: 320px;">
+        <legend>PAYMENT INFO</legend>
+        @using (Html.BeginForm("payment", "Users"))
+        {
+            @Html.HiddenFor(m => m.AdminId)
+            @Html.HiddenFor(m => m.ParentId)
+            @Html.HiddenFor(m => m.Amount)
+            @Html.AntiForgeryToken()
+            @Html.Hidden(AuthorizeNet.ApiFields.Amount, totalFrees);
+            
+            <h6>
+                Card information</h6>        
+                       
+            <table style="width: 100%;">
+                <colgroup>
+                    <col width="200px" />
+                    <col width="230px" />
+                    <col width="230px" />
+                </colgroup>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right;'>
+                        Card Number:
+                    </td>
+                    <td style='vertical-align: middle;'>
+                        <input type="text" id="x_card_num" name="x_card_num" size="28" onkeyup="SelectCC(this.value)" />
+                    </td>
+                    <td style='vertical-align: middle;'>
+                        <img id="visa" src="@Url.Content("~/Content/images/visa-card.png")" alt="" style="vertical-align: middle; float:left;" />
+                        <img id="mastercard" src="@Url.Content("~/Content/images/mastercard-card.png")" alt="" style="vertical-align: middle; float:left;margin-left:5px;" />
+                        <img id="amex" src="@Url.Content("~/Content/images/amex-card.png")" alt="" style="vertical-align: middle; float:left;margin-left:5px;" />
+                        <img id="discover" src="@Url.Content("~/Content/images/discover-card.png")" alt="" style="vertical-align: middle; float:left;margin-left:5px;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Expiration Date (MMYY):
+                    </td>
+                    <td>
+                        <input type="text" size="5" maxlength="5" name="x_exp_date" style="width: 50px;" />
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        CCV:
+                    </td>
+                    <td>
+                        <input type="text" size="3" maxlength="3" name="x_card_code" style="width: 40px;" />
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+            <h6>
+                Billing information</h6>                                    
+            <table>
+                <colgroup>
+                    <col width="200px" />
+                    <col width="*" />
+                </colgroup>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right;'>
+                        First Name:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Bill_FirstName, new { @name = AuthorizeNet.ApiFields.FirstName })
+                        @Html.ValidationMessageFor(model => model.Bill_FirstName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Last Name:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Bill_LastName, new { @name = AuthorizeNet.ApiFields.LastName })
+                        @Html.ValidationMessageFor(model => model.Bill_LastName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Address:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Bill_Address, new { @name = AuthorizeNet.ApiFields.Address })
+                        @Html.ValidationMessageFor(model => model.Bill_Address, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        City:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Bill_City, new { @name = AuthorizeNet.ApiFields.City })
+                        @Html.ValidationMessageFor(model => model.Bill_City, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        State:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Bill_State, new { @name = AuthorizeNet.ApiFields.State })
+                        @Html.ValidationMessageFor(model => model.Bill_State, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Zip:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Bill_Zip, new { @name = AuthorizeNet.ApiFields.Zip })
+                        @Html.ValidationMessageFor(model => model.Bill_Zip, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Email:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.Bill_Email, new { @name = AuthorizeNet.ApiFields.Email })
+                        @Html.ValidationMessageFor(model => model.Bill_Email, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+            </table>
+            <input type="button" id="payment-error-back" value="Back" action='@Url.Action("init-enroll-confirm")' style="float: left;" class="btn" />
+            <input type="button" id="payment-pay" value="Pay" style="float: right;" class="btn" />
+            <br class="clear" />
+        }
+    </fieldset>
+</div>

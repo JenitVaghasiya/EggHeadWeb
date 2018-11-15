@@ -1,0 +1,69 @@
+﻿@using EggheadWeb.Models.Common;
+@model Payment
+@{
+    ViewBag.BreadCrumbs = new string[] { "Charge" };
+    ViewBag.Title = Model.Id > 0 ? "Charge" : "Init";
+    ViewBag.CurrentMenu = 7;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var totalFrees = 0;
+}
+
+<div class="twelve columns contact-form-wrapper">
+
+    @using (Html.BeginForm("charge", "Admin"))
+    {
+        @Html.HiddenFor(m => m.AdminId)
+        @Html.HiddenFor(m => m.Amount)
+        @Html.AntiForgeryToken()
+        @Html.Hidden(AuthorizeNet.ApiFields.Amount, totalFrees);
+
+        if (!string.IsNullOrEmpty(Model.PaymentMessage)) 
+        { 
+        <div style="color:red">
+            @Model.PaymentMessage
+        </div>
+        }
+        <h6>
+            Payment information
+        </h6>
+
+        <table style="width: 100%;" class="input-form">
+            <colgroup>
+                <col width="170px" />
+                <col width="400px" />
+            </colgroup>
+            <tr>
+                <td style='vertical-align: middle; text-align: right'>
+                    Select Parent:
+                </td>
+                <td>
+                    @Html.DropDownListFor(x => x.AdminParentId, new SelectList(ViewBag.Parents, "Id", "FullName"), "-- Choose Parent --", new { onchange = "" })
+
+                </td>
+            </tr>
+            <tr>
+                <td style='vertical-align: middle; text-align: right;'>
+                    Amount:
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.AdminAmount, new { @name = "AdminAmount", @style = "width: 200px;" })
+                    @Html.ValidationMessageFor(model => model.AdminAmount, string.Empty, new { @style = "color:Red" })
+                </td>
+            </tr>
+            <tr>
+                <td style='vertical-align: middle; text-align: right;'>
+                    Description:
+                </td>
+                <td>
+                    @Html.TextBoxFor(model => model.Description, new { @name = "Description", @style = "width: 200px;" })
+                    @Html.ValidationMessageFor(model => model.Description, string.Empty, new { @style = "color:Red" })
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" id="payment-pay" value="Charge" class="btn btn-green big" /></td>
+            </tr>
+        </table>
+        <div class="clear"></div>
+    }
+</div>

@@ -1,0 +1,1148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EggHeadWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaId" Type="bigint" />
+    <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="200" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="EmailPassword" Type="nvarchar" MaxLength="200" />
+    <Property Name="IsSuperAdmin" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdminEmailTemplate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MailSubject" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="MailBody" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdminFrontend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminId" Type="bigint" Nullable="false" />
+    <Property Name="FrontendId" Type="int" />
+    <Property Name="MenuName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="OverridePageContent" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AdminPaymentInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminId" Type="bigint" Nullable="false" />
+    <Property Name="APILoginID" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="TransactionKey" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="MD5HashPhrase" Type="nvarchar" MaxLength="100" />
+    <Property Name="LastUpdateDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="AdminTask">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" Nullable="false" />
+    <Property Name="Priority" Type="tinyint" Nullable="false" />
+    <Property Name="Status" Type="tinyint" Nullable="false" />
+    <Property Name="DueDate" Type="datetime" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="200" />
+    <Property Name="CreateDate" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="APVariable">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Value" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="200" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Assign">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Date" Type="datetime" Nullable="false" />
+    <Property Name="InstructorId" Type="bigint" Nullable="false" />
+    <Property Name="AssistantId" Type="bigint" />
+    <Property Name="ClassId" Type="bigint" />
+    <Property Name="CampId" Type="bigint" />
+    <Property Name="BirthdayId" Type="bigint" />
+    <Property Name="WorkshopId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Birthday">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParentName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ContactNumber" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="ChildName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="PartyDate" Type="datetime" Nullable="false" />
+    <Property Name="PartyTime" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="AreaId" Type="bigint" Nullable="false" />
+    <Property Name="InputDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CampId" Type="bigint" />
+    <Property Name="ClassId" Type="bigint" />
+    <Property Name="WorkshopId" Type="bigint" />
+    <Property Name="BirthdayId" Type="bigint" />
+    <Property Name="StudentId" Type="bigint" Nullable="false" />
+    <Property Name="BookDate" Type="datetime" Nullable="false" />
+    <Property Name="CouponId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="BookingShortInfoTemp">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentId" Type="bigint" />
+    <Property Name="classId" Type="bigint" />
+    <Property Name="ServiceType" Type="nvarchar" MaxLength="50" />
+    <Property Name="Name" Type="nvarchar" MaxLength="250" />
+    <Property Name="Cost" Type="decimal" Precision="18" Scale="10" />
+    <Property Name="Dates" Type="nvarchar" MaxLength="500" />
+    <Property Name="CouponId" Type="bigint" />
+  </EntityType>
+  <EntityType Name="Camp">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="OnlineName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="GradeGroupId" Type="bigint" Nullable="false" />
+    <Property Name="TimeStart" Type="time" Precision="7" Nullable="false" />
+    <Property Name="TimeEnd" Type="time" Precision="7" Nullable="false" />
+    <Property Name="InstructorId" Type="bigint" Nullable="false" />
+    <Property Name="AssistantId" Type="bigint" />
+    <Property Name="CanRegistOnline" Type="bit" Nullable="false" />
+    <Property Name="IsOpen" Type="bit" Nullable="false" />
+    <Property Name="DisplayUntil" Type="datetime" />
+    <Property Name="MaxEnroll" Type="int" Nullable="false" />
+    <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="OnlineDescription" Type="nvarchar(max)" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="Enrolled" Type="int" />
+    <Property Name="InputDate" Type="date" />
+  </EntityType>
+  <EntityType Name="Class">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="OnlineName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="GradeGroupId" Type="bigint" Nullable="false" />
+    <Property Name="TimeStart" Type="time" Precision="7" Nullable="false" />
+    <Property Name="TimeEnd" Type="time" Precision="7" Nullable="false" />
+    <Property Name="InstructorId" Type="bigint" Nullable="false" />
+    <Property Name="AssistantId" Type="bigint" />
+    <Property Name="CanRegistOnline" Type="bit" Nullable="false" />
+    <Property Name="IsOpen" Type="bit" Nullable="false" />
+    <Property Name="DisplayUntil" Type="datetime" />
+    <Property Name="MaxEnroll" Type="int" Nullable="false" />
+    <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="OnlineDescription" Type="nvarchar(max)" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="Enrolled" Type="int" />
+    <Property Name="InputDate" Type="date" />
+  </EntityType>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminId" Type="bigint" />
+    <Property Name="Code" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+    <Property Name="Type" Type="tinyint" Nullable="false" />
+    <Property Name="DiscountAmount" Type="decimal" Precision="18" Scale="0" />
+    <Property Name="ExpDate" Type="datetime" Nullable="false" />
+    <Property Name="MaxAvailable" Type="int" Nullable="false" />
+    <Property Name="MaxUsesPerCustomer" Type="int" Nullable="false" />
+    <Property Name="LastUsedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="EmailTemplate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="MailSubject" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="MailBody" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Frontend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="MenuName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="PageContent" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Grade">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GradeGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="GradeGroupDetail">
+    <Key>
+      <PropertyRef Name="GradeGroupId" />
+      <PropertyRef Name="GradeId" />
+    </Key>
+    <Property Name="GradeGroupId" Type="bigint" Nullable="false" />
+    <Property Name="GradeId" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Instructor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaId" Type="bigint" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Pay" Type="nvarchar" MaxLength="100" />
+    <Property Name="Address" Type="nvarchar" MaxLength="200" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" />
+    <Property Name="Note" Type="nvarchar" MaxLength="4000" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CreatedBy" Type="bigint" Nullable="false" />
+    <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AreaId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="DisplayName" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
+    <Property Name="Address" Type="nvarchar" MaxLength="200" />
+    <Property Name="Email" Type="nvarchar" MaxLength="100" />
+    <Property Name="ContactPerson" Type="nvarchar" MaxLength="100" />
+    <Property Name="IsActive" Type="bit" Nullable="false" />
+    <Property Name="CanRegistOnline" Type="bit" Nullable="false" />
+    <Property Name="Note" Type="nvarchar" MaxLength="4000" />
+    <Property Name="UpdatedBy" Type="bigint" Nullable="false" />
+    <Property Name="UpdatedDate" Type="date" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Parent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationId" Type="bigint" Nullable="false" />
+    <Property Name="Email" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="text" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="PhoneNumer" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Address" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="City" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Zip" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastLoginDateTime" Type="datetime" />
+    <Property Name="CreatedBy" Type="bigint" />
+    <Property Name="CreatedDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AdminId" Type="bigint" />
+    <Property Name="ParentId" Type="bigint" Nullable="false" />
+    <Property Name="Amount" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="AuthCode" Type="nvarchar" MaxLength="50" />
+    <Property Name="TransactionID" Type="nvarchar" MaxLength="50" />
+    <Property Name="ServiceName" Type="nvarchar" MaxLength="100" />
+    <Property Name="PaymentMessage" Type="text" />
+    <Property Name="PaymentDate" Type="datetime" />
+    <Property Name="Bill_FirstName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bill_LastName" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bill_Address" Type="nvarchar" MaxLength="100" />
+    <Property Name="Bill_City" Type="nvarchar" MaxLength="100" />
+    <Property Name="Bill_Zip" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bill_State" Type="nvarchar" MaxLength="50" />
+    <Property Name="Bill_Email" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="PrivateMessage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FromAdminId" Type="bigint" />
+    <Property Name="ToAdminId" Type="bigint" />
+    <Property Name="MessageSubject" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="MessageContent" Type="text" Nullable="false" />
+    <Property Name="SendDate" Type="datetime" Nullable="false" />
+    <Property Name="Unread" Type="bit" Nullable="false" />
+    <Property Name="FromAdminName" Type="nvarchar" MaxLength="50" />
+    <Property Name="ToAdminName" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ParentId" Type="bigint" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="GradeId" Type="tinyint" Nullable="false" />
+    <Property Name="Gender" Type="char" MaxLength="1" Nullable="false" />
+    <Property Name="BirthDate" Type="datetime" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar" MaxLength="4000" />
+  </EntityType>
+  <EntityType Name="Workshop">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LocationId" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+    <Property Name="GradeGroupId" Type="bigint" Nullable="false" />
+    <Property Name="TimeStart" Type="time" Precision="7" Nullable="false" />
+    <Property Name="TimeEnd" Type="time" Precision="7" Nullable="false" />
+    <Property Name="InstructorId" Type="bigint" Nullable="false" />
+    <Property Name="AssistantId" Type="bigint" />
+    <Property Name="Cost" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="Notes" Type="nvarchar(max)" />
+    <Property Name="InputDate" Type="datetime" />
+  </EntityType>
+  <Association Name="FK_Admin_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="0..1" />
+    <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminEmailTemplate_Admin">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+    <End Role="AdminEmailTemplate" Type="Self.AdminEmailTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminEmailTemplate">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminFrontend_Admin">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+    <End Role="AdminFrontend" Type="Self.AdminFrontend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminFrontend">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminFrontend_Frontend">
+    <End Role="Frontend" Type="Self.Frontend" Multiplicity="0..1" />
+    <End Role="AdminFrontend" Type="Self.AdminFrontend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Frontend">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminFrontend">
+        <PropertyRef Name="FrontendId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminPaymentInfo_AdminPaymentInfo">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+    <End Role="AdminPaymentInfo" Type="Self.AdminPaymentInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminPaymentInfo">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminTask_Admin">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+    <End Role="AdminTask" Type="Self.AdminTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminTask">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assign_Birthday2">
+    <End Role="Birthday" Type="Self.Birthday" Multiplicity="0..1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birthday">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="BirthdayId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Birthday_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="1" />
+    <End Role="Birthday" Type="Self.Birthday" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Birthday">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Birthday">
+    <End Role="Birthday" Type="Self.Birthday" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birthday">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="BirthdayId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Camp">
+    <End Role="Camp" Type="Self.Camp" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Camp">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="CampId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Class">
+    <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Coupon">
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupon">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="CouponId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Workshop">
+    <End Role="Workshop" Type="Self.Workshop" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workshop">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="WorkshopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingTemp_Birthday">
+    <End Role="Birthday" Type="Self.Birthday" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birthday">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="BirthdayId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingTemp_Camp">
+    <End Role="Camp" Type="Self.Camp" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Camp">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="CampId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingTemp_Class">
+    <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingTemp_Coupon">
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupon">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="CouponId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingTemp_Student">
+    <End Role="Student" Type="Self.Student" Multiplicity="1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookingTemp_Workshop">
+    <End Role="Workshop" Type="Self.Workshop" Multiplicity="0..1" />
+    <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workshop">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="WorkshopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Camp_GradeGroup">
+    <End Role="GradeGroup" Type="Self.GradeGroup" Multiplicity="1" />
+    <End Role="Camp" Type="Self.Camp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GradeGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Camp">
+        <PropertyRef Name="GradeGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Camp_Instructor">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
+    <End Role="Camp" Type="Self.Camp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Camp">
+        <PropertyRef Name="InstructorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Camp_Instructor1">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+    <End Role="Camp" Type="Self.Camp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Camp">
+        <PropertyRef Name="AssistantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Camp_Location">
+    <End Role="Location" Type="Self.Location" Multiplicity="1" />
+    <End Role="Camp" Type="Self.Camp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Camp">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class_GradeGroup">
+    <End Role="GradeGroup" Type="Self.GradeGroup" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GradeGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="GradeGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class_Instructor">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="InstructorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class_Instructor1">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="AssistantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class_Location">
+    <End Role="Location" Type="Self.Location" Multiplicity="1" />
+    <End Role="Class" Type="Self.Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Coupon_Admin">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+    <End Role="Coupon" Type="Self.Coupon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GradeGroupDetail_Grade">
+    <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+    <End Role="GradeGroupDetail" Type="Self.GradeGroupDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GradeGroupDetail">
+        <PropertyRef Name="GradeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GradeGroupDetail_GradeGroup">
+    <End Role="GradeGroup" Type="Self.GradeGroup" Multiplicity="1" />
+    <End Role="GradeGroupDetail" Type="Self.GradeGroupDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GradeGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GradeGroupDetail">
+        <PropertyRef Name="GradeGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instructor_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="1" />
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Instructor">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructorAssign_Camp">
+    <End Role="Camp" Type="Self.Camp" Multiplicity="0..1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Camp">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="CampId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructorAssign_Class">
+    <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructorAssign_Instructor">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="InstructorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructorAssign_Instructor1">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="AssistantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructorAssign_Workshop">
+    <End Role="Workshop" Type="Self.Workshop" Multiplicity="0..1" />
+    <End Role="Assign" Type="Self.Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workshop">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="WorkshopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Location_Area">
+    <End Role="Area" Type="Self.Area" Multiplicity="1" />
+    <End Role="Location" Type="Self.Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parent_Location">
+    <End Role="Location" Type="Self.Location" Multiplicity="1" />
+    <End Role="Parent" Type="Self.Parent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parent">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PrivateMessage_Admin">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+    <End Role="PrivateMessage" Type="Self.PrivateMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PrivateMessage">
+        <PropertyRef Name="FromAdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PrivateMessage_Admin1">
+    <End Role="Admin" Type="Self.Admin" Multiplicity="0..1" />
+    <End Role="PrivateMessage" Type="Self.PrivateMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PrivateMessage">
+        <PropertyRef Name="ToAdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Grade">
+    <End Role="Grade" Type="Self.Grade" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="GradeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Student_Parent">
+    <End Role="Parent" Type="Self.Parent" Multiplicity="1" />
+    <End Role="Student" Type="Self.Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workshop_GradeGroup">
+    <End Role="GradeGroup" Type="Self.GradeGroup" Multiplicity="1" />
+    <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GradeGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Workshop">
+        <PropertyRef Name="GradeGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workshop_Instructor">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="1" />
+    <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Workshop">
+        <PropertyRef Name="InstructorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workshop_Instructor1">
+    <End Role="Instructor" Type="Self.Instructor" Multiplicity="0..1" />
+    <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Workshop">
+        <PropertyRef Name="AssistantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workshop_Location">
+    <End Role="Location" Type="Self.Location" Multiplicity="1" />
+    <End Role="Workshop" Type="Self.Workshop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Workshop">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EggHeadWebModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdminEmailTemplate" EntityType="Self.AdminEmailTemplate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdminFrontend" EntityType="Self.AdminFrontend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdminPaymentInfo" EntityType="Self.AdminPaymentInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AdminTask" EntityType="Self.AdminTask" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="APVariable" EntityType="Self.APVariable" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Assign" EntityType="Self.Assign" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Birthday" EntityType="Self.Birthday" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BookingShortInfoTemp" EntityType="Self.BookingShortInfoTemp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Camp" EntityType="Self.Camp" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Coupon" EntityType="Self.Coupon" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EmailTemplate" EntityType="Self.EmailTemplate" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Frontend" EntityType="Self.Frontend" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Grade" EntityType="Self.Grade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GradeGroup" EntityType="Self.GradeGroup" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GradeGroupDetail" EntityType="Self.GradeGroupDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Instructor" EntityType="Self.Instructor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Parent" EntityType="Self.Parent" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PrivateMessage" EntityType="Self.PrivateMessage" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Workshop" EntityType="Self.Workshop" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Admin_Area" Association="Self.FK_Admin_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="Admin" EntitySet="Admin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminEmailTemplate_Admin" Association="Self.FK_AdminEmailTemplate_Admin">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="AdminEmailTemplate" EntitySet="AdminEmailTemplate" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminFrontend_Admin" Association="Self.FK_AdminFrontend_Admin">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="AdminFrontend" EntitySet="AdminFrontend" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminFrontend_Frontend" Association="Self.FK_AdminFrontend_Frontend">
+      <End Role="Frontend" EntitySet="Frontend" />
+      <End Role="AdminFrontend" EntitySet="AdminFrontend" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminPaymentInfo_AdminPaymentInfo" Association="Self.FK_AdminPaymentInfo_AdminPaymentInfo">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="AdminPaymentInfo" EntitySet="AdminPaymentInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminTask_Admin" Association="Self.FK_AdminTask_Admin">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="AdminTask" EntitySet="AdminTask" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assign_Birthday2" Association="Self.FK_Assign_Birthday2">
+      <End Role="Birthday" EntitySet="Birthday" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Birthday_Area" Association="Self.FK_Birthday_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="Birthday" EntitySet="Birthday" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Birthday" Association="Self.FK_Booking_Birthday">
+      <End Role="Birthday" EntitySet="Birthday" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Camp" Association="Self.FK_Booking_Camp">
+      <End Role="Camp" EntitySet="Camp" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Class" Association="Self.FK_Booking_Class">
+      <End Role="Class" EntitySet="Class" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Coupon" Association="Self.FK_Booking_Coupon">
+      <End Role="Coupon" EntitySet="Coupon" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Student" Association="Self.FK_Booking_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Workshop" Association="Self.FK_Booking_Workshop">
+      <End Role="Workshop" EntitySet="Workshop" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingTemp_Birthday" Association="Self.FK_BookingTemp_Birthday">
+      <End Role="Birthday" EntitySet="Birthday" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingTemp_Camp" Association="Self.FK_BookingTemp_Camp">
+      <End Role="Camp" EntitySet="Camp" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingTemp_Class" Association="Self.FK_BookingTemp_Class">
+      <End Role="Class" EntitySet="Class" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingTemp_Coupon" Association="Self.FK_BookingTemp_Coupon">
+      <End Role="Coupon" EntitySet="Coupon" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingTemp_Student" Association="Self.FK_BookingTemp_Student">
+      <End Role="Student" EntitySet="Student" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookingTemp_Workshop" Association="Self.FK_BookingTemp_Workshop">
+      <End Role="Workshop" EntitySet="Workshop" />
+      <End Role="Booking" EntitySet="Booking" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Camp_GradeGroup" Association="Self.FK_Camp_GradeGroup">
+      <End Role="GradeGroup" EntitySet="GradeGroup" />
+      <End Role="Camp" EntitySet="Camp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Camp_Instructor" Association="Self.FK_Camp_Instructor">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="Camp" EntitySet="Camp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Camp_Instructor1" Association="Self.FK_Camp_Instructor1">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="Camp" EntitySet="Camp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Camp_Location" Association="Self.FK_Camp_Location">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="Camp" EntitySet="Camp" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class_GradeGroup" Association="Self.FK_Class_GradeGroup">
+      <End Role="GradeGroup" EntitySet="GradeGroup" />
+      <End Role="Class" EntitySet="Class" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class_Instructor" Association="Self.FK_Class_Instructor">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="Class" EntitySet="Class" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class_Instructor1" Association="Self.FK_Class_Instructor1">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="Class" EntitySet="Class" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class_Location" Association="Self.FK_Class_Location">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="Class" EntitySet="Class" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Coupon_Admin" Association="Self.FK_Coupon_Admin">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="Coupon" EntitySet="Coupon" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GradeGroupDetail_Grade" Association="Self.FK_GradeGroupDetail_Grade">
+      <End Role="Grade" EntitySet="Grade" />
+      <End Role="GradeGroupDetail" EntitySet="GradeGroupDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GradeGroupDetail_GradeGroup" Association="Self.FK_GradeGroupDetail_GradeGroup">
+      <End Role="GradeGroup" EntitySet="GradeGroup" />
+      <End Role="GradeGroupDetail" EntitySet="GradeGroupDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instructor_Area" Association="Self.FK_Instructor_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="Instructor" EntitySet="Instructor" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructorAssign_Camp" Association="Self.FK_InstructorAssign_Camp">
+      <End Role="Camp" EntitySet="Camp" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructorAssign_Class" Association="Self.FK_InstructorAssign_Class">
+      <End Role="Class" EntitySet="Class" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructorAssign_Instructor" Association="Self.FK_InstructorAssign_Instructor">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructorAssign_Instructor1" Association="Self.FK_InstructorAssign_Instructor1">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructorAssign_Workshop" Association="Self.FK_InstructorAssign_Workshop">
+      <End Role="Workshop" EntitySet="Workshop" />
+      <End Role="Assign" EntitySet="Assign" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Location_Area" Association="Self.FK_Location_Area">
+      <End Role="Area" EntitySet="Area" />
+      <End Role="Location" EntitySet="Location" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parent_Location" Association="Self.FK_Parent_Location">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="Parent" EntitySet="Parent" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PrivateMessage_Admin" Association="Self.FK_PrivateMessage_Admin">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="PrivateMessage" EntitySet="PrivateMessage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PrivateMessage_Admin1" Association="Self.FK_PrivateMessage_Admin1">
+      <End Role="Admin" EntitySet="Admin" />
+      <End Role="PrivateMessage" EntitySet="PrivateMessage" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Grade" Association="Self.FK_Student_Grade">
+      <End Role="Grade" EntitySet="Grade" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Student_Parent" Association="Self.FK_Student_Parent">
+      <End Role="Parent" EntitySet="Parent" />
+      <End Role="Student" EntitySet="Student" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workshop_GradeGroup" Association="Self.FK_Workshop_GradeGroup">
+      <End Role="GradeGroup" EntitySet="GradeGroup" />
+      <End Role="Workshop" EntitySet="Workshop" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workshop_Instructor" Association="Self.FK_Workshop_Instructor">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="Workshop" EntitySet="Workshop" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workshop_Instructor1" Association="Self.FK_Workshop_Instructor1">
+      <End Role="Instructor" EntitySet="Instructor" />
+      <End Role="Workshop" EntitySet="Workshop" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workshop_Location" Association="Self.FK_Workshop_Location">
+      <End Role="Location" EntitySet="Location" />
+      <End Role="Workshop" EntitySet="Workshop" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

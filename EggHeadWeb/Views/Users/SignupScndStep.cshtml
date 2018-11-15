@@ -1,0 +1,95 @@
+﻿@using EggheadWeb.Models.Common;
+@model EggheadWeb.Models.UserModels.StudentItem
+@{
+    var grades = SelectLists.Grades(new EggheadEntities());
+}
+<div class="page-wrapper">
+    <div class="process-state-step2">
+    </div>
+    <div class="" style="width:800px; margin-left:90px">
+        @using (Html.BeginForm("SignupScndStep", "Users", FormMethod.Post))
+        {
+            <span style="font-weight:bold">CHILD(REN) INFORMATION</span>
+            <table>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        @Html.LabelFor(model => model.FirstName)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.FirstName)
+                        @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        @Html.LabelFor(model => model.LastName)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.LastName)
+                        @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        @Html.LabelFor(model => model.GradeId, "Grades")
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.GradeId, grades, "-­‐Select Grade-­‐")
+                        @Html.ValidationMessageFor(model => model.GradeId, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        @Html.LabelFor(model => model.Gender)
+                    </td>
+                    <td>
+                        @Html.RadioButtonFor(model => model.Gender, "M", new { @id = "gender_male", @checked = "checked" })
+                        <label for="gender_male" style='display: inline; line-height: 16px; vertical-align: bottom;
+                                margin-top: 15px;'>
+                            Male
+                        </label>
+                        @Html.RadioButtonFor(model => model.Gender, "F", new { @id = "gender_female" })
+                        <label for="gender_female" style='display: inline; line-height: 16px; vertical-align: bottom;
+                                margin-top: 15px;'>
+                            Female
+                        </label>
+                        @Html.ValidationMessageFor(model => model.Gender, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        @Html.LabelFor(model => model.BirthDate)
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.BirthDate)
+                        @Html.ValidationMessageFor(model => model.BirthDate, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        @Html.LabelFor(model => model.Notes)
+                    </td>
+                    <td>
+                        @Html.TextAreaFor(model => model.Notes, new { @style = "width:300px; height:50px;" })
+                        @Html.ValidationMessageFor(model => model.Notes, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+            </table>
+            <br />
+            <div style="width: 100%;">
+                <div style="margin: 0 auto; width: 33%; float: left; text-align: left">
+                    <input type="button" class="btn btn-big" value="BACK" id="step2-step1" />
+                </div>
+                <div style="margin: 0 auto; width: 33%; float: left; text-align: center">
+                    <input type="button"
+                           class="btn btn-big" id="step2-step2" value="ADD OTHER CHILD" />
+                </div>
+                <div style="margin: 0 auto; width: 33%; float: right; text-align: right">
+                    <input type="button"
+                           class="btn btn-big" value="CONTINUE" id="step2-step3" />
+                </div>
+            </div>
+        }
+    </div>
+    <br class="clear" />
+</div>

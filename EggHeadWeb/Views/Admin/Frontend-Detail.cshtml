@@ -1,0 +1,52 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Security;
+@model AdminFrontend
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings", "FrontEnd" };
+    ViewBag.Title = "Edit frontend";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var isSuperAdmin = this.User.IsInRole(UserRoleProvider.SUPER_ADMIN);
+
+    var admin = EggheadWeb.Security.UserProvider.Current.Admin;
+}
+@using (Html.BeginForm("frontend-edit", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl("Admin", new { action = "frontend" })" />
+    </div>
+    <br />
+    
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.FrontendId)
+    @Html.ValidationSummary(true)
+    
+    <p>
+        <label for="menuname">
+            Frontend Name :</label>
+        @Html.ValidationMessageFor(m => m.Name)<br />
+        @Html.TextBoxFor(m => m.Name, new { @class = "half" })
+    </p>
+    
+    <p>
+        <label for="name">
+            Menu Text:</label>
+        @Html.ValidationMessageFor(m => m.MenuName)<br />
+        @Html.TextBoxFor(m => m.MenuName, new { @class = "half" })
+    </p>
+    <p>
+        <label for="active" class="required">
+            Active:</label>
+        @Html.ValidationMessageFor(m => m.IsActive)<br />
+        @Html.CheckBoxFor(m => m.IsActive)
+    </p>
+    <p>
+        <label for="content" class="required">
+            Content:</label>
+        @Html.ValidationMessageFor(m => m.OverridePageContent)<br />
+        @Html.TextAreaFor(m => m.OverridePageContent, new { @class = "wysiwyg medium full" })
+    </p>
+}

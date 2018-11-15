@@ -1,0 +1,571 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common
+@using EggheadWeb.Models.AdminModels
+@using EggheadWeb.Utility;
+@model Calendar
+@functions{
+    string GetDetailAction(ServiceType type)
+    {
+        return type.ToString().ToLower() + "-detail";
+    }
+
+    long GetId(Assign assign)
+    {
+        switch (assign.Type)
+        {
+            case ServiceType.Class:
+                return assign.Class.Id;
+            case ServiceType.Camp:
+                return assign.Camp.Id;
+            case ServiceType.Birthday:
+                return assign.Birthday.Id;
+            case ServiceType.Workshop:
+                return assign.Workshop.Id;
+            default:
+                return 0;
+        }
+    }
+}
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+<style type="text/css">
+    .calendar-month, .calendar-day
+    {
+        position: relative;
+    }
+    .calendar-month table.calendar-table, .calendar-day table.calendar-table
+    {
+        width: 100%;
+        table-layout: fixed;
+    }
+    .calendar-table td, .calendar-table th
+    {
+        border-collapse: collapse;
+        border: 1px solid #CCCCCC;
+        padding: 5px !important;
+        font-weight: normal;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    .calendar-day .calendar-table th
+    {
+        text-align: center;
+        border: none;
+        border-left: 1px solid white;
+        border-top: 1px solid white;
+    }
+    .day
+    {
+        cursor: pointer;
+    }
+    .calendar-month .calendar-table th
+    {
+        text-align: left;
+        border: none;
+        border-left: 1px solid white;
+        border-top: 1px solid white;
+    }
+    .calendar-day .event
+    {
+        overflow: hidden;
+        position: absolute;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        border: 1px solid #CCCCCC;
+        background-color: #FFAABB;
+        cursor: pointer;
+    }
+    .calendar-day .event .inner
+    {
+        padding: 2px;
+        width: 100%;
+        height: 100%;
+    }
+    .event
+    {
+        display: none;
+        margin-bottom: 2px;
+    }
+    .event.Class
+    {
+        background-color: #FDADAA;
+    }
+    .event.Camp
+    {
+        background-color: #1BE0B2;
+    }
+    .event.Birthday
+    {
+        background-color: #BADE83;
+    }
+    .event.Workshop
+    {
+        background-color: #c0dFe8;
+    }
+    
+    .calendar-day .time
+    {
+        font-size: 10px;
+    }
+    .today
+    {
+        background-color: #EEEEEE;
+        font-weight: bold;
+    }
+    .calendar-day th.today
+    {
+        border-top: 1px solid #CCCCCC;
+        border-right: 1px solid #CCCCCC;
+        border-left: 1px solid #CCCCCC;
+        font-weight: bold;
+    }
+    
+    .calendar-month td.month
+    {
+        height: 80px;
+        padding: 5px;
+    }
+    .calendar-month td.disabled
+    {
+        color: #AAAAAA;
+    }
+    
+    .event-detail
+    {
+        display: none;
+        border: 1px solid #CCCCCC;
+        position: absolute;
+        padding: 10px;
+        background-color: #FFFFFF;
+        color: Black;
+    }
+    .event-detail .event-name
+    {
+        font-weight: bold;
+        font-size: 14px;
+    }
+    .event-detail .event-time
+    {
+    }
+    
+    .event-list
+    {
+        display: none;
+        border: 1px solid #CCCCCC;
+        position: absolute;
+        padding: 10px;
+        background-color: #FFFFFF;
+    }
+</style>
+<script type="text/javascript">
+    $.fn.calendar = function (type) {
+        var calendar;
+        @{
+            if (Model.Type != CalendarViewType.Month)
+            {
+                @:calendar = new RangeCalendar(this);
+            }
+            else
+            {
+                @:calendar = new MonthCalendar(this);
+            }
+        }
+
+        calendar.update=function(types) {
+            if (types) {
+                $("[data-event-type]", calendar.element).attr("data-visibled", "False").hide();
+                for (var i=0; i<types.length; i++) {
+                    $("[data-event-type="+types[i]+"]").attr("data-visibled", "True").show();
+                }
+            }
+            else {
+                $("[data-event-type][data-visibled=False]", calendar.element).hide();
+                $("[data-event-type][data-visibled=True]", calendar.element).show();
+            }
+            calendar.init();
+        };
+
+        this.data("calendar", calendar);
+
+        return calendar;
+    };
+
+    function OverlapEvents(event) {
+        var self = this;
+
+        this.startTime = 9999;
+        this.endTime = 0;
+        this.events = [];
+
+        this.add = function (event) {
+            var startTime = event.data("start-time") * 1;
+            var endTime = event.data("end-time") * 1;
+            var day = event.data("day") * 1;
+
+            self.events.push(event);
+            if (self.startTime > startTime) {
+                self.startTime = startTime;
+            }
+            if (self.endTime < endTime) {
+                self.endTime = endTime;
+            }
+        };
+        this.overlap = function (event) {
+            var startTime = event.data("start-time") * 1;
+            var endTime = event.data("end-time") * 1;
+            var day = event.data("day") * 1;
+
+            return (startTime >= self.startTime && startTime < self.endTime) ||
+                (self.startTime >= startTime && self.startTime < endTime);
+        };
+        this.position = function (calendar) {
+            var columns = [];
+            for (var i = 0; i < self.events.length; i++) {
+                var event = self.events[i];
+                var newcolumn = true;
+                for (var j = 0; j < columns.length; j++) {
+                    if (!columns[j].overlap(event)) {
+                        columns[j].add(event);
+                        newcolumn = false;
+                        break;
+                    }
+                }
+                if (newcolumn) {
+                    var column = new OverlapEvents();
+                    column.add(self.events[i]);
+                    columns.push(column);
+                }
+            }
+
+            for (var i = 0; i < columns.length; i++) {
+                for (var j = 0; j < columns[i].events.length; j++) {
+                    var event = columns[i].events[j];
+
+                    var startTime = event.data("start-time") * 1;
+                    var endTime = event.data("end-time") * 1;
+                    var day = event.data("day") * 1;
+
+                    event.css({
+                        left: calendar.getX(day) + calendar.offsetLeft + calendar.widthPerDay * i / columns.length,
+                        top: calendar.getY(startTime - 300) + calendar.offsetTop,
+                        width: calendar.widthPerDay / columns.length + 1,
+                        height: calendar.getY(endTime - startTime) + 1
+                    });
+                }
+            }
+        }
+        if (event) {
+            this.add(event);
+        }
+    }
+
+    function MonthCalendar(element) {
+        var self=this;
+
+        this.element=element;
+
+        // Month calendar
+        $(".show-event-list", self.element).live("click", function(e) {
+            e.stopPropagation();
+            $(".event-list", self.element).hide();
+            var $this=$(this);
+            var $td=$this.closest("td");
+            $this.closest(".event-summary", self.element).next(".event-list").css({
+                "min-width": $td.width(),
+                "min-height": $td.height()
+            })
+            .show().position({
+                my: "left top",
+                at: "left top",
+                of: $this.closest("td"),
+                offset: "-1 -1"
+            });
+        });
+        $(".event-list", self.element).click(function(e) {
+            e.stopPropagation();
+        });
+        $('body').click(function(e) {
+            $(".event-list", self.element).hide();
+        });
+
+        this.init=function() {
+            $(".month", self.element).each(function() {
+                var holder=$(this).closest("td").find(".events-summary-holder");
+                holder.html("");
+
+                var events=$(".events .event[data-visibled=True]", this);
+                if (events.length==0) {
+                    return;
+                }
+
+                if (events.length<=3) {
+                    for (var i=0;i < events.length; i++) {
+                        holder.append($(events[i]).clone());
+                    }
+                }
+                else {
+                    for (var i=0;i < 2; i++) {
+                        holder.append($(events[i]).clone());
+                    }
+                    holder.append("<a href='javascript:;' class='show-event-list'>+"+(events.length-2)+" more");
+                }
+            });
+
+            return self;
+        };
+    }
+
+    function RangeCalendar(element) {
+        var self = this;
+        this.element = element;
+        this.$table = this.element.find("table");
+        this.dayCount = this.$table.find("col").length - 1;
+
+        this.offsetTop = this.$table.find("thead > tr").height();
+        this.offsetLeft = 80;
+
+        this.heightPerMinute = (this.$table.height() - this.offsetTop) / (60 * 18);
+        this.widthPerDay = (this.$table.width() - this.offsetLeft) / this.dayCount;
+
+        this.init = function () {
+            self.dayGroups = [null, null, null, null, null, null, null];
+            $(".event[data-visibled=True]", self.element).show().each(function () {
+                var event = $(this);
+                var day = event.data("day") * 1;
+
+                if (!self.dayGroups[day]) {
+                    self.dayGroups[day] = [];
+                    self.dayGroups[day].push(new OverlapEvents(event));
+                }
+                else {
+                    var group = self.dayGroups[day];
+                    var events = group[group.length - 1];
+                    if (!events.overlap(event)) {
+                        group.push(new OverlapEvents(event));
+                    }
+                    else {
+                        events.add(event);
+                    }
+                }
+            }).click(function(e) {
+                e.stopPropagation();
+                $(".event-detail", self.element).hide();
+
+                var $this=$(this);
+                var $td=$this.closest("td");
+                var id=$this.data("id");
+                $("#event-detail-"+id, self.element).show().position({
+                    my: "center bottom",
+                    at: "center top",
+                    of: $this,
+                    offset: "0 -5"
+                });
+            });
+            for (var i = 0; i < self.dayGroups.length; i++) {
+                var group = self.dayGroups[i];
+                if (!group) {
+                    continue;
+                }
+                for (var j = 0; j < group.length; j++) {
+                    group[j].position(self);
+                }
+            }
+
+            $(".event-detail", self.element).click(function(e) {
+                e.stopPropagation();
+            });
+            $('body').click(function(e) {
+                $(".event-detail", self.element).hide();
+            });
+            
+            return self;
+        };
+        this.getY = function (offset) {
+            return offset * self.heightPerMinute;
+        };
+        this.getX = function (day) {
+            return day * self.widthPerDay;
+        };
+    }
+
+    $(document).ready(function() {
+        var calendar=$("#@(ViewBag.Id) .calendar-view").calendar();
+        calendar.update();
+
+        calendar.init();
+    });
+
+</script>
+@if (Model.Type == CalendarViewType.Month)
+{
+    var day = Model.FromDate.AddDays(-(int)Model.FromDate.DayOfWeek);
+    <div class="calendar-view calendar-month">
+        <table class="calendar-table">
+            <thead>
+                <tr>
+                    @for (var i = 0; i < 7; i++)
+                    {
+                        <th>
+                            @(((DayOfWeek)i).ToString().Substring(0, 3))
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < 5; i++)
+                {
+                    <tr>
+                        @for (var j = 0; j < 7; j++)
+                        {
+                            <td class="month @(day.Month != Model.FromDate.Month ? "disabled" : "") @(day == DateTime.Today ? "today" : "")">
+                                <div class="event-summary">
+                                    <span class="day" data-date="@day">@(day.Day == 1 ? day.ToString("MMM dd") : day.ToString("dd"))</span>
+                                    <br />
+                                    <div class="events-summary-holder">
+                                    </div>
+                                </div>
+                                <div class="event-list">
+                                    <span class="day" data-date="@day">@(day.Day == 1 ? day.ToString("MMM dd") : day.ToString("dd"))</span>
+                                    <br />
+                                    @foreach (var e in Model.Events.Where(e => e.Date == day))
+                                    {
+                                        <div data-event-type="@e.Type" class="event @e.Type" data-visibled="@Model.ServiceTypes.Contains(e.Type)">
+                                            @if (e.Id > 0)
+                                            {
+                                                @:<span class="event-time">@e.DateTimeStart.TimeOfDay.To12HoursString()</span>-<a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a>
+                                             }
+                                            else
+                                            {
+                                                @:<span class="event-time">@e.Name</span>
+                                                                                                                                                                                                                                                                        }
+                                        </div>
+                                    }
+                                </div>
+                                <div class="events" style="display: none">
+                                    @foreach (var e in Model.Events.Where(e => e.Date == day))
+                                    {
+                                        <div class="event @e.Type" data-event-type="@e.Type" data-event-name="@e.Name" data-event-time="@e.DateTimeStart.TimeOfDay.To12HoursString()" data-id="@e.Id" data-visibled="@Model.ServiceTypes.Contains(e.Type)">
+                                            @if (e.Id > 0)
+                                            {
+                                                @:<span class="event-time">@e.DateTimeStart.TimeOfDay.To12HoursString()</span>-<a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a>
+                                            }
+                                            else
+                                            {
+                                                @:<span class="event-time">@e.Name</span>
+                                                                                                                                                                                                                                                                                                                    }
+                                        </div>
+                                    }
+                                </div>
+                            </td>
+                                    day = day.AddDays(1);
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="calendar-view calendar-day">
+        <table class="calendar-table">
+            <colgroup>
+                <col width="80px" />
+                @for (var day = Model.FromDate; day <= Model.ToDate; day = day.AddDays(1))
+                {
+                    if (day == DateTime.Today)
+                    {
+                    <col class="today" />
+                    }
+                    else
+                    {
+                    <col />
+                    }
+                }
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    @for (var day = Model.FromDate; day <= Model.ToDate; day = day.AddDays(1))
+                    {
+                        <th class="@(day == DateTime.Today ? "today" : "") day" data-date="@day">
+                            @(day.DayOfWeek.ToString().Substring(0, 3))
+                            @(day.ToString("M/dd"))
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @for (var i = 0; i < 48; i++)
+                {
+                    var h = i / 2;
+                    if (h >= 5 && h <= 22)
+                    {
+                    <tr>
+                        @if (i % 2 == 0)
+                        {
+
+                            TimeSpan time = new TimeSpan(i / 2, i % 2 == 0 ? 0 : 30, 0);
+                            
+                            <td style="text-align: right;" rowspan="2">@time.To12HoursString()
+                            </td>
+                        }
+                        @for (var day = Model.FromDate; day <= Model.ToDate; day = day.AddDays(1))
+                        {
+                            <td>
+                                &nbsp;
+                            </td>
+                        }
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="events">
+            @if (Model != null && Model.Events != null)
+            {
+                foreach (var e in Model.Events)
+                {
+                <div id="event-@(e.Id)" class="event @e.Type" data-id="@e.Id" data-start-time="@e.TimeStart.TotalMinutes" data-end-time="@e.TimeEnd.TotalMinutes" data-event-type="@e.Type" data-visibled="@Model.ServiceTypes.Contains(e.Type)" data-day="@e.Date.Subtract(Model.FromDate).TotalDays" data-date="@e.Date">
+                    <div class="inner">
+                        <br />
+                        @if (e.Id > 0)
+                        {
+                            <span class="time">
+                            @e.TimeStart.To12HoursString()
+                            - @e.TimeEnd.To12HoursString()
+                            </span>
+                            <a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a>
+                        }
+                        else
+                        {
+                        @e.Name
+                        }
+                    </div>
+                </div>
+                <div id="event-detail-@(e.Id)" class="event-detail">
+                    @if (e.Id > 0)
+                    {
+                        <span class="event-name"><a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a></span>
+                        <br />
+                    <span class="event-time">@(string.Format("{0:ddd, MMMM dd}", e.Date)), @e.DateTimeStart.TimeOfDay.To12HoursString()
+                        – @e.DateTimeEnd.TimeOfDay.To12HoursString()</span>
+                    }
+                    else
+                    {
+                        <span class="event-name">@e.Name</span>
+                        <br />
+                        <span class="event-time">@(string.Format("{0:ddd, MMMM dd}", e.Date))</span>
+                    }
+                </div>
+                }
+            }
+        </div>
+    </div>
+}

@@ -1,0 +1,81 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model PayrollSearchForm
+@{
+    ViewBag.BreadCrumbs = new string[] { "Reports" };
+    ViewBag.Title = "Payroll";
+    ViewBag.CurrentMenu = 1;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var db = new EggheadEntities();
+    var payrolls = (SearchResult<PayrollSearchForm, PayrollItem>)ViewBag.Payrolls;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        /* expandable rows */
+        customExpandableRows();
+    });
+
+</script>
+<section class="column width8 first">
+    @using (Html.BeginForm("payroll", "Admin", FormMethod.Get))
+    {
+     <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Print = true, ExcelAction = "payroll-excel" })
+    </div>
+        
+            <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+                <colgroup>
+                    <col width="100px" />
+                    <col width="200px" />
+                    <col width="150px" />
+                    <col width="*" />
+                </colgroup>
+                <tr>
+                    <td>
+                    <label>
+                    Date from:</label>
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.DateFrom)
+                    </td>
+                    <td>
+                    <label>
+                        Location:</label>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @style = "width:150px;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    <label>
+                        Date to:</label>
+                    </td>
+                    <td>
+                        @Html.EditorFor(m => m.DateTo)
+                    </td>
+                    <td>
+                     <label>
+                        Instructor:
+                        </label>
+                    </td>
+                    <td>
+                        @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(db), Constants.SELECT_INSTRUCTOR, new { @style = "width:150px;" })
+                    </td>
+                </tr>
+            </table>
+            <p class="box" style="margin-top: 0; margin-bottom: 0;">
+                <input type="submit" class="btn btn-green big" value="Search" />
+                <input type="button" class="btn reset" value="Reset" />
+            </p>
+    }
+
+    @if (payrolls != null)
+    {
+    <div class="paging-container">
+        @Html.Partial("payroll-paging", payrolls)
+    </div>
+    }
+</section>

@@ -1,0 +1,16 @@
+﻿@if (TempData["SuccessMain"] != null)
+{
+    <div class='green_shaded_block'>
+        <span class='txt_shad1'>@TempData["SuccessMain"]</span>
+        <br />
+        <span class='txt_shad2 bld'>@TempData["SuccessSub"]</span>
+    </div>
+}
+@if (TempData["ErrorMain"] != null)
+{
+    <div class='red_shaded_block'>
+        <span class='txt_shad1_error'>@TempData["ErrorMain"]</span>
+        <br />
+        <span class='txt_shad2 bld'>@TempData["ErrorSub"]</span>
+    </div>
+}

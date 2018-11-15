@@ -1,0 +1,6 @@
+﻿@using EggheadWeb.Models.Common;
+@model GradeSelect
+@Html.CheckBoxFor(x => x.Value)
+@Html.LabelFor(x => x.Value, Model.GradeName)
+@Html.HiddenFor(x => x.GradeId)
+@Html.HiddenFor(x => x.GradeName)

@@ -1,0 +1,84 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@{
+    var inboxMessages = this.ViewBag.InboxMessages as List<PrivateMessage>;
+    var sentMessages = this.ViewBag.SentMessages as List<PrivateMessage>;
+}
+<div>
+    <div id="inbox" style="height: 400px; overflow: auto">
+        <table class="stylized">
+            <colgroup>
+                <col width="150px" />
+                <col width="200px" />
+                <col width="150px" />
+            </colgroup>
+            <tbody>
+                @foreach (var message in inboxMessages)
+                {
+                    var style = "";
+
+                    if (message.Unread)
+                    {
+                        style = "style = font-weight:bold;";
+                    }
+                    <tr @(style)>
+                        <td>
+                            @if (message.FromAdminId.HasValue)
+                            { @StringUtil.GetFullName(message.Admin.FirstName, message.Admin.LastName)
+                            }
+                            else
+                            { @message.FromAdminName <span style="color: Red;">[Deleted]</span> }
+                        </td>
+                        <td>
+                            @if (@message.Unread)
+                            { <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
+                            }
+                            else
+                            { <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
+                            }
+                        </td>
+                        <td>
+                            @message.SendDate.ToString("M/dd/yyyy")
+                            @if (@message.Unread)
+                            { <span style="color: Green;">&nbsp;&nbsp;New! </span> }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div id="sent-items" style="height: 400px; overflow: auto">
+        <table class="stylized">
+            <colgroup>
+                <col width="150px" />
+                <col width="200px" />
+                <col width="100px" />
+            </colgroup>
+            <tbody>
+                @foreach (var message in sentMessages)
+                {
+                    <tr>
+                        <td>
+                            @if (message.ToAdminId.HasValue)
+                            {
+                                @StringUtil.GetFullName(message.Admin1.FirstName, message.Admin1.LastName)
+                            }
+                            else
+                            {
+                                @message.ToAdminName 
+                                <span style="color: Red;">[Deleted]</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
+                        </td>
+                        <td>
+                            @message.SendDate.ToString("M/dd/yyyy")
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <input type="hidden" id="pm-count" value="@ViewBag.PMCount" >
+</div>

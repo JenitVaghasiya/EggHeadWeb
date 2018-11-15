@@ -1,0 +1,81 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model SearchResult<AreaSearchForm, Area>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+<table class="display stylized search-result-table" data-fixed-left="1" data-fixed-right="1">
+    <colgroup>
+        <col width="200px" />
+        <col width="150px" />
+        <col width="150px" />
+        <col width="150px" />
+        <col width="250px" />
+        <col class="task-medium" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Territory Name
+            </th>
+            <th>
+                URL Name
+            </th>
+            <th>
+                State
+            </th>
+            <th>
+                Administrator
+            </th>
+            <th>
+                Description
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            <tr>
+                <td>
+                    @item.DisplayName
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.State
+                </td>
+                <td>
+                    @if (item.Admins.Count > 0)
+                    { 
+                        <a href= '@Url.RouteUrl("SuperAdmin", new { action = "users-edit", id = item.Admins.First().Id })'>
+                            @StringUtil.GetFullName(item.Admins.First().FirstName, item.Admins.First().LastName)</a> 
+                    }
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl(new { action = "territories-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl(new { action = "territories-delete" })' data-id = '@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("territories", "Admin", FormMethod.Get, new { @id = "territoriespaging" }))
+{
+    @Html.HiddenFor(m => m.Form.QuickSearch)
+}
+@Html.DisplayForModel("Paging", new
+{
+    Submit = true,
+    PagingFormId = "territoriespaging"
+})

@@ -1,0 +1,26 @@
+﻿@using EggheadWeb.Models.Common;
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_ParentUserLayout.cshtml";
+}
+@model Payment
+<div class="page-wrapper">
+    @Html.Partial("_UserLeftMenu")
+    <div id="partialView" class="ajax-container">
+        <div class="twelve columns mb20">
+            <div class="enroll_container">
+                <fieldset style="border: 1px solid #EAEAEA; min-height: 320px;">
+                    <legend>PAYMENT ERROR</legend>
+                    @if (!string.IsNullOrEmpty(Model.PaymentMessage))
+                    {
+                        <div style="padding-left: 60px; padding-bottom: 20px; color: Red;">
+                            <span>@Model.PaymentMessage</span>
+                        </div>
+                    }
+                    <input type="button" id="payment-error-back" value="Back" action='@Url.Action("payment-init")' style="float: right;" class="btn" />
+                    <br class="clear" />
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

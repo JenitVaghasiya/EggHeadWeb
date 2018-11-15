@@ -1,0 +1,111 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model MainTaskbarItem
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#main-button-emai").click(function () {
+            var emails = '';
+            var names = '';
+
+            if ($(".email-table").length) {
+                emails = $(".email-table").find("td input:checked").map(function () {
+                    return $.trim($(this).data('email-to-address'));
+                }).get().join("; ");
+
+                names = $(".email-table").find("td input:checked").map(function () {
+                    return $.trim($(this).data('email-to-name'));
+                }).get().join("; ");
+            }
+            else if ($("#email-to-address").length) {
+                emails = $("#email-to-address").val();
+                names = $("#email-to-name").val();
+            }
+
+            if (emails == '') {
+                @{
+                    if (!string.IsNullOrEmpty(ViewBag.NoRecordSelectMsg))
+                    {
+                        @:alert('@ViewBag.NoRecordSelectMsg');
+                    }
+                    else
+                    {
+                        @:alert('Please select record(s).');
+                    }
+                }
+               return;
+            }
+
+            $("#to-addresses").val(emails);
+            $("#to-names").val(names);
+            $("form#sendemailform").submit();
+        });
+
+
+        var $printButton = $("#main-button-print");
+        
+        var clickRegisted = false;
+        
+        if ($printButton.data("events")) {
+            $.each($printButton.data("events"), function(i, e) {
+                if (i == "click") { 
+                    clickRegisted = true;
+                }});
+        }
+
+        if (!clickRegisted)
+        {
+           $printButton.click(function () {
+                var target = $(".search-result-table:visible").clone();
+                $(target).find("col:last-child, th:last-child, td:last-child").remove();
+            
+                if (!target.length) {
+                    target = $(".calendar-view:visible");
+                }
+                if (target.length) {
+                    target.jqprint();
+                    return;
+                }
+
+                // For table group
+                var target = $(".search-result-table-with-group:visible").clone();
+                $(target).find("col:last-child:not(.group-column), th:last-child:not(.group-column), td:last-child:not(.group-column)").remove();
+
+                if (!target.length) {
+                    target = $(".calendar-view:visible");
+                }
+                if (target.length) {
+                    target.jqprint();
+                    return;
+                }
+            });
+        }
+    })
+</script>
+@if (Model.Print)
+{      
+    <input type="button" id="main-button-print" title="Print" class="image-button-32 button-32-print" />
+}
+@if (Model.Email)
+{
+    <input type="button" id="main-button-emai" title="Email" class="image-button-32 button-32-email" />
+}
+@if (Model.Add)
+{
+    <input type="button" id="main-button-add" data-redirect='@Model.AddAction' title="Add" class="image-button-32 button-32-add" />
+}
+@if (Model.ExcelExport)
+{
+    var dataDirectExcel = @String.IsNullOrEmpty(Model.ExcelAction) ? "" : string.Format("data-redirect={0}", Model.ExcelAction);
+    <input id="main-button-excel" type="button" @dataDirectExcel title="Expor to excel file" class="image-button-32 button-32-export-excel" />
+}
+@if (Model.PdfExport)
+{
+    var dataDirectPdf = @String.IsNullOrEmpty(Model.PdfAction) ? "" : string.Format("data-redirect={0}", Model.PdfAction);
+    <input id="main-button-pdf" type="button" @dataDirectPdf title="Export to PDF file" class="image-button-32 button-32-export-pdf" />
+}
+@if (Model.Save)
+{
+    <input type="submit" title="Save" class="image-button-32 button-32-save" />
+}
+@Html.Hidden("to-address", Model.EmailToAddress, new { @id = "email-to-address" })
+@Html.Hidden("to-name", Model.EmailToName, new { @id = "email-to-name" })

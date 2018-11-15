@@ -1,0 +1,188 @@
+﻿@using EggheadWeb.Models.Common
+@using EggheadWeb.Models.UserModels
+@{
+    var classEnrollInfo = ViewBag.ClassEnrollInfo as List<ChildBookingItem>;
+    var campEnrollInfo = ViewBag.CampEnrollInfo as List<ChildBookingItem>;
+    var originalTotalFees = (decimal)0.00;
+
+    if (classEnrollInfo != null)
+    {
+        originalTotalFees += classEnrollInfo.Sum(t => t.Booking.Sum(x => x.Cost));
+    }
+
+    if (campEnrollInfo != null)
+    {
+        originalTotalFees += campEnrollInfo.Sum(t => t.Booking.Sum(x => x.Cost));
+    }
+}
+<div class="contact-form-wrapper">
+    @using (Html.BeginForm("enroll-confirm", "Users", FormMethod.Post))
+    {
+        @Html.Partial("_UserInformMessages")
+        <fieldset style="min-height: 320px;">
+            <legend>CLASS/CAMP CONFIRMATION</legend>
+            <div class="class-confirm-text">
+                Classes may be cancelled if the minimum enrollment number is not reached. You may
+                be contacted via email in the chance classes are cancelled, postponed due to low
+                enrollment, non permittiting weather or conflicting school event. Unfortunately,
+                our weather machine is not fully functional so please bare with us during rainy
+                days.
+            </div>
+            <div>
+                <table class="scheduletable">
+                    <colgroup>
+                        <col width="150px" />
+                        <col width="250px" />
+                        <col width="150px" />
+                        <col width="120px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                Student
+                            </th>
+                            <th>
+                                Day
+                            </th>
+                            <th>
+                                Class
+                            </th>
+                            <th style="text-align: center;">
+                                Enrollment Fees
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (classEnrollInfo != null)
+                        {
+                            foreach (var student in classEnrollInfo)
+                            {
+                                foreach (var item in student.Booking)
+                                {
+                            <tr>
+                                <td>
+                                    @student.Child.FirstName @student.Child.LastName
+                                </td>
+                                <td>
+                                    @item.Dates
+                                </td>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td align="right">
+                                    $ @item.Cost
+                                </td>
+                            </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+                <br />
+                <table class="scheduletable">
+                    <colgroup>
+                        <col width="150px" />
+                        <col width="250px" />
+                        <col width="150px" />
+                        <col width="120px" />
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>
+                                Student
+                            </th>
+                            <th>
+                                Day
+                            </th>
+                            <th>
+                                Camp
+                            </th>
+                            <th style="text-align: center;">
+                                Enrollment Fees
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (campEnrollInfo != null)
+                        {
+                            foreach (var student in campEnrollInfo)
+                            {
+                                foreach (var item in student.Booking)
+                                {
+                            <tr>
+                                <td>
+                                    @student.Child.FirstName @student.Child.LastName
+                                </td>
+                                <td>
+                                    @item.Dates
+                                </td>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td align="right">
+                                    $ @item.Cost
+                                </td>
+                            </tr>
+                                }
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <div class="notebox">
+                    Notice: Classes are really exiciting, engaging and educational. Be advised if you
+                    enroll your child(ren) in PESA Programs they will come back happier, smarter
+                    and possibly tired from all the excitement. We do not provide students with sugar
+                    to achieve this result.
+                </div>
+                <div class="coupon_box red">
+                    <div class="txt_coupon1 bld">
+                        Coupon Code</div>
+                    <div class="txt_coupon2">
+                        Enter Coupon Code Here<br>
+                    </div>
+                    <div class="coupon_txtbox">
+                        <input name="coupon_code" class="txtbox_coupon" id="coupon_code" onkeyup="return false;"
+                            style="padding: 2px 4px; width: 100px; height: 20px; display: inline;" type="text">&nbsp;&nbsp;
+                        <a id="coupon_apply" data-action= '@Url.Action("get-coupon")' onclick="applyCoupon(this);">
+                            APPLY</a>
+                    </div>
+                    <div id="cpnMsg" style="color: Red;">
+                    </div>
+                </div>
+                <div class="totalfee_box">
+                    <div class="txt_coupon1 bld">
+                        <div style="width: 90px; text-align: right; float: left;">
+                            Adjustments:
+                        </div>
+                        <div id="discount" style="width: 40px; text-align: right; float: left;">
+                            $ 0.00
+                        </div>
+                    </div>
+                    <div style="height: 50px;">
+                    </div>
+                    <div class="bld">
+                        <input id="original_total_amount" type="hidden" value="@originalTotalFees"/>
+                        <input id="total_amount" type="hidden" value="@originalTotalFees" />
+                        <div class="bld" style="width: 90px; text-align: right; float: left;">
+                            Total:
+                        </div>
+                        <div id="total_amount_display" style="width: 40px; text-align: right; float: left;
+                            color: red;">
+                            $ @originalTotalFees
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br class="clear" />
+            <div>
+                <input type="button" onclick="SelfRedirect();" value="Back" class="btn" style="float: left;" />
+                <input type="button" id="endroll-confim-pay-button" action='@Url.Action("payment-init")' class="btn" value="Pay" style="float: right;" />
+            </div>
+        </fieldset>
+    }
+</div>
+<script>
+    $('#pageTitle').html("CLASS/CAMP CONFIRMATION");
+</script>

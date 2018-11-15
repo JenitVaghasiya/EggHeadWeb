@@ -1,0 +1,40 @@
+﻿@model EggheadWeb.Models.Common.LoginForm
+@{
+    ViewBag.Title = "Login";
+    ViewBag.TabTitle = "Login";
+    Layout = "~/Views/Shared/_AdminLoginLayout.cshtml";
+}
+<h3>
+    Login</h3>
+@if (ViewBag.Info != null)
+{
+    <div class="box box-info">@ViewBag.Info</div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="box box-error">@ViewBag.Error</div>
+}
+<form action="@Url.RouteUrl("Admin", new { action = "Login" })" method="post">
+<p>
+    @Html.LabelFor(m => m.Username)
+    <br />
+    @Html.TextBoxFor(m => m.Username, new { @class = "full" })
+    @Html.ValidationMessageFor(m => m.Username)
+</p>
+<p>
+    @Html.LabelFor(m => m.Password)
+    <br />
+    @Html.PasswordFor(m => m.Password, new { @class = "full" })
+    @Html.ValidationMessageFor(m => m.Password)
+</p>
+<p>
+    @Html.CheckBoxFor(m => m.SaveLogin)
+    @Html.LabelFor(m => m.SaveLogin)
+</p>
+<p>
+    <input type="submit" class="btn btn-green big" value="Login" />
+</p>
+<div class="clear">
+    &nbsp;</div>
+</form>
+

@@ -1,0 +1,130 @@
+﻿@using EggheadWeb.Models.Common
+@using EggheadWeb.Models.AdminModels
+@using EggheadWeb.Common;
+@using EggheadWeb.Utility;
+
+@model SearchResult<ScheduleSearchForm, Class>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+
+    var ClassByDays = ViewBag.ClassByDays as Dictionary<DayOfWeek, List<Class>>;
+    
+}
+<table class="display stylized search-result-table-with-group" data-fixed-left="1"
+    data-fixed-right="1">
+    <colgroup>
+        <col width="110px" />
+        <col width="120px" />
+        <col width="75px" />
+        <col width="75px" />
+        <col width="110px" />
+        <col width="40px" />
+        <col width="75px" />
+        <col width="70px" />
+        <col width="*" />
+        <col width="75px" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Class
+            </th>
+            <th>
+                Time(S)
+            </th>
+            <th>
+                Time(E)
+            </th>
+            <th>
+                Instructor
+            </th>
+            <th>
+                $
+            </th>
+            <th>
+                Grades
+            </th>
+            <th>
+                Enroll #
+            </th>
+            <th>
+                Dates
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var list in ClassByDays)
+        {
+            if (list.Value.Count == 0)
+            {
+                continue;
+            }
+
+            foreach (var item in list.Value)
+            {
+            <tr>
+                <td>
+                    @Convert.ToInt32(list.Key)
+                </td>
+                <td>
+                    @list.Key.ToString()
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
+                        @item.Location.DisplayName</a>
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "class-detail", id = item.Id })'>
+                        @item.Name</a>
+                </td>
+                <td>
+                    @item.TimeStart.To12HoursString()
+                </td>
+                <td>
+                    @item.TimeEnd.To12HoursString()
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
+                        @ScheduleUtil.GetShortInstructorName(item.Instructor)</a>
+                </td>
+                <td>
+                    @item.Cost
+                </td>
+                <td>
+                    @ScheduleUtil.GetGradeListText(item)
+                </td>
+                <td>
+                    @(item.Enrolled.HasValue ? item.Enrolled.Value : 0)
+                </td>
+                <td>
+                    @ScheduleUtil.GetDateListText(item)
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "class-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "class-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.DisplayForModel("Paging", new
+{
+    PagingFormId = "schedulespaging",
+    UniqueId = "Class",
+    PrePagingMethod = "setClassServiceType",
+})

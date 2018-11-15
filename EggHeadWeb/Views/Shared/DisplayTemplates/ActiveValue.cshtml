@@ -1,0 +1,13 @@
+﻿@model bool
+<div style="padding-top: 2px;">
+    @if (Model)
+    {
+        @:<span class="printonly">Y</span>
+    @:<div class="icon-active icon-active-true">Active</div>
+}
+    else
+    {
+        @:<span class="printonly">N</span>
+    @:<div class="icon-active icon-active-false">Inactive</div>
+        }
+</div>

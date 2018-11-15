@@ -1,0 +1,20 @@
+﻿@model DateTime?
+@Html.TextBox(string.Empty, (Model.HasValue) ? Model.Value.ToString("MM/dd/yyyy") : "", new { @style = "width:80px" })
+
+<script type="text/javascript" >
+    $(document).ready(function () {
+        //set the date picker
+        var dtp = '#@ViewData.TemplateInfo.GetFullHtmlFieldId("")';
+        dtp = dtp.replace("[", "_");
+        dtp = dtp.replace("]", "_");
+        //window.alert($(dtp).attr("value"));
+        var hid = ($(dtp).attr("type") == "hidden");
+        if (!hid) {
+            $(dtp).datepick({ dateFormat: 'm/dd/yyyy', firstDay: 7 });
+        }
+    });
+	
+</script>
+
+
+

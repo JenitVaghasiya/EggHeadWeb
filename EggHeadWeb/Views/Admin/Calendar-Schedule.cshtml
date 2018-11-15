@@ -1,0 +1,190 @@
+﻿@using EggheadWeb.Models.Common
+@using EggheadWeb.Models.AdminModels
+@model CalendarSearchForm
+@{
+    var calendar = (Calendar)ViewBag.Calendar;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".nav").one("click", function () {
+            $("#hiddenDate").val($(this).data("date"));
+            updateCalendar();
+        });
+
+        $(".day").one("click", function () {
+            $("#hiddenDate").val($(this).data("date"));
+            $("#viewType").val("@(CalendarViewType.Day)")
+            updateCalendar();
+        });
+
+        $("#viewType").change(function () {
+            updateCalendar();
+        });
+
+        $("#allTypes").change(function () {
+            $(".serviceType").attr("checked", $(this).is(":checked"));
+            initCalendar();
+        });
+        $(".serviceType").change(function () {
+            $("#allTypes").attr("checked", $(".serviceType:not(:checked)").length == 0);
+            initCalendar();
+        });
+
+        function initCalendar() {
+            var types = [];
+            $(".serviceType:checked").each(function () {
+                types.push($(this).data("type"));
+            });
+            var calendar = $("#calendar .calendar-view").data("calendar");
+            calendar.update(types);
+        };
+
+        $("#allTypes").attr("checked", $(".serviceType:not(:checked)").length == 0);
+    });
+
+    function updateCalendar() {
+
+        var form = $("<form id='calendar-schedule'>").attr({
+            action: '@Url.RouteUrl("Admin", new { action = "calendar-schedule" })',
+            method: "GET"
+        }).append($("#calendar-control").clone());
+
+        //Set select values
+        $(form).find("select").val($("#calendar-control select").val());
+
+        $.ajax({
+            url: form.attr("action"),
+            method: form.attr("method"),
+            data: form.serialize(),
+            success: function (result) {
+                $("#tabs-schedule").html(result);
+            },
+            error: function (error) {
+                alert('error');
+            }
+        });
+
+    }
+</script>
+<div id="calendar-control" style="height: 120px;">
+    <div class="box" style="margin-top: 0; margin-bottom: 0; height: 30px;">
+        <span style="float: right">
+            @if (calendar.Type == CalendarViewType.Day)
+            {
+                @calendar.FromDate.ToLongDateString()
+            }
+            else if (calendar.Type == CalendarViewType.Week)
+            {
+                if (calendar.FromDate.Year == calendar.ToDate.Year)
+                {
+                    if (calendar.FromDate.Month == calendar.ToDate.Month)
+                    {
+                @string.Format("{0:MMM dd} – {1:dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                    }
+                    else
+                    {
+                @string.Format("{0:MMM dd} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                    }
+                }
+                else
+                {
+                @string.Format("{0:MMM dd, yyyy} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                }
+            }
+            else if (calendar.Type == CalendarViewType.Month)
+            {
+                @calendar.FromDate.ToString("MMMM yyyy")
+            }
+            &nbsp;&nbsp;
+            <input id="prev" type="button" class="btn nav" value="<" data-date="@calendar.PreviousDate" />
+            <input id="today" type="button" class="btn nav" value="Today" data-date="@DateTime.Today" />
+            <input id="next" type="button" class="btn nav" value=">" data-date="@calendar.NextDate" />
+            @Html.HiddenFor(m => m.Date, new { @id = "hiddenDate" })
+            @Html.DropDownListFor(m => m.ViewBy, SelectLists.CalendarViewTypes(), new { @id = "viewType" })
+        </span>
+    </div>
+    <div style="margin-top: 10px; float: right;">
+        @Html.HiddenFor(m => m.ClassId)
+        @Html.HiddenFor(m => m.CampId)
+        @Html.HiddenFor(m => m.WorkshopId)
+        @Html.HiddenFor(m => m.BirthdayId)
+        @if (Model.LocationId != null)
+        {
+            @Html.HiddenFor(m => m.LocationId)
+        }
+        @if (Model.InstructorId != null)
+        {
+            @Html.HiddenFor(m => m.InstructorId)
+        }
+        @if (Model.AssistantId != null)
+        {
+            @Html.HiddenFor(m => m.AssistantId)
+        }
+        @Html.HiddenFor(m => m.ParentId)
+        @if (!Model.ClassId.HasValue && !Model.CampId.HasValue && !Model.WorkshopId.HasValue && !Model.BirthdayId.HasValue)
+        {
+            <div style="float: left;">
+                <input id="allTypes" type="checkbox" /><label for="allTypes">All</label>
+            </div>
+            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #FDADAA;
+                float: left;">
+                @Html.CheckBoxFor(m => m.ShowClasses, new { @class = "serviceType", @id = "showClasses", @data_type = ServiceType.Class })
+                @Html.LabelFor(m => m.ShowClasses)
+            </div>
+            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #1BE0B2;
+                float: left;">
+                @Html.CheckBoxFor(m => m.ShowCamps, new { @class = "serviceType", @id = "showCamps", @data_type = ServiceType.Camp })
+                @Html.LabelFor(m => m.ShowCamps)
+            </div>
+       
+           if (Model.InstructorId.HasValue)
+           {
+            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #BADE83;
+                float: left;">
+                @Html.CheckBoxFor(m => m.ShowBirthdays, new { @class = "serviceType", @id = "showBirthdays", @data_type = ServiceType.Birthday })
+                @Html.LabelFor(m => m.ShowBirthdays)
+            </div>
+            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #C0DFE8;
+                float: left;">
+                @Html.CheckBoxFor(m => m.ShowWorkshops, new { @class = "serviceType", @id = "showWorkshops", @data_type = ServiceType.Workshop })
+                @Html.LabelFor(m => m.ShowWorkshops)
+            </div>
+           }
+           else if (Model.ParentId.HasValue)
+           {
+            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #BADE83;
+                float: left;">
+                @Html.CheckBoxFor(m => m.ShowBirthdays, new { @class = "serviceType", @id = "showBirthdays", @data_type = ServiceType.Birthday })
+                @Html.LabelFor(m => m.ShowBirthdays)
+            </div>
+            @Html.HiddenFor(m => m.ShowWorkshops)
+           }
+           else if (Model.LocationId.HasValue)
+           {
+            @Html.HiddenFor(m => m.ShowBirthdays)
+            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #C0DFE8;
+                float: left;">
+                @Html.CheckBoxFor(m => m.ShowWorkshops, new { @class = "serviceType", @id = "showWorkshops", @data_type = ServiceType.Workshop })
+                @Html.LabelFor(m => m.ShowWorkshops)
+            </div>
+           }
+           else
+           {
+            @Html.HiddenFor(m => m.ShowBirthdays)
+            @Html.HiddenFor(m => m.ShowWorkshops)
+           }
+        }
+        else
+        {
+            @Html.HiddenFor(m => m.ShowClasses)
+            @Html.HiddenFor(m => m.ShowCamps)
+            @Html.HiddenFor(m => m.ShowBirthdays)
+            @Html.HiddenFor(m => m.ShowWorkshops)
+        }
+        <br />
+        <br />
+    </div>
+</div>
+<div id="calendar">
+    @Html.Partial("CalendarControl", calendar, new ViewDataDictionary { { "Id", "calendar" } })
+</div>

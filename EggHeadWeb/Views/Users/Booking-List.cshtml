@@ -1,0 +1,32 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.UserModels;
+<div style="color: #FFA500;" class="enr_rghtmain">
+    Enrollments
+</div>
+@{
+    var enrollInfo = ViewBag.EnrollInfo as List<ChildBookingItem>;
+}
+@foreach (var item in enrollInfo)
+{
+    <div>
+        @item.Child.FirstName:
+    </div>
+    <ul>
+        @foreach (var booking in item.Booking)
+        {
+            <li>
+                @booking.Name
+                <a class='endroll-delete' 
+                 data-action = '@(booking.Type == ServiceType.Class ? Url.Action("enroll-class-delete") : Url.Action("enroll-camp-delete"))'
+                 data-student-id = '@item.Child.Id'
+                 data-id = '@booking.Id' style="float: right;"
+                 onclick='deleteEnroll(this);'>x</a></li>
+                
+        }
+    </ul>
+}
+<div style="color: #FFA500;" class="enr_rghtmain1">
+    Total Fees : @enrollInfo.Sum(t => t.Booking.Sum(k => k.Cost)) ($)
+</div>
+<div>
+    &nbsp;</div>

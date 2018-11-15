@@ -1,0 +1,35 @@
+﻿@{
+    var now = DateTime.Now;
+    var years = Enumerable.Range(0, 50).Select(x => new SelectListItem { Value = (now.Year - x).ToString(), Text = (now.Year - x).ToString() });
+    var months = Enumerable.Range(1, 12).Select(x => new SelectListItem { Value = x.ToString("00"), Text = System.Threading.Thread.CurrentThread.CurrentUICulture.DateTimeFormat.GetMonthName(x) });
+    var days = Enumerable.Range(1, 31).Select(x => new SelectListItem { Value = x.ToString("00"), Text = x.ToString() });
+
+    var result = ViewData.ModelState[ViewData.TemplateInfo.HtmlFieldPrefix];
+
+    if (result != null && result.Value != null)
+    {
+        var values = result.Value.RawValue as string[];
+        months = new SelectList(months, "Value", "Text", values[0]);
+        days = new SelectList(days, "Value", "Text", values[1]);
+        years = new SelectList(years, "Value", "Text", values[2]);
+
+        result.Value = null;
+    }
+    else
+    {
+        var currentValue = ViewData.Model;
+
+        if (currentValue != null)
+        {
+            years = new SelectList(years, "Value", "Text", currentValue.Year);
+            months = new SelectList(months, "Value", "Text", currentValue.Month.ToString("00"));
+            days = new SelectList(days, "Value", "Text", currentValue.Day.ToString("00"));
+        }
+    }
+
+}
+<div class="trippleddldate" style="display: table-cell;">
+    @Html.DropDownList("", months, "<Month>", new { id = @ViewData.TemplateInfo.HtmlFieldPrefix + "_m", style = "width:100px; float:left; margin-right:10px;" })
+    @Html.DropDownList("", days, "<Day>", new { id = @ViewData.TemplateInfo.HtmlFieldPrefix + "_d", style = "width:80px; float:left; margin-right:10px;" })
+    @Html.DropDownList("", years, "<Year>", new { id = @ViewData.TemplateInfo.HtmlFieldPrefix + "_y", style = "width:80px; float:left; margin-right:10px;" })
+</div>

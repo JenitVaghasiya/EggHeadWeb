@@ -1,0 +1,14 @@
+﻿@model EggheadWeb.Models.Common.Parent
+@{
+    ViewBag.Title = "Edit account information";
+    Layout = "~/Views/Shared/_ParentUserLayout.cshtml";
+}
+<div class="page-wrapper">
+    @Html.Partial("_UserLeftMenu")
+    <div class="twelve columns mb20" style="margin-top:0px;">
+        <div id="partialView" class="ajax-container">
+            @Html.Partial("Check-Schedule")
+        </div>
+    </div>
+    <br class='clear' />
+</div>

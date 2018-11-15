@@ -1,0 +1,64 @@
+﻿@using EggheadWeb.Models.Common;
+@model IEnumerable<Student>
+<p>
+    <a href='@Url.RouteUrl("Admin", new { action = "students-detail", parentId = ViewBag.ParentId })' class="nyroModal" rev="modal">
+        + Add new child</a>
+</p>
+<table class="display stylized search-result-table">
+    <colgroup>
+        <col class="c-name" />
+        <col class="c-gender" />
+        <col class="c-grade" />
+        <col class="c-date" />
+        <col class="c-notes" />
+        <col class="c-task-medium" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Grade
+            </th>
+            <th>
+                Birth Date
+            </th>
+            <th>
+                Notes
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+                <td>
+                    @item.GenderText
+                </td>
+                <td>
+                    @item.Grade.Name
+                </td>
+                <td>
+                    @item.BirthDate.ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    @item.Notes
+                </td>
+                <td>
+                    <input type="button" href ='@Url.RouteUrl("Admin", new { action = "students-detail", id = @item.Id, parentId = @item.ParentId })' value="Detail" class="nyroModal image-button image-button-modify" rev="modal" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-delete ='@Url.RouteUrl("Admin", new { action = "students-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

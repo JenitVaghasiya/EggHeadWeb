@@ -1,0 +1,14 @@
+﻿<div class="wap-nav">
+    <ul>
+        @if (Request.IsAuthenticated)
+        {
+            <li><a href="@Url.Action("Home")">Home</a></li>
+            <li><a href="@Url.Action("Account-info")">Account</a></li>
+            <li><a href="@Url.Action("Classes")">Classes</a></li>
+            <li><a href="@Url.Action("Camps")">Camps</a></li>
+            <li><a href="@Url.Action("Logout")">Logout</a></li>
+        }
+    </ul>
+    <input type ="hidden" id="selected-menu-item" value = '@ViewBag.SelectedMenuItem' />
+    <br class="clear" />
+</div>

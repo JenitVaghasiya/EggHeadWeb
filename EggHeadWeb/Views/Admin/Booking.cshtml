@@ -1,0 +1,56 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@{
+    ViewBag.Title = "Booking";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Booking birthday
+        $("#booking-birthday-submit").live("click", function () {
+            $(this).closest("form").ajaxSubmit(function (html) {
+                $("#tabs-birthday").html(html);
+            });
+        });
+
+        // Booking workshop
+        $("#booking-workshop-submit").live("click", function () {
+            $(this).closest("form").ajaxSubmit(function (html) {
+                $("#tabs-workshop").html(html);
+            });
+        });
+
+        // Booking class
+        $("#booking-class-submit").live("click", function () {
+            $(this).closest("form").ajaxSubmit(function (html) {
+                $("#tabs-class").html(html);
+            });
+        });
+
+        // Booking birthday
+        $("#booking-camp-submit").live("click", function () {
+            $(this).closest("form").ajaxSubmit(function (html) {
+                $("#tabs-camp").html(html);
+            });
+        });
+    });
+</script>
+<div class="tabs">
+    <ul>
+        <li><a class="corner-tl" href="#tabs-class">Booking Class</a></li>
+        <li><a class="corner-tr" href="#tabs-camp">Booking Camp</a></li>
+        <li><a class="corner-tr" href="#tabs-workshop">Booking Workshop</a></li>
+        <li><a class="corner-tr" href="#tabs-birthday">Booking Birthday</a></li>
+    </ul>
+    <div id="tabs-class">
+        @Html.Partial("Booking-Class", new ClassItem())
+    </div>
+    <div id="tabs-camp">
+        @Html.Partial("Booking-Camp", new CampItem())
+    </div>
+    <div id="tabs-workshop">
+        @Html.Partial("Booking-Workshop", new WorkshopItem())
+    </div>
+    <div id="tabs-birthday">
+        @Html.Partial("Booking-Birthday", new BirthdayItem())
+    </div>
+</div>

@@ -1,0 +1,187 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model Location
+@{
+    ViewBag.BreadCrumbs = new string[] { "Locations" };
+    ViewBag.Title = Model.Id > 0 ? "Edit Location" : "New Location";
+    ViewBag.CurrentMenu = 2;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var isSuperAdmin = User.IsInRole(EggheadWeb.Security.UserRoleProvider.SUPER_ADMIN);
+
+    var calendarSearchForm = new CalendarSearchForm
+    {
+        ViewBy = CalendarViewType.Month,
+        LocationId = Model.Id,
+        ShowWorkshops = true,
+        ShowBirthdays = false,
+        Date = DateTime.Today
+    };
+}
+@using (Html.BeginForm())
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @if (Model.Id <= 0)
+        {
+            Html.RenderPartial("MainTaskbar", new MainTaskbarItem { Save = true });
+        }
+        else
+        {
+            Html.RenderPartial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "locations-detail", Print = true, Email = true, ExcelAction = "location-detail-excel?id=" + Model.Id, Save = true, EmailToAddress = Model.Email, EmailToName = Model.ContactPerson });
+        }
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl("Admin", new { action = "locations", research = "true" })" />
+    </div>
+    @Html.ValidationSummary(true)
+    <table>
+        <colgroup>
+            <col class="width4" />
+            <col class="width2" />
+        </colgroup>
+        @if (isSuperAdmin)
+        {
+            <tr>
+                <td>
+                    <p>
+                        <label class="required" for="name">
+                            Area:</label>
+                        @Html.ValidationMessageFor(m => m.AreaId)<br />
+                        @Html.DropDownListFor(m => m.AreaId, SelectLists.Areas(new EggheadEntities()), string.Empty)
+                    </p>
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
+        <tr>
+            <td>
+                <p>
+                    <label class="required" for="name">
+                        Name:</label>
+                    @Html.ValidationMessageFor(m => m.Name)<br />
+                    @Html.TextBoxFor(m => m.Name, new { @class = "full" })
+                </p>
+            </td>
+            <td style="padding-left: 20px">
+                <p>
+                    <label for="isActive">
+                        Active:</label>
+                    @Html.ValidationMessageFor(m => m.IsActive)<br />
+                    @Html.CheckBoxFor(m => m.IsActive)
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <label class="required" for="name">
+                        Display Name:</label>
+                    @Html.ValidationMessageFor(m => m.DisplayName)<br />
+                    @Html.TextBoxFor(m => m.DisplayName, new { @class = "full" })
+                </p>
+            </td>
+            <td style="padding-left: 20px">
+                <p>
+                    <label for="canRegistOnline">
+                        Online:</label>
+                    @Html.ValidationMessageFor(m => m.CanRegistOnline)<br />
+                    @Html.CheckBoxFor(m => m.CanRegistOnline)
+                </p>
+            </td>
+        </tr>
+    </table>
+    <div class="tabs">
+        <ul>
+            <li><a class="corner-tl" href="#tabs-schedule">Schedule</a></li>
+            <li><a href="#tabs-address">Address</a></li>
+            <li><a href="#tabs-contact">Contact</a></li>
+            <li><a class="corner-tr" href="#tabs-notes">Notes</a></li>
+        </ul>
+        <div id="tabs-schedule">
+            @if (Model.Id > 0)
+            {
+                Html.RenderAction("calendar-schedule", new { form = calendarSearchForm });
+            }
+        </div>
+        <div id="tabs-address">
+            <table>
+                <colgroup>
+                    <col class="width3" />
+                    <col class="width3" />
+                </colgroup>
+                <tr>
+                    <td colspan='2'>
+                        <p>
+                            <label class="required" for="address">
+                                Address:</label>
+                            @Html.ValidationMessageFor(m => m.Address)<br />
+                            @Html.TextBoxFor(m => m.Address, new { @class = "full" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label class="required" for="city">
+                                City:</label>
+                            @Html.ValidationMessageFor(m => m.City)<br />
+                            @Html.TextBoxFor(m => m.City, new { @class = "half" })
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label class="required" for="state">
+                                State:</label>
+                            @Html.ValidationMessageFor(m => m.State)<br />
+                            @Html.TextBoxFor(m => m.State, new { @class = "half" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label class="required" for="zip">
+                                Zip:</label>
+                            @Html.ValidationMessageFor(m => m.Zip)<br />
+                            @Html.TextBoxFor(m => m.Zip, new { @class = "half" })
+                        </p>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="tabs-contact">
+            <p>
+                <label class="required" for="phoneNumer">
+                    Phone:</label>
+                @Html.ValidationMessageFor(m => m.PhoneNumber)<br />
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "input-phone-number half" })
+            </p>
+            <p>
+                <label class="required" for="email">
+                    Email:</label>
+                @Html.ValidationMessageFor(m => m.Email)<br />
+                @Html.TextBoxFor(m => m.Email, new { @id = "email", @class = "half" })
+            </p>
+            <p>
+                <label class="required" for="contactPerson">
+                    Contact:</label>
+                @Html.ValidationMessageFor(m => m.ContactPerson)<br />
+                @Html.TextBoxFor(m => m.ContactPerson, new { @class = "half" })
+            </p>
+        </div>
+        <div id="tabs-notes">
+            <p>
+                <label for="note">
+                    Note</label>
+                @Html.ValidationMessageFor(m => m.Note)<br />
+                @Html.TextAreaFor(m => m.Note, new { @class = "medium full" })
+            </p>
+        </div>
+    </div>
+        
+    @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.AreaId);
+    @Html.HiddenFor(m => m.Id)}
+@Html.Hidden("to-address", Model.Email, new { @id = "email-to-address" })
+@Html.Hidden("to-name", Model.ContactPerson, new { @id = "email-to-name" })

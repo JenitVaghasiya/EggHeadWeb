@@ -1,0 +1,141 @@
+﻿@model EggheadWeb.Models.Common.ISearchResult
+@{
+    if (!Model.IsPaging)
+    {
+        return;
+    }
+
+    var pagingFormId = (string)ViewBag.PagingFormId;
+    var uniqueId = (string)ViewBag.UniqueId;
+    var ajaxPagingMethod = pagingFormId + uniqueId + "AjaxPaging";
+    var submitPagingMethod = pagingFormId + uniqueId + "SubmitPaging";
+    var pagingMethod = ViewBag.Submit == null ? ajaxPagingMethod : submitPagingMethod;
+    var prePagingMethod = (string)ViewBag.PrePagingMethod;
+    var postPagingMethod = (string)ViewBag.PostPagingMethod;
+    var pageField = (string)ViewBag.PageField ?? "page";
+}
+<script type="text/javascript" defer="defer">
+    function @(ajaxPagingMethod)(a, page) {
+        var form=$("#@(pagingFormId)");
+        var pageField=$("[name=@(pageField)]");
+        if (pageField.length) {
+            pageField.val(page);
+        }
+        else {
+            form.append($("<input type='hidden' name='@(pageField)'>").val(page));
+        }
+
+        @if (!string.IsNullOrEmpty(prePagingMethod))
+        {
+            @(prePagingMethod)@:(form)
+        }
+
+        $.ajax({
+            url: form.attr("action"),
+            method: form.attr("method"),
+            data: form.serialize(),
+            success: function(result) {
+                
+                var container = $(a).closest(".paging-container").html(result);
+                container.find(".search-result-table").trigger("sortEvent");
+
+                @if (!string.IsNullOrEmpty(postPagingMethod))
+                {
+                    @(postPagingMethod)@:();
+                }
+            },
+            error: function(error) {
+                alert('error');
+            }
+        });
+    }
+
+    function @(submitPagingMethod)(a, page) {
+        var form=$("#@(pagingFormId)");
+        if (!form.length) {
+            form=$(a).closest("form");
+        }
+        var pageField=$("[name=@(pageField)]");
+        if (pageField.length) {
+            pageField.val(page);
+        }
+        else {
+            form.append($("<input type='hidden' name='@(pageField)'>").val(page));
+        }
+        form.append($("<input type='hidden' name='research'>").val(true));
+        @if (!string.IsNullOrEmpty(prePagingMethod))
+        {
+            @(prePagingMethod)@:(form)
+        }
+        form.submit();
+    }
+</script>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+    var min = (int)Math.Max(1, Model.CurrentPage - 3);
+    var max = (int)Math.Min(Model.TotalPages, Model.CurrentPage + 3);
+    var count = max - min;
+    if (count < 7)
+    {
+        if (min == 1)
+        {
+            max = (int)Math.Min(Model.TotalPages, min + 6);
+        }
+        else if (max == Model.TotalPages)
+        {
+            min = (int)Math.Max(1, max - 6);
+        }
+    }
+    if (min <= 5)
+    {
+        min = 1;
+    }
+    if (max >= Model.TotalPages - 5)
+    {
+        max = Model.TotalPages;
+    }
+}
+<div class="paging">
+    @if (Model.HasPrevPage)
+    {
+        <a onclick="@(pagingMethod)(this, @(Model.CurrentPage - 1));">Previous</a>
+    }
+    else
+    {
+        <span>Previous</span>
+    }
+    @if (min > 1)
+    {
+        <a onclick="@(pagingMethod)(this,1);">1</a>
+        <a onclick="@(pagingMethod)(this,2);">2</a>
+        <span class="break">...</span>
+    }
+    @for (var page = min; page <= max; page++)
+    {
+        if (page == Model.CurrentPage)
+        {
+        <span class="active">@page</span>
+        }
+        else
+        {
+        <a onclick="@(pagingMethod)(this,@page);">@page</a>
+        }
+    }
+    @if (max < Model.TotalPages)
+    {
+        <span class="break">...</span>
+        <a onclick="@(pagingMethod)(this, @(Model.TotalPages - 1));">@(Model.TotalPages - 1)</a>
+        <a onclick="@(pagingMethod)(this, @(Model.TotalPages));">@(Model.TotalPages)</a>
+    }
+    @if (Model.HasNextPage)
+    {
+        <a onclick="@(pagingMethod)(this, @(Model.CurrentPage + 1));">Next</a>
+    }
+    else
+    {
+        <span>Next</span>
+    }
+</div>

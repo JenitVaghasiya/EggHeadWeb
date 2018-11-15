@@ -1,0 +1,62 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.UserModels;
+@if (Request.IsAuthenticated)
+{
+    var frontends = ViewBag.HelpQuestions as List<FrontendItem>;
+
+    <div class="four columns mt5 mb20" style="width:200px; margin-left:0px">
+        <div class="left_div_top">
+            My Account
+        </div>
+        <div class="left_div_btm">
+            <div class="left_div">
+                <a href="@Url.Action("Classes")">Classes</a>
+            </div>
+            <div class="left_div">
+                <a href="@Url.Action("Camps")">Camps</a>
+            </div>
+            <!--
+            <div class="left_div">
+                <a href="@Url.Action("Account-info")">My Account</a>
+            </div>
+            -->
+            <div class="left_div">
+                <a id="edit-account-info-link" action='@Url.Action("account-edit-init")'>Edit Information</a>
+            </div>
+            <div class="left_div">
+                <a id="student-info-link" action='@Url.Action("student-info")'>Student Information</a>
+            </div>
+            <div class="left_div">
+                <a id="add-student-link" action='@Url.Action("student-add-init")'>Add a Student</a>
+            </div>
+            <div class="left_div">
+                &nbsp;
+            </div>
+            <div class="left_div">
+                <a id="check-schedule-link" action='@Url.Action("check-schedule")'>My Schedule</a>
+            </div>
+            <!--
+            <div class="left_div">
+                <a id="all-activity-link" action='@Url.Action("all-activity")'>Classes & Camps</a>
+            </div>
+            -->
+            <div class="left_div">
+                <a href="@Url.Action("Logout")">Logout</a>
+            </div>
+        </div>
+        <div class="left_div_top">
+            Help & Questions?
+        </div>
+        <div class="left_div_btm">
+            @if (frontends != null)
+            {
+                foreach (var item in frontends.Where(t => t.IsActive).ToList())
+                {
+                    <div class="left_div">
+                        <a class="help-question-link" action='@Url.Action("help-question")' id='@item.Id'>@item.MenuName</a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

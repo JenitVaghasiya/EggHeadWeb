@@ -1,0 +1,66 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model SearchResult<PayrollSearchForm, PayrollItem>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+<table class="display stylized search-result-table">
+    <colgroup>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Instructor
+            </th>
+            <th>
+                Teach
+            </th>
+            <th>
+                Assist
+            </th>
+            <th>
+                Birthday
+            </th>
+            <th>
+                Workshop
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            <tr>
+                <td class="title">
+                    @Html.Partial("Payroll-Detail", item)
+                </td>
+                <td>
+                    @item.TeachCount
+                </td>
+                <td>
+                    @item.AssistCount
+                </td>
+                <td>
+                    @item.BirthdayCount
+                </td>
+                <td>
+                    @item.WorkshopCount
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("payrolls", "", FormMethod.Get, new { @id = "payrollspaging" }))
+{
+    @Html.HiddenFor(m => m.Form.DateFrom)
+    @Html.HiddenFor(m => m.Form.DateTo)
+    @Html.HiddenFor(m => m.Form.LocationId)
+    @Html.HiddenFor(m => m.Form.InstructorId)
+}
+@Html.DisplayForModel("Paging", new
+{
+    Submit = true,
+    PagingFormId = "payrollspaging"
+})

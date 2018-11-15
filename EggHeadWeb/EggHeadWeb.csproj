@@ -1,0 +1,664 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{764263E1-0999-42FB-9A22-1372B6C16F09}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EggHeadWeb</RootNamespace>
+    <AssemblyName>EggHeadWeb</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AuthorizeNet">
+      <HintPath>..\packages\AuthorizeNet.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.4.1.10715.0\lib\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.AccessControl">
+      <HintPath>..\packages\Google.GData.AccessControl.2.2.0.0\lib\Google.GData.AccessControl.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PayPal">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net45\PayPal.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Diagnostics.DiagnosticSource">
+      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.4.1\lib\net45\System.Diagnostics.DiagnosticSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.TelemetryCorrelation">
+      <HintPath>..\packages\Microsoft.AspNet.TelemetryCorrelation.1.0.0\lib\net45\Microsoft.AspNet.TelemetryCorrelation.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.5.1\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.4.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.5.1\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.5.1\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.5.1\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.5.1\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.5.1\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Client, Version=2.2.0.0, Culture=neutral, PublicKeyToken=04a59ca9b0273830, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Extensions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=0b4c5df2ebf20876, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.GData.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="Mvc.Mailer">
+      <HintPath>..\packages\Mvc.Mailer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation">
+      <HintPath>..\packages\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System" />
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="EPPlus">
+      <HintPath>..\packages\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="MVC3ControlsToolkit">
+      <HintPath>..\packages\MVC3ControlsToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Contacts">
+      <HintPath>..\packages\Google.GData.Contacts.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.GData.Calendar">
+      <HintPath>..\packages\Google.GData.Calendar.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="BCrypt.Net">
+      <HintPath>..\packages\BCrypt.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="FluentValidation.Mvc">
+      <HintPath>..\packages\FluentValidation.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="AuthorizeNet\CheckoutFormReaders.cs" />
+    <Compile Include="Common\ApVariableUtil.cs" />
+    <Compile Include="Common\BizExtension.cs" />
+    <Compile Include="Common\Constants.cs" />
+    <Compile Include="Common\ControlllerExtension.cs" />
+    <Compile Include="Common\CryptoUtil.cs" />
+    <Compile Include="Common\EmailUtil.cs" />
+    <Compile Include="Common\GradeUtil.cs" />
+    <Compile Include="Common\Messages.Designer.cs" />
+    <Compile Include="Common\MessageUtil.cs" />
+    <Compile Include="Common\MisUtil.cs" />
+    <Compile Include="Common\RosterPdfUtil.cs" />
+    <Compile Include="Common\ScheduleUtil.cs" />
+    <Compile Include="Common\ServerFileUtil.cs" />
+    <Compile Include="Common\SessionKeys.cs" />
+    <Compile Include="Common\StringUtil.cs" />
+    <Compile Include="Common\TrippleDDLDateTimeAttribute.cs" />
+    <Compile Include="Common\TrippleDDLDateTimeModelBinder.cs" />
+    <Compile Include="Common\TrippleDDLTimeSpanAttribute.cs" />
+    <Compile Include="Common\TrippleDDLTimeSpanBinder.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BaseAdminController.cs" />
+    <Compile Include="Controllers\CalendarExceLDownloadAttribute.cs" />
+    <Compile Include="Controllers\ExcelDownloadAttribute.cs" />
+    <Compile Include="Controllers\PDFDownloadAttribute.cs" />
+    <Compile Include="Controllers\ScheduleExcelDownloadAttribute.cs" />
+    <Compile Include="Controllers\SuperAdminController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="DAL\AdminFrontendRepository.cs" />
+    <Compile Include="DAL\CampRepository.cs" />
+    <Compile Include="DAL\ClassRepository.cs" />
+    <Compile Include="DAL\GenericRepository_TEntity_.cs" />
+    <Compile Include="DAL\UnitOfWork.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Mailers\AdminMailer.cs" />
+    <Compile Include="Mailers\IAdminMailer.cs" />
+    <Compile Include="Mailers\IUserMailer.cs" />
+    <Compile Include="Mailers\UserMailer.cs" />
+    <Compile Include="Models.AdminModels\AreaSearchForm.cs" />
+    <Compile Include="Models.AdminModels\BirthdayItem.cs" />
+    <Compile Include="Models.AdminModels\Calendar.cs" />
+    <Compile Include="Models.AdminModels\CalendarSearchForm.cs" />
+    <Compile Include="Models.AdminModels\CalendarViewType.cs" />
+    <Compile Include="Models.AdminModels\CampItem.cs" />
+    <Compile Include="Models.AdminModels\ClassItem.cs" />
+    <Compile Include="Models.AdminModels\CouponBookingInfo.cs" />
+    <Compile Include="Models.AdminModels\CouponSearchForm.cs" />
+    <Compile Include="Models.AdminModels\EmailSearchForm.cs" />
+    <Compile Include="Models.AdminModels\FrontendItem.cs" />
+    <Compile Include="Models.AdminModels\InstructorExcelItem.cs" />
+    <Compile Include="Models.AdminModels\InstructorItem1.cs" />
+    <Compile Include="Models.AdminModels\InstructorSearchForm.cs" />
+    <Compile Include="Models.AdminModels\LocationItem.cs" />
+    <Compile Include="Models.AdminModels\LocationSearchForm.cs" />
+    <Compile Include="Models.AdminModels\ParentSearchForm.cs" />
+    <Compile Include="Models.AdminModels\PaymentSearchForm.cs" />
+    <Compile Include="Models.AdminModels\PayrollItem.cs" />
+    <Compile Include="Models.AdminModels\PayrollItemDetail.cs" />
+    <Compile Include="Models.AdminModels\PayrollSearchForm.cs" />
+    <Compile Include="Models.AdminModels\RelatedScheduleSearchForm.cs" />
+    <Compile Include="Models.AdminModels\RosterDetailPdf.cs" />
+    <Compile Include="Models.AdminModels\RosterItem.cs" />
+    <Compile Include="Models.AdminModels\RosterSearchForm.cs" />
+    <Compile Include="Models.AdminModels\ScheduleItem.cs" />
+    <Compile Include="Models.AdminModels\ScheduleSearchForm.cs" />
+    <Compile Include="Models.AdminModels\ScheduleSearchResult.cs" />
+    <Compile Include="Models.AdminModels\SystemEmailSetting.cs" />
+    <Compile Include="Models.AdminModels\UserSearchForm.cs" />
+    <Compile Include="Models.AdminModels\WorkshopItem.cs" />
+    <Compile Include="Models.Common\Admin.cs" />
+    <Compile Include="Models.Common\AdminEmailTemplate.cs" />
+    <Compile Include="Models.Common\AdminEmailTemplateAttrs.cs" />
+    <Compile Include="Models.Common\AdminEmailTemplateValidator.cs" />
+    <Compile Include="Models.Common\AdminFrontend.cs" />
+    <Compile Include="Models.Common\AdminFrontendAttr.cs" />
+    <Compile Include="Models.Common\AdminFrontendFormValidator.cs" />
+    <Compile Include="Models.Common\AdminPaymentInfo.cs" />
+    <Compile Include="Models.Common\AdminPaymentInfoValidatior.cs" />
+    <Compile Include="Models.Common\AdminTask.cs" />
+    <Compile Include="Models.Common\AdminTaskValidator.cs" />
+    <Compile Include="Models.Common\AdminValidator.cs" />
+    <Compile Include="Models.Common\APVariable.cs" />
+    <Compile Include="Models.Common\APVariableAttr.cs" />
+    <Compile Include="Models.Common\ApVariableKeys.cs" />
+    <Compile Include="Models.Common\APVariableValidator.cs" />
+    <Compile Include="Models.Common\Area.cs" />
+    <Compile Include="Models.Common\AreaValidator.cs" />
+    <Compile Include="Models.Common\Assign.cs" />
+    <Compile Include="Models.Common\AssignValidator.cs" />
+    <Compile Include="Models.Common\BirtdayAttrs.cs" />
+    <Compile Include="Models.Common\Birthday.cs" />
+    <Compile Include="Models.Common\BirthdayValidator.cs" />
+    <Compile Include="Models.Common\Booking.cs" />
+    <Compile Include="Models.Common\BookingFormFormValidator.cs" />
+    <Compile Include="Models.Common\BookingShortInfoTemp.cs" />
+    <Compile Include="Models.Common\Camp.cs" />
+    <Compile Include="Models.Common\CampValidator.cs" />
+    <Compile Include="Models.Common\ChangePasswordForm.cs" />
+    <Compile Include="Models.Common\ChoiceLists.cs" />
+    <Compile Include="Models.Common\Class.cs" />
+    <Compile Include="Models.Common\ClassCampAttrs.cs" />
+    <Compile Include="Models.Common\ClassValidator.cs" />
+    <Compile Include="Models.Common\Coupon.cs" />
+    <Compile Include="Models.Common\CouponType.cs" />
+    <Compile Include="Models.Common\CouponValidator.cs" />
+    <Compile Include="Models.Common\EggheadEntities.cs" />
+    <Compile Include="Models.Common\EmailTemplate.cs" />
+    <Compile Include="Models.Common\EmailType.cs" />
+    <Compile Include="Models.Common\Frontend.cs" />
+    <Compile Include="Models.Common\FrontendAttr.cs" />
+    <Compile Include="Models.Common\FrontendFormValidator.cs" />
+    <Compile Include="Models.Common\GaderValidator.cs" />
+    <Compile Include="Models.Common\Grade.cs" />
+    <Compile Include="Models.Common\GradeGroup.cs" />
+    <Compile Include="Models.Common\GradeSelect.cs" />
+    <Compile Include="Models.Common\Instructor.cs" />
+    <Compile Include="Models.Common\InstructorItemValidator.cs" />
+    <Compile Include="Models.Common\InstructorValidator.cs" />
+    <Compile Include="Models.Common\ISearchResult.cs" />
+    <Compile Include="Models.Common\Location.cs" />
+    <Compile Include="Models.Common\LocationValidator.cs" />
+    <Compile Include="Models.Common\LoginForm.cs" />
+    <Compile Include="Models.Common\MainTaskbarItem.cs" />
+    <Compile Include="Models.Common\Parent.cs" />
+    <Compile Include="Models.Common\ParentValidator.cs" />
+    <Compile Include="Models.Common\Payment.cs" />
+    <Compile Include="Models.Common\PrivateMessage.cs" />
+    <Compile Include="Models.Common\PrivateMessageValidatior.cs" />
+    <Compile Include="Models.Common\ResetPasswordForm.cs" />
+    <Compile Include="Models.Common\ResetPasswordFormValidator.cs" />
+    <Compile Include="Models.Common\SearchResult.cs" />
+    <Compile Include="Models.Common\SearchResult_TForm, TItem_.cs" />
+    <Compile Include="Models.Common\SelectLists.cs" />
+    <Compile Include="Models.Common\SendEmailForm.cs" />
+    <Compile Include="Models.Common\SendEmailFormValidatior.cs" />
+    <Compile Include="Models.Common\ServiceType.cs" />
+    <Compile Include="Models.Common\Student.cs" />
+    <Compile Include="Models.Common\StudentAttrs.cs" />
+    <Compile Include="Models.Common\StudentValidator.cs" />
+    <Compile Include="Models.Common\SystemEmailTemplateType.cs" />
+    <Compile Include="Models.Common\TaksStatus.cs" />
+    <Compile Include="Models.Common\TaskPriority.cs" />
+    <Compile Include="Models.Common\UpdateEmailPasswordForm.cs" />
+    <Compile Include="Models.Common\UpdateEmailPasswordFormValidator.cs" />
+    <Compile Include="Models.Common\Workshop.cs" />
+    <Compile Include="Models.Common\WorkshopAttrs.cs" />
+    <Compile Include="Models.Common\WorkshopValidator.cs" />
+    <Compile Include="Models.UserModels\BookingShortInfo.cs" />
+    <Compile Include="Models.UserModels\ChildBookingItem.cs" />
+    <Compile Include="Models.UserModels\EnrollStudentItem.cs" />
+    <Compile Include="Models.UserModels\FrontendItem.cs" />
+    <Compile Include="Models.UserModels\ParentItem.cs" />
+    <Compile Include="Models.UserModels\StudentItem.cs" />
+    <Compile Include="Models.UserModels\UserItem.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_036C0B5B-1481-4323-8D20-8F5ADCB23D92.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_5937a670-0e60-4077-877b-f7221da3dda1.cs" />
+    <Compile Include="obj\Debug\TemporaryGeneratedFile_E7A71F73-0F8D-4B9B-B56E-8E70B10BC5D3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\AllowAnonymousAttribute.cs" />
+    <Compile Include="Security\LoginUser.cs" />
+    <Compile Include="Security\UserAuthorizeFilter.cs" />
+    <Compile Include="Security\UserProvider.cs" />
+    <Compile Include="Security\UserRoleProvider.cs" />
+    <Compile Include="Security\WithAuthenController.cs" />
+    <Compile Include="Utility\Common.cs" />
+    <Compile Include="Utility\Configuration.cs" />
+    <Compile Include="Utility\DateTimeExtension.cs" />
+    <Compile Include="Utility\GoogleCalendarHelper.cs" />
+    <Compile Include="Utility\GoogleContactHelper.cs" />
+    <Compile Include="Utility\PayPal.cs" />
+    <Compile Include="Utility\PayPalOrder.cs" />
+    <Compile Include="Utility\PayPalRedirect.cs" />
+    <Compile Include="Utility\PayPalSettings.cs" />
+    <Compile Include="Utility\RequestFlow.cs" />
+    <Compile Include="Utility\RequestFlowItem.cs" />
+    <Compile Include="Utility\RequestFlowItemMessage.cs" />
+    <Compile Include="Utility\RequestFlowItemMessageType.cs" />
+    <Compile Include="Utility\TimeExtension.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Antlr3.Runtime.dll" />
+    <Content Include="bin\Google.GData.AccessControl.dll" />
+    <Content Include="bin\Microsoft.AI.Agent.Intercept.dll" />
+    <Content Include="bin\Microsoft.AI.DependencyCollector.dll" />
+    <Content Include="bin\Microsoft.AI.PerfCounterCollector.dll" />
+    <Content Include="bin\Microsoft.AI.ServerTelemetryChannel.dll" />
+    <Content Include="bin\Microsoft.AI.Web.dll" />
+    <Content Include="bin\Microsoft.AI.WindowsServer.dll" />
+    <Content Include="bin\Microsoft.ApplicationInsights.dll" />
+    <Content Include="bin\Microsoft.AspNet.TelemetryCorrelation.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll" />
+    <Content Include="bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml" />
+    <Content Include="bin\Microsoft.Web.Infrastructure.dll" />
+    <Content Include="bin\Newtonsoft.Json.dll" />
+    <Content Include="bin\System.Diagnostics.DiagnosticSource.dll" />
+    <Content Include="bin\System.Web.Helpers.dll" />
+    <Content Include="bin\System.Web.Mvc.dll" />
+    <Content Include="bin\System.Web.Optimization.dll" />
+    <Content Include="bin\System.Web.Razor.dll" />
+    <Content Include="bin\System.Web.WebPages.Deployment.dll" />
+    <Content Include="bin\System.Web.WebPages.dll" />
+    <Content Include="bin\System.Web.WebPages.Razor.dll" />
+    <Content Include="bin\WebGrease.dll" />
+    <Content Include="Content\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Models.Common.EggheadEntities.csdl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Models.Common.EggheadEntities.msl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Models.Common.EggheadEntities.ssdl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-3.3.1.js" />
+    <Content Include="Scripts\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.js" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\AdminMailer\MailTemplate.cshtml" />
+    <Content Include="Views\AdminMailer\_Layout.cshtml" />
+    <Content Include="Views\Admin\AdminNotAssign.cshtml" />
+    <Content Include="Views\Admin\Birthday-Detail.cshtml" />
+    <Content Include="Views\Admin\Booking-Birthday.cshtml" />
+    <Content Include="Views\Admin\Booking-Camp.cshtml" />
+    <Content Include="Views\Admin\Booking-Class.cshtml" />
+    <Content Include="Views\Admin\Booking-Workshop.cshtml" />
+    <Content Include="Views\Admin\Booking.cshtml" />
+    <Content Include="Views\Admin\Calendar-Schedule.cshtml" />
+    <Content Include="Views\Admin\Calendar.cshtml" />
+    <Content Include="Views\Admin\CalendarControl.cshtml" />
+    <Content Include="Views\Admin\Camp-Detail.cshtml" />
+    <Content Include="Views\Admin\Charge.cshtml" />
+    <Content Include="Views\Admin\ChargeFail.cshtml" />
+    <Content Include="Views\Admin\ChargeSuccess.cshtml" />
+    <Content Include="Views\Admin\Class-Detail.cshtml" />
+    <Content Include="Views\Admin\Coupons-Detail.cshtml" />
+    <Content Include="Views\Admin\Coupons-Paging.cshtml" />
+    <Content Include="Views\Admin\Coupons.cshtml" />
+    <Content Include="Views\Admin\Frontend-Detail.cshtml" />
+    <Content Include="Views\Admin\Frontend.cshtml" />
+    <Content Include="Views\Admin\Instructors-Detail-Admin.cshtml" />
+    <Content Include="Views\Admin\Instructors-Detail.cshtml" />
+    <Content Include="Views\Admin\Instructors-Paging.cshtml" />
+    <Content Include="Views\Admin\Instructors.cshtml" />
+    <Content Include="Views\Admin\Locations-Detail-Admin.cshtml" />
+    <Content Include="Views\Admin\Locations-Detail.cshtml" />
+    <Content Include="Views\Admin\Locations-Paging.cshtml" />
+    <Content Include="Views\Admin\Locations.cshtml" />
+    <Content Include="Views\Admin\Parents-Detail-Admin.cshtml" />
+    <Content Include="Views\Admin\Parents-Detail.cshtml" />
+    <Content Include="Views\Admin\Parents-Paging.cshtml" />
+    <Content Include="Views\Admin\Parents.cshtml" />
+    <Content Include="Views\Admin\Payment.cshtml" />
+    <Content Include="Views\Admin\Payroll-Detail.cshtml" />
+    <Content Include="Views\Admin\Payroll-Paging.cshtml" />
+    <Content Include="Views\Admin\Payroll.cshtml" />
+    <Content Include="Views\Admin\Reletated-Schedules.cshtml" />
+    <Content Include="Views\Admin\Reset-Password.cshtml" />
+    <Content Include="Views\Admin\Roster-Detail-PDF.cshtml" />
+    <Content Include="Views\Admin\Roster-Detail-Print.cshtml" />
+    <Content Include="Views\Admin\Roster-Detail.cshtml" />
+    <Content Include="Views\Admin\Rosters-Birthdays.cshtml" />
+    <Content Include="Views\Admin\Rosters-Camps.cshtml" />
+    <Content Include="Views\Admin\Rosters-Classes.cshtml" />
+    <Content Include="Views\Admin\Rosters-PdfTemplate.cshtml" />
+    <Content Include="Views\Admin\Rosters-Print.cshtml" />
+    <Content Include="Views\Admin\Rosters-Workshops.cshtml" />
+    <Content Include="Views\Admin\Rosters.cshtml" />
+    <Content Include="Views\Admin\Schedules-Birthdays.cshtml" />
+    <Content Include="Views\Admin\Schedules-Camps.cshtml" />
+    <Content Include="Views\Admin\Schedules-Classes.cshtml" />
+    <Content Include="Views\Admin\Schedules-Workshops.cshtml" />
+    <Content Include="Views\Admin\Schedules.cshtml" />
+    <Content Include="Views\Admin\Students-Detail.cshtml" />
+    <Content Include="Views\Admin\Students.cshtml" />
+    <Content Include="Views\Admin\Workshop-Detail.cshtml" />
+    <Content Include="Views\Shared\Send-Email.cshtml" />
+    <Content Include="Views\Shared\Home.backup.cshtml" />
+    <Content Include="Views\Shared\Home.cshtml" />
+    <Content Include="Views\Shared\Login.cshtml" />
+    <Content Include="Views\Shared\MainTaskbar.cshtml" />
+    <Content Include="Views\Shared\Private-Message-Display.cshtml" />
+    <Content Include="Views\Shared\PrivateMessages.cshtml" />
+    <Content Include="Views\Shared\Profile-Info.cshtml" />
+    <Content Include="Views\Shared\Profile.cshtml" />
+    <Content Include="Views\Shared\Template-Detail.cshtml" />
+    <Content Include="Views\SuperAdmin\Frontend-Detail.cshtml" />
+    <Content Include="Views\SuperAdmin\Frontend.cshtml" />
+    <Content Include="Views\SuperAdmin\Grades.cshtml" />
+    <Content Include="Views\SuperAdmin\System-Email-Setting.cshtml" />
+    <Content Include="Views\SuperAdmin\System-Template-Detail.cshtml" />
+    <Content Include="Views\SuperAdmin\Terms-Detail.cshtml" />
+    <Content Include="Views\SuperAdmin\Territories-Detail.cshtml" />
+    <Content Include="Views\SuperAdmin\Territories-Paging.cshtml" />
+    <Content Include="Views\SuperAdmin\Territories.cshtml" />
+    <Content Include="Views\SuperAdmin\Users-Edit.cshtml" />
+    <Content Include="Views\SuperAdmin\Users-Paging.cshtml" />
+    <Content Include="Views\SuperAdmin\Users-ResetPass.cshtml" />
+    <Content Include="Views\SuperAdmin\Users.cshtml" />
+    <Content Include="Views\UserMailer\PasswordReset.cshtml" />
+    <Content Include="Views\UserMailer\Welcome.cshtml" />
+    <Content Include="Views\UserMailer\_Layout.cshtml" />
+    <Content Include="Views\Users\Account-Edit.cshtml" />
+    <Content Include="Views\Users\Account-info.cshtml" />
+    <Content Include="Views\Users\All-activity.cshtml" />
+    <Content Include="Views\Users\Area-Not-Found.cshtml" />
+    <Content Include="Views\Users\Booking-List.cshtml" />
+    <Content Include="Views\Users\Camp.cshtml" />
+    <Content Include="Views\Users\Camps.cshtml" />
+    <Content Include="Views\Users\Check-schedule.cshtml" />
+    <Content Include="Views\Users\Class.cshtml" />
+    <Content Include="Views\Users\Classes.cshtml" />
+    <Content Include="Views\Users\Enroll-confirm.cshtml" />
+    <Content Include="Views\Users\Help-Question.cshtml" />
+    <Content Include="Views\Users\Login.cshtml" />
+    <Content Include="Views\Users\LoginMessages.cshtml" />
+    <Content Include="Views\Users\Password-Change.cshtml" />
+    <Content Include="Views\Users\Password-Reset.cshtml" />
+    <Content Include="Views\Users\Payment-Detail.cshtml" />
+    <Content Include="Views\Users\Payment-Error.cshtml" />
+    <Content Include="Views\Users\Payment.cshtml" />
+    <Content Include="Views\Users\Register.cshtml" />
+    <Content Include="Views\Users\SignupFrstStep.cshtml" />
+    <Content Include="Views\Users\SignupScndStep.cshtml" />
+    <Content Include="Views\Users\SignupThrdStep.cshtml" />
+    <Content Include="Views\Users\Student-Add.cshtml" />
+    <Content Include="Views\Users\Student-Edit.cshtml" />
+    <Content Include="Views\Users\Student-info.cshtml" />
+    <Content Include="Views\Shared\AdminTasks.cshtml" />
+    <Content Include="Views\Shared\Email-Update.cshtml" />
+    <Content Include="Views\Shared\Email.cshtml" />
+    <Content Include="Views\Shared\_ParentLoginLayout.cshtml" />
+    <Content Include="Views\Shared\_ParentUserLayout.cshtml" />
+    <Content Include="Views\Shared\_UserInformMessages.cshtml" />
+    <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\Shared\_UserLeftMenu.cshtml" />
+    <Content Include="Views\Shared\_UserMainMenu.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ActiveValue.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ItemsPerPage.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Paging.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GradeDropDown.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\GradeSelect.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TrippleDDLDateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TrippleDDLTimeSpan.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminLoginLayout.cshtml" />
+    <Content Include="Views\Shared\_AdminSendMailLayout.cshtml" />
+    <Content Include="Views\Shared\_ExcelLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-theme.min.css.map" />
+    <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.3.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Common\Messages.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58360</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:58360/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

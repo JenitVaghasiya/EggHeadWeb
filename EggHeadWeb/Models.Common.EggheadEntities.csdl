@@ -1,0 +1,1099 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EggHeadWebModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="EggheadEntities" annotation:LazyLoadingEnabled="true" a:TypeAccess="Public" xmlns:a="http://schemas.microsoft.com/ado/2006/04/codegeneration">
+    <EntitySet Name="Grades" EntityType="EggHeadWebModel.Grade" />
+    <EntitySet Name="GradeGroups" EntityType="EggHeadWebModel.GradeGroup" />
+    <EntitySet Name="Students" EntityType="EggHeadWebModel.Student" />
+    <AssociationSet Name="FK_Student_Grade" Association="EggHeadWebModel.FK_Student_Grade">
+      <End Role="Grade" EntitySet="Grades" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <AssociationSet Name="GradeGroupDetail" Association="EggHeadWebModel.GradeGroupDetail">
+      <End Role="Grade" EntitySet="Grades" />
+      <End Role="GradeGroup" EntitySet="GradeGroups" />
+    </AssociationSet>
+    <EntitySet Name="AdminPaymentInfoes" EntityType="EggHeadWebModel.AdminPaymentInfo" />
+    <EntitySet Name="Bookings" EntityType="EggHeadWebModel.Booking" />
+    <AssociationSet Name="FK_Booking_Student" Association="EggHeadWebModel.FK_Booking_Student">
+      <End Role="Student" EntitySet="Students" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <EntitySet Name="Instructors" EntityType="EggHeadWebModel.Instructor" />
+    <EntitySet Name="Assigns" EntityType="EggHeadWebModel.Assign" />
+    <AssociationSet Name="FK_InstructorAssign_Instructor" Association="EggHeadWebModel.FK_InstructorAssign_Instructor">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Assign" EntitySet="Assigns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructorAssign_Instructor1" Association="EggHeadWebModel.FK_InstructorAssign_Instructor1">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Assign" EntitySet="Assigns" />
+    </AssociationSet>
+    <EntitySet Name="Parents" EntityType="EggHeadWebModel.Parent" />
+    <AssociationSet Name="FK_Student_Parent" Association="EggHeadWebModel.FK_Student_Parent">
+      <End Role="Parent" EntitySet="Parents" />
+      <End Role="Student" EntitySet="Students" />
+    </AssociationSet>
+    <EntitySet Name="Payments" EntityType="EggHeadWebModel.Payment" />
+    <EntitySet Name="AdminEmailTemplates" EntityType="EggHeadWebModel.AdminEmailTemplate" />
+    <EntitySet Name="EmailTemplates" EntityType="EggHeadWebModel.EmailTemplate" />
+    <EntitySet Name="Frontends" EntityType="EggHeadWebModel.Frontend" />
+    <EntitySet Name="Admins" EntityType="EggHeadWebModel.Admin" />
+    <AssociationSet Name="FK_AdminEmailTemplate_Admin" Association="EggHeadWebModel.FK_AdminEmailTemplate_Admin">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="AdminEmailTemplate" EntitySet="AdminEmailTemplates" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminPaymentInfo_AdminPaymentInfo" Association="EggHeadWebModel.FK_AdminPaymentInfo_AdminPaymentInfo">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="AdminPaymentInfo" EntitySet="AdminPaymentInfoes" />
+    </AssociationSet>
+    <EntitySet Name="AdminTasks" EntityType="EggHeadWebModel.AdminTask" />
+    <AssociationSet Name="FK_AdminTask_Admin" Association="EggHeadWebModel.FK_AdminTask_Admin">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="AdminTask" EntitySet="AdminTasks" />
+    </AssociationSet>
+    <EntitySet Name="Areas" EntityType="EggHeadWebModel.Area" />
+    <AssociationSet Name="FK_Admin_Area" Association="EggHeadWebModel.FK_Admin_Area">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="Admin" EntitySet="Admins" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Instructor_Area" Association="EggHeadWebModel.FK_Instructor_Area">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="Instructor" EntitySet="Instructors" />
+    </AssociationSet>
+    <EntitySet Name="Locations" EntityType="EggHeadWebModel.Location" />
+    <AssociationSet Name="FK_Location_Area" Association="EggHeadWebModel.FK_Location_Area">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="Location" EntitySet="Locations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Parent_Location" Association="EggHeadWebModel.FK_Parent_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Parent" EntitySet="Parents" />
+    </AssociationSet>
+    <EntitySet Name="AdminFrontends" EntityType="EggHeadWebModel.AdminFrontend" />
+    <AssociationSet Name="FK_AdminFrontend_Admin" Association="EggHeadWebModel.FK_AdminFrontend_Admin">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="AdminFrontend" EntitySet="AdminFrontends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_AdminFrontend_Frontend" Association="EggHeadWebModel.FK_AdminFrontend_Frontend">
+      <End Role="Frontend" EntitySet="Frontends" />
+      <End Role="AdminFrontend" EntitySet="AdminFrontends" />
+    </AssociationSet>
+    <EntitySet Name="APVariables" EntityType="EggHeadWebModel.APVariable" />
+    <EntitySet Name="Coupons" EntityType="EggHeadWebModel.Coupon" />
+    <AssociationSet Name="FK_Coupon_Admin" Association="EggHeadWebModel.FK_Coupon_Admin">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="Coupon" EntitySet="Coupons" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Coupon" Association="EggHeadWebModel.FK_Booking_Coupon">
+      <End Role="Coupon" EntitySet="Coupons" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <EntitySet Name="PrivateMessages" EntityType="EggHeadWebModel.PrivateMessage" />
+    <AssociationSet Name="FK_PrivateMessage_Admin" Association="EggHeadWebModel.FK_PrivateMessage_Admin">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="PrivateMessage" EntitySet="PrivateMessages" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PrivateMessage_Admin1" Association="EggHeadWebModel.FK_PrivateMessage_Admin1">
+      <End Role="Admin" EntitySet="Admins" />
+      <End Role="PrivateMessage" EntitySet="PrivateMessages" />
+    </AssociationSet>
+    <EntitySet Name="Birthdays" EntityType="EggHeadWebModel.Birthday" />
+    <EntitySet Name="Workshops" EntityType="EggHeadWebModel.Workshop" />
+    <AssociationSet Name="FK_Birthday_Area" Association="EggHeadWebModel.FK_Birthday_Area">
+      <End Role="Area" EntitySet="Areas" />
+      <End Role="Birthday" EntitySet="Birthdays" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Assign_Birthday2" Association="EggHeadWebModel.FK_Assign_Birthday2">
+      <End Role="Birthday" EntitySet="Birthdays" />
+      <End Role="Assign" EntitySet="Assigns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructorAssign_Workshop" Association="EggHeadWebModel.FK_InstructorAssign_Workshop">
+      <End Role="Workshop" EntitySet="Workshops" />
+      <End Role="Assign" EntitySet="Assigns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Birthday" Association="EggHeadWebModel.FK_Booking_Birthday">
+      <End Role="Birthday" EntitySet="Birthdays" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Workshop" Association="EggHeadWebModel.FK_Booking_Workshop">
+      <End Role="Workshop" EntitySet="Workshops" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workshop_GradeGroup" Association="EggHeadWebModel.FK_Workshop_GradeGroup">
+      <End Role="GradeGroup" EntitySet="GradeGroups" />
+      <End Role="Workshop" EntitySet="Workshops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workshop_Instructor" Association="EggHeadWebModel.FK_Workshop_Instructor">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Workshop" EntitySet="Workshops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workshop_Instructor1" Association="EggHeadWebModel.FK_Workshop_Instructor1">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Workshop" EntitySet="Workshops" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Workshop_Location" Association="EggHeadWebModel.FK_Workshop_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Workshop" EntitySet="Workshops" />
+    </AssociationSet>
+    <EntitySet Name="Camps" EntityType="EggHeadWebModel.Camp" />
+    <EntitySet Name="Classes" EntityType="EggHeadWebModel.Class" />
+    <AssociationSet Name="FK_InstructorAssign_Camp" Association="EggHeadWebModel.FK_InstructorAssign_Camp">
+      <End Role="Camp" EntitySet="Camps" />
+      <End Role="Assign" EntitySet="Assigns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_InstructorAssign_Class" Association="EggHeadWebModel.FK_InstructorAssign_Class">
+      <End Role="Class" EntitySet="Classes" />
+      <End Role="Assign" EntitySet="Assigns" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Camp" Association="EggHeadWebModel.FK_Booking_Camp">
+      <End Role="Camp" EntitySet="Camps" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Booking_Class" Association="EggHeadWebModel.FK_Booking_Class">
+      <End Role="Class" EntitySet="Classes" />
+      <End Role="Booking" EntitySet="Bookings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Camp_GradeGroup" Association="EggHeadWebModel.FK_Camp_GradeGroup">
+      <End Role="GradeGroup" EntitySet="GradeGroups" />
+      <End Role="Camp" EntitySet="Camps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Camp_Instructor" Association="EggHeadWebModel.FK_Camp_Instructor">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Camp" EntitySet="Camps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Camp_Instructor1" Association="EggHeadWebModel.FK_Camp_Instructor1">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Camp" EntitySet="Camps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Camp_Location" Association="EggHeadWebModel.FK_Camp_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Camp" EntitySet="Camps" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class_GradeGroup" Association="EggHeadWebModel.FK_Class_GradeGroup">
+      <End Role="GradeGroup" EntitySet="GradeGroups" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class_Instructor" Association="EggHeadWebModel.FK_Class_Instructor">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class_Instructor1" Association="EggHeadWebModel.FK_Class_Instructor1">
+      <End Role="Instructor" EntitySet="Instructors" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Class_Location" Association="EggHeadWebModel.FK_Class_Location">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="Class" EntitySet="Classes" />
+    </AssociationSet>
+    <EntitySet Name="BookingShortInfoTemps" EntityType="EggHeadWebModel.BookingShortInfoTemp" />
+  </EntityContainer>
+  <EntityType Name="Grade">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Byte" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Students" Relationship="EggHeadWebModel.FK_Student_Grade" FromRole="Grade" ToRole="Student" />
+    <NavigationProperty Name="GradeGroups" Relationship="EggHeadWebModel.GradeGroupDetail" FromRole="Grade" ToRole="GradeGroup" />
+  </EntityType>
+  <EntityType Name="GradeGroup">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Grades" Relationship="EggHeadWebModel.GradeGroupDetail" FromRole="GradeGroup" ToRole="Grade" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Workshops" Relationship="EggHeadWebModel.FK_Workshop_GradeGroup" FromRole="GradeGroup" ToRole="Workshop" />
+    <NavigationProperty Name="Camps" Relationship="EggHeadWebModel.FK_Camp_GradeGroup" FromRole="GradeGroup" ToRole="Camp" />
+    <NavigationProperty Name="Classes" Relationship="EggHeadWebModel.FK_Class_GradeGroup" FromRole="GradeGroup" ToRole="Class" />
+  </EntityType>
+  <EntityType Name="Student">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="ParentId" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="GradeId" Nullable="false" />
+    <Property Type="String" Name="Gender" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+    <Property Type="DateTime" Name="BirthDate" Nullable="false" Precision="3" />
+    <Property Type="String" Name="Notes" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Grade" Relationship="EggHeadWebModel.FK_Student_Grade" FromRole="Student" ToRole="Grade" />
+    <NavigationProperty Name="Bookings" Relationship="EggHeadWebModel.FK_Booking_Student" FromRole="Student" ToRole="Booking" />
+    <NavigationProperty Name="Parent" Relationship="EggHeadWebModel.FK_Student_Parent" FromRole="Student" ToRole="Parent" />
+  </EntityType>
+  <Association Name="FK_Student_Grade">
+    <End Type="EggHeadWebModel.Grade" Role="Grade" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Student" Role="Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grade">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="GradeId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GradeGroupDetail">
+    <End Type="EggHeadWebModel.Grade" Role="Grade" Multiplicity="*" />
+    <End Type="EggHeadWebModel.GradeGroup" Role="GradeGroup" Multiplicity="*" />
+  </Association>
+  <EntityType Name="AdminPaymentInfo">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AdminId" Nullable="false" />
+    <Property Type="String" Name="APILoginID" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="TransactionKey" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="MD5HashPhrase" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="LastUpdateDate" Precision="3" />
+    <NavigationProperty Name="Admin" Relationship="EggHeadWebModel.FK_AdminPaymentInfo_AdminPaymentInfo" FromRole="AdminPaymentInfo" ToRole="Admin" />
+  </EntityType>
+  <EntityType Name="Booking">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="CampId" />
+    <Property Type="Int64" Name="ClassId" />
+    <Property Type="Int64" Name="WorkshopId" />
+    <Property Type="Int64" Name="BirthdayId" />
+    <Property Type="Int64" Name="StudentId" Nullable="false" />
+    <Property Type="DateTime" Name="BookDate" Nullable="false" Precision="3" />
+    <Property Type="Int64" Name="CouponId" />
+    <NavigationProperty Name="Student" Relationship="EggHeadWebModel.FK_Booking_Student" FromRole="Booking" ToRole="Student" />
+    <NavigationProperty Name="Coupon" Relationship="EggHeadWebModel.FK_Booking_Coupon" FromRole="Booking" ToRole="Coupon" />
+    <NavigationProperty Name="Birthday" Relationship="EggHeadWebModel.FK_Booking_Birthday" FromRole="Booking" ToRole="Birthday" />
+    <NavigationProperty Name="Workshop" Relationship="EggHeadWebModel.FK_Booking_Workshop" FromRole="Booking" ToRole="Workshop" />
+    <NavigationProperty Name="Camp" Relationship="EggHeadWebModel.FK_Booking_Camp" FromRole="Booking" ToRole="Camp" />
+    <NavigationProperty Name="Class" Relationship="EggHeadWebModel.FK_Booking_Class" FromRole="Booking" ToRole="Class" />
+  </EntityType>
+  <Association Name="FK_Booking_Student">
+    <End Type="EggHeadWebModel.Student" Role="Student" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="StudentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Instructor">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AreaId" Nullable="false" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PhoneNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Pay" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Address" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="City" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Zip" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Email" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Note" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Int64" Name="CreatedBy" Nullable="false" />
+    <Property Type="DateTime" Name="CreatedDate" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Assigns" Relationship="EggHeadWebModel.FK_InstructorAssign_Instructor" FromRole="Instructor" ToRole="Assign" />
+    <NavigationProperty Name="Assigns1" Relationship="EggHeadWebModel.FK_InstructorAssign_Instructor1" FromRole="Instructor" ToRole="Assign" />
+    <NavigationProperty Name="Area" Relationship="EggHeadWebModel.FK_Instructor_Area" FromRole="Instructor" ToRole="Area" />
+    <NavigationProperty Name="Workshops" Relationship="EggHeadWebModel.FK_Workshop_Instructor" FromRole="Instructor" ToRole="Workshop" />
+    <NavigationProperty Name="Workshops1" Relationship="EggHeadWebModel.FK_Workshop_Instructor1" FromRole="Instructor" ToRole="Workshop" />
+    <NavigationProperty Name="Camps" Relationship="EggHeadWebModel.FK_Camp_Instructor" FromRole="Instructor" ToRole="Camp" />
+    <NavigationProperty Name="Camps1" Relationship="EggHeadWebModel.FK_Camp_Instructor1" FromRole="Instructor" ToRole="Camp" />
+    <NavigationProperty Name="Classes" Relationship="EggHeadWebModel.FK_Class_Instructor" FromRole="Instructor" ToRole="Class" />
+    <NavigationProperty Name="Classes1" Relationship="EggHeadWebModel.FK_Class_Instructor1" FromRole="Instructor" ToRole="Class" />
+  </EntityType>
+  <EntityType Name="Assign">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="Date" Nullable="false" Precision="3" />
+    <Property Type="Int64" Name="InstructorId" Nullable="false" />
+    <Property Type="Int64" Name="AssistantId" />
+    <Property Type="Int64" Name="ClassId" />
+    <Property Type="Int64" Name="CampId" />
+    <Property Type="Int64" Name="BirthdayId" />
+    <Property Type="Int64" Name="WorkshopId" />
+    <NavigationProperty Name="Instructor" Relationship="EggHeadWebModel.FK_InstructorAssign_Instructor" FromRole="Assign" ToRole="Instructor" />
+    <NavigationProperty Name="Instructor1" Relationship="EggHeadWebModel.FK_InstructorAssign_Instructor1" FromRole="Assign" ToRole="Instructor" />
+    <NavigationProperty Name="Birthday" Relationship="EggHeadWebModel.FK_Assign_Birthday2" FromRole="Assign" ToRole="Birthday" />
+    <NavigationProperty Name="Workshop" Relationship="EggHeadWebModel.FK_InstructorAssign_Workshop" FromRole="Assign" ToRole="Workshop" />
+    <NavigationProperty Name="Camp" Relationship="EggHeadWebModel.FK_InstructorAssign_Camp" FromRole="Assign" ToRole="Camp" />
+    <NavigationProperty Name="Class" Relationship="EggHeadWebModel.FK_InstructorAssign_Class" FromRole="Assign" ToRole="Class" />
+  </EntityType>
+  <Association Name="FK_InstructorAssign_Instructor">
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Assign" Role="Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="InstructorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructorAssign_Instructor1">
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Assign" Role="Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="AssistantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Parent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="LocationId" Nullable="false" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PhoneNumer" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Address" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="City" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="State" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Zip" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="LastLoginDateTime" Precision="3" />
+    <Property Type="Int64" Name="CreatedBy" />
+    <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+    <NavigationProperty Name="Students" Relationship="EggHeadWebModel.FK_Student_Parent" FromRole="Parent" ToRole="Student" />
+    <NavigationProperty Name="Location" Relationship="EggHeadWebModel.FK_Parent_Location" FromRole="Parent" ToRole="Location" />
+  </EntityType>
+  <Association Name="FK_Student_Parent">
+    <End Type="EggHeadWebModel.Parent" Role="Parent" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Student" Role="Student" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Parent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="ParentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Payment">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AdminId" />
+    <Property Type="Int64" Name="ParentId" Nullable="false" />
+    <Property Type="Decimal" Name="Amount" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="String" Name="AuthCode" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="TransactionID" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ServiceName" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PaymentMessage" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="PaymentDate" Precision="3" />
+    <Property Type="String" Name="Bill_FirstName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Bill_LastName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Bill_Address" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Bill_City" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Bill_Zip" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Bill_State" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Bill_Email" MaxLength="50" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="AdminEmailTemplate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AdminId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="MailSubject" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="MailBody" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Admin" Relationship="EggHeadWebModel.FK_AdminEmailTemplate_Admin" FromRole="AdminEmailTemplate" ToRole="Admin" />
+  </EntityType>
+  <EntityType Name="EmailTemplate">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int32" Name="Type" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="MailSubject" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="MailBody" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="Frontend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="MenuName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="String" Name="PageContent" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AdminFrontends" Relationship="EggHeadWebModel.FK_AdminFrontend_Frontend" FromRole="Frontend" ToRole="AdminFrontend" />
+  </EntityType>
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AreaId" />
+    <Property Type="String" Name="Username" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Password" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="FirstName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="LastName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PhoneNumber" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Address" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="City" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Zip" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Email" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="EmailPassword" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsSuperAdmin" Nullable="false" />
+    <NavigationProperty Name="AdminEmailTemplates" Relationship="EggHeadWebModel.FK_AdminEmailTemplate_Admin" FromRole="Admin" ToRole="AdminEmailTemplate" />
+    <NavigationProperty Name="AdminPaymentInfoes" Relationship="EggHeadWebModel.FK_AdminPaymentInfo_AdminPaymentInfo" FromRole="Admin" ToRole="AdminPaymentInfo" />
+    <NavigationProperty Name="AdminTasks" Relationship="EggHeadWebModel.FK_AdminTask_Admin" FromRole="Admin" ToRole="AdminTask" />
+    <NavigationProperty Name="Area" Relationship="EggHeadWebModel.FK_Admin_Area" FromRole="Admin" ToRole="Area" />
+    <NavigationProperty Name="AdminFrontends" Relationship="EggHeadWebModel.FK_AdminFrontend_Admin" FromRole="Admin" ToRole="AdminFrontend" />
+    <NavigationProperty Name="Coupons" Relationship="EggHeadWebModel.FK_Coupon_Admin" FromRole="Admin" ToRole="Coupon" />
+    <NavigationProperty Name="PrivateMessages" Relationship="EggHeadWebModel.FK_PrivateMessage_Admin" FromRole="Admin" ToRole="PrivateMessage" />
+    <NavigationProperty Name="PrivateMessages1" Relationship="EggHeadWebModel.FK_PrivateMessage_Admin1" FromRole="Admin" ToRole="PrivateMessage" />
+  </EntityType>
+  <Association Name="FK_AdminEmailTemplate_Admin">
+    <End Type="EggHeadWebModel.Admin" Role="Admin" Multiplicity="1" />
+    <End Type="EggHeadWebModel.AdminEmailTemplate" Role="AdminEmailTemplate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminEmailTemplate">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminPaymentInfo_AdminPaymentInfo">
+    <End Type="EggHeadWebModel.Admin" Role="Admin" Multiplicity="1" />
+    <End Type="EggHeadWebModel.AdminPaymentInfo" Role="AdminPaymentInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminPaymentInfo">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AdminTask">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AdminId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="Priority" Nullable="false" />
+    <Property Type="Byte" Name="Status" Nullable="false" />
+    <Property Type="DateTime" Name="DueDate" Precision="3" />
+    <Property Type="String" Name="Notes" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Admin" Relationship="EggHeadWebModel.FK_AdminTask_Admin" FromRole="AdminTask" ToRole="Admin" />
+  </EntityType>
+  <Association Name="FK_AdminTask_Admin">
+    <End Type="EggHeadWebModel.Admin" Role="Admin" Multiplicity="1" />
+    <End Type="EggHeadWebModel.AdminTask" Role="AdminTask" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminTask">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Area">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DisplayName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Description" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Admins" Relationship="EggHeadWebModel.FK_Admin_Area" FromRole="Area" ToRole="Admin" />
+    <NavigationProperty Name="Instructors" Relationship="EggHeadWebModel.FK_Instructor_Area" FromRole="Area" ToRole="Instructor" />
+    <NavigationProperty Name="Locations" Relationship="EggHeadWebModel.FK_Location_Area" FromRole="Area" ToRole="Location" />
+    <NavigationProperty Name="Birthdays" Relationship="EggHeadWebModel.FK_Birthday_Area" FromRole="Area" ToRole="Birthday" />
+  </EntityType>
+  <Association Name="FK_Admin_Area">
+    <End Type="EggHeadWebModel.Area" Role="Area" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Admin" Role="Admin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Admin">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Instructor_Area">
+    <End Type="EggHeadWebModel.Area" Role="Area" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Instructor">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AreaId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="DisplayName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="PhoneNumber" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Address" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ContactPerson" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="Boolean" Name="CanRegistOnline" Nullable="false" />
+    <Property Type="String" Name="Note" MaxLength="4000" FixedLength="false" Unicode="true" />
+    <Property Type="Int64" Name="UpdatedBy" Nullable="false" />
+    <Property Type="DateTime" Name="UpdatedDate" Nullable="false" Precision="0" />
+    <Property Type="String" Name="City" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Zip" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Area" Relationship="EggHeadWebModel.FK_Location_Area" FromRole="Location" ToRole="Area" />
+    <NavigationProperty Name="Parents" Relationship="EggHeadWebModel.FK_Parent_Location" FromRole="Location" ToRole="Parent" />
+    <NavigationProperty Name="Workshops" Relationship="EggHeadWebModel.FK_Workshop_Location" FromRole="Location" ToRole="Workshop" />
+    <NavigationProperty Name="Camps" Relationship="EggHeadWebModel.FK_Camp_Location" FromRole="Location" ToRole="Camp" />
+    <NavigationProperty Name="Classes" Relationship="EggHeadWebModel.FK_Class_Location" FromRole="Location" ToRole="Class" />
+  </EntityType>
+  <Association Name="FK_Location_Area">
+    <End Type="EggHeadWebModel.Area" Role="Area" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Location" Role="Location" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Location">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Parent_Location">
+    <End Type="EggHeadWebModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Parent" Role="Parent" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Parent">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="AdminFrontend">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AdminId" Nullable="false" />
+    <Property Type="Int32" Name="FrontendId" />
+    <Property Type="String" Name="MenuName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Boolean" Name="IsActive" Nullable="false" />
+    <Property Type="String" Name="OverridePageContent" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Admin" Relationship="EggHeadWebModel.FK_AdminFrontend_Admin" FromRole="AdminFrontend" ToRole="Admin" />
+    <NavigationProperty Name="Frontend" Relationship="EggHeadWebModel.FK_AdminFrontend_Frontend" FromRole="AdminFrontend" ToRole="Frontend" />
+  </EntityType>
+  <Association Name="FK_AdminFrontend_Admin">
+    <End Type="EggHeadWebModel.Admin" Role="Admin" Multiplicity="1" />
+    <End Type="EggHeadWebModel.AdminFrontend" Role="AdminFrontend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminFrontend">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_AdminFrontend_Frontend">
+    <End Type="EggHeadWebModel.Frontend" Role="Frontend" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.AdminFrontend" Role="AdminFrontend" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Frontend">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AdminFrontend">
+        <PropertyRef Name="FrontendId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="APVariable">
+    <Key>
+      <PropertyRef Name="Name" />
+    </Key>
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Value" Nullable="false" FixedLength="false" Unicode="true" MaxLength="Max" />
+  </EntityType>
+  <EntityType Name="Coupon">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="AdminId" />
+    <Property Type="String" Name="Code" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Description" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Type="Byte" Name="Type" Nullable="false" />
+    <Property Type="Decimal" Name="DiscountAmount" Precision="18" Scale="0" />
+    <Property Type="DateTime" Name="ExpDate" Nullable="false" Precision="3" />
+    <Property Type="Int32" Name="MaxAvailable" Nullable="false" />
+    <Property Type="Int32" Name="MaxUsesPerCustomer" Nullable="false" />
+    <Property Type="DateTime" Name="LastUsedDate" Precision="3" />
+    <NavigationProperty Name="Admin" Relationship="EggHeadWebModel.FK_Coupon_Admin" FromRole="Coupon" ToRole="Admin" />
+    <NavigationProperty Name="Bookings" Relationship="EggHeadWebModel.FK_Booking_Coupon" FromRole="Coupon" ToRole="Booking" />
+  </EntityType>
+  <Association Name="FK_Coupon_Admin">
+    <End Type="EggHeadWebModel.Admin" Role="Admin" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Coupon" Role="Coupon" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Coupon">
+        <PropertyRef Name="AdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Coupon">
+    <End Type="EggHeadWebModel.Coupon" Role="Coupon" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Coupon">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="CouponId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="PrivateMessage">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="FromAdminId" />
+    <Property Type="Int64" Name="ToAdminId" />
+    <Property Type="String" Name="MessageSubject" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="MessageContent" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Type="DateTime" Name="SendDate" Nullable="false" Precision="3" />
+    <Property Type="Boolean" Name="Unread" Nullable="false" />
+    <Property Type="String" Name="FromAdminName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ToAdminName" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Admin" Relationship="EggHeadWebModel.FK_PrivateMessage_Admin" FromRole="PrivateMessage" ToRole="Admin" />
+    <NavigationProperty Name="Admin1" Relationship="EggHeadWebModel.FK_PrivateMessage_Admin1" FromRole="PrivateMessage" ToRole="Admin" />
+  </EntityType>
+  <Association Name="FK_PrivateMessage_Admin">
+    <End Type="EggHeadWebModel.Admin" Role="Admin" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.PrivateMessage" Role="PrivateMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PrivateMessage">
+        <PropertyRef Name="FromAdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PrivateMessage_Admin1">
+    <End Type="EggHeadWebModel.Admin" Role="Admin" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.PrivateMessage" Role="PrivateMessage" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Admin">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="PrivateMessage">
+        <PropertyRef Name="ToAdminId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Birthday">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="String" Name="ParentName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ContactNumber" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Type="String" Name="Email" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Address" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="ChildName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Age" Nullable="false" />
+    <Property Type="DateTime" Name="PartyDate" Nullable="false" Precision="3" />
+    <Property Type="Time" Name="PartyTime" Nullable="false" Precision="7" />
+    <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Type="Int64" Name="AreaId" Nullable="false" />
+    <Property Type="DateTime" Name="InputDate" Precision="3" />
+    <NavigationProperty Name="Area" Relationship="EggHeadWebModel.FK_Birthday_Area" FromRole="Birthday" ToRole="Area" />
+    <NavigationProperty Name="Assigns" Relationship="EggHeadWebModel.FK_Assign_Birthday2" FromRole="Birthday" ToRole="Assign" />
+    <NavigationProperty Name="Bookings" Relationship="EggHeadWebModel.FK_Booking_Birthday" FromRole="Birthday" ToRole="Booking" />
+  </EntityType>
+  <EntityType Name="Workshop">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="LocationId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="Int64" Name="GradeGroupId" Nullable="false" />
+    <Property Type="Time" Name="TimeStart" Nullable="false" Precision="7" />
+    <Property Type="Time" Name="TimeEnd" Nullable="false" Precision="7" />
+    <Property Type="Int64" Name="InstructorId" Nullable="false" />
+    <Property Type="Int64" Name="AssistantId" />
+    <Property Type="Decimal" Name="Cost" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="DateTime" Name="InputDate" Precision="3" />
+    <NavigationProperty Name="Assigns" Relationship="EggHeadWebModel.FK_InstructorAssign_Workshop" FromRole="Workshop" ToRole="Assign" />
+    <NavigationProperty Name="Bookings" Relationship="EggHeadWebModel.FK_Booking_Workshop" FromRole="Workshop" ToRole="Booking" />
+    <NavigationProperty Name="GradeGroup" Relationship="EggHeadWebModel.FK_Workshop_GradeGroup" FromRole="Workshop" ToRole="GradeGroup" />
+    <NavigationProperty Name="Instructor" Relationship="EggHeadWebModel.FK_Workshop_Instructor" FromRole="Workshop" ToRole="Instructor" />
+    <NavigationProperty Name="Instructor1" Relationship="EggHeadWebModel.FK_Workshop_Instructor1" FromRole="Workshop" ToRole="Instructor" />
+    <NavigationProperty Name="Location" Relationship="EggHeadWebModel.FK_Workshop_Location" FromRole="Workshop" ToRole="Location" />
+  </EntityType>
+  <Association Name="FK_Birthday_Area">
+    <End Type="EggHeadWebModel.Area" Role="Area" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Birthday" Role="Birthday" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Area">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Birthday">
+        <PropertyRef Name="AreaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Assign_Birthday2">
+    <End Type="EggHeadWebModel.Birthday" Role="Birthday" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Assign" Role="Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birthday">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="BirthdayId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructorAssign_Workshop">
+    <End Type="EggHeadWebModel.Workshop" Role="Workshop" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Assign" Role="Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workshop">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="WorkshopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Birthday">
+    <End Type="EggHeadWebModel.Birthday" Role="Birthday" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Birthday">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="BirthdayId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Workshop">
+    <End Type="EggHeadWebModel.Workshop" Role="Workshop" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Workshop">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="WorkshopId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workshop_GradeGroup">
+    <End Type="EggHeadWebModel.GradeGroup" Role="GradeGroup" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Workshop" Role="Workshop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GradeGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Workshop">
+        <PropertyRef Name="GradeGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workshop_Instructor">
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Workshop" Role="Workshop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Workshop">
+        <PropertyRef Name="InstructorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workshop_Instructor1">
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Workshop" Role="Workshop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Workshop">
+        <PropertyRef Name="AssistantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Workshop_Location">
+    <End Type="EggHeadWebModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Workshop" Role="Workshop" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Workshop">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Camp">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="LocationId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="OnlineName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="Int64" Name="GradeGroupId" Nullable="false" />
+    <Property Type="Time" Name="TimeStart" Nullable="false" Precision="7" />
+    <Property Type="Time" Name="TimeEnd" Nullable="false" Precision="7" />
+    <Property Type="Int64" Name="InstructorId" Nullable="false" />
+    <Property Type="Int64" Name="AssistantId" />
+    <Property Type="Boolean" Name="CanRegistOnline" Nullable="false" />
+    <Property Type="Boolean" Name="IsOpen" Nullable="false" />
+    <Property Type="DateTime" Name="DisplayUntil" Precision="3" />
+    <Property Type="Int32" Name="MaxEnroll" Nullable="false" />
+    <Property Type="Decimal" Name="Cost" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="String" Name="OnlineDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Enrolled" />
+    <Property Type="DateTime" Name="InputDate" Precision="0" />
+    <NavigationProperty Name="Assigns" Relationship="EggHeadWebModel.FK_InstructorAssign_Camp" FromRole="Camp" ToRole="Assign" />
+    <NavigationProperty Name="Bookings" Relationship="EggHeadWebModel.FK_Booking_Camp" FromRole="Camp" ToRole="Booking" />
+    <NavigationProperty Name="GradeGroup" Relationship="EggHeadWebModel.FK_Camp_GradeGroup" FromRole="Camp" ToRole="GradeGroup" />
+    <NavigationProperty Name="Instructor" Relationship="EggHeadWebModel.FK_Camp_Instructor" FromRole="Camp" ToRole="Instructor" />
+    <NavigationProperty Name="Instructor1" Relationship="EggHeadWebModel.FK_Camp_Instructor1" FromRole="Camp" ToRole="Instructor" />
+    <NavigationProperty Name="Location" Relationship="EggHeadWebModel.FK_Camp_Location" FromRole="Camp" ToRole="Location" />
+  </EntityType>
+  <EntityType Name="Class">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Type="Int64" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="Int64" Name="LocationId" Nullable="false" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="OnlineName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Type="Int64" Name="GradeGroupId" Nullable="false" />
+    <Property Type="Time" Name="TimeStart" Nullable="false" Precision="7" />
+    <Property Type="Time" Name="TimeEnd" Nullable="false" Precision="7" />
+    <Property Type="Int64" Name="InstructorId" Nullable="false" />
+    <Property Type="Int64" Name="AssistantId" />
+    <Property Type="Boolean" Name="CanRegistOnline" Nullable="false" />
+    <Property Type="Boolean" Name="IsOpen" Nullable="false" />
+    <Property Type="DateTime" Name="DisplayUntil" Precision="3" />
+    <Property Type="Int32" Name="MaxEnroll" Nullable="false" />
+    <Property Type="Decimal" Name="Cost" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="String" Name="OnlineDescription" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="String" Name="Notes" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Type="Int32" Name="Enrolled" />
+    <Property Type="DateTime" Name="InputDate" Precision="0" />
+    <NavigationProperty Name="Assigns" Relationship="EggHeadWebModel.FK_InstructorAssign_Class" FromRole="Class" ToRole="Assign" />
+    <NavigationProperty Name="Bookings" Relationship="EggHeadWebModel.FK_Booking_Class" FromRole="Class" ToRole="Booking" />
+    <NavigationProperty Name="GradeGroup" Relationship="EggHeadWebModel.FK_Class_GradeGroup" FromRole="Class" ToRole="GradeGroup" />
+    <NavigationProperty Name="Instructor" Relationship="EggHeadWebModel.FK_Class_Instructor" FromRole="Class" ToRole="Instructor" />
+    <NavigationProperty Name="Instructor1" Relationship="EggHeadWebModel.FK_Class_Instructor1" FromRole="Class" ToRole="Instructor" />
+    <NavigationProperty Name="Location" Relationship="EggHeadWebModel.FK_Class_Location" FromRole="Class" ToRole="Location" />
+  </EntityType>
+  <Association Name="FK_InstructorAssign_Camp">
+    <End Type="EggHeadWebModel.Camp" Role="Camp" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Assign" Role="Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Camp">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="CampId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_InstructorAssign_Class">
+    <End Type="EggHeadWebModel.Class" Role="Class" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Assign" Role="Assign" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assign">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Camp">
+    <End Type="EggHeadWebModel.Camp" Role="Camp" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Camp">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="CampId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Booking_Class">
+    <End Type="EggHeadWebModel.Class" Role="Class" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Booking" Role="Booking" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Class">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Booking">
+        <PropertyRef Name="ClassId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Camp_GradeGroup">
+    <End Type="EggHeadWebModel.GradeGroup" Role="GradeGroup" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Camp" Role="Camp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GradeGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Camp">
+        <PropertyRef Name="GradeGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Camp_Instructor">
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Camp" Role="Camp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Camp">
+        <PropertyRef Name="InstructorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Camp_Instructor1">
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Camp" Role="Camp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Camp">
+        <PropertyRef Name="AssistantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Camp_Location">
+    <End Type="EggHeadWebModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Camp" Role="Camp" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Camp">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class_GradeGroup">
+    <End Type="EggHeadWebModel.GradeGroup" Role="GradeGroup" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Class" Role="Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GradeGroup">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="GradeGroupId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class_Instructor">
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Class" Role="Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="InstructorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class_Instructor1">
+    <End Type="EggHeadWebModel.Instructor" Role="Instructor" Multiplicity="0..1" />
+    <End Type="EggHeadWebModel.Class" Role="Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Instructor">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="AssistantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Class_Location">
+    <End Type="EggHeadWebModel.Location" Role="Location" Multiplicity="1" />
+    <End Type="EggHeadWebModel.Class" Role="Class" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Class">
+        <PropertyRef Name="LocationId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="BookingShortInfoTemp">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentId" Type="Int64" />
+    <Property Name="classId" Type="Int64" />
+    <Property Name="ServiceType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+    <Property Name="Cost" Type="Decimal" Precision="18" Scale="10" />
+    <Property Name="Dates" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="CouponId" Type="Int64" />
+  </EntityType>
+</Schema>

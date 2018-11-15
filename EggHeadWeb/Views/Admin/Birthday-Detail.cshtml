@@ -1,0 +1,170 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@using MVCControlsToolkit.Controls;
+@model Birthday
+@{
+    ViewBag.BreadCrumbs = new string[] { "Schedules" };
+    ViewBag.Title = "Edit Birthday";
+    ViewBag.CurrentMenu = 1;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var db = new EggheadEntities();
+
+    var calendarSearchForm = new CalendarSearchForm
+    {
+        ViewBy = CalendarViewType.Month,
+        Date = DateTime.Today,
+        BirthdayId = Model.Id,
+        ShowClasses = false,
+        ShowCamps = false,
+        ShowWorkshops = false,
+        ShowBirthdays = true
+    };
+}
+
+@using (Html.BeginForm())
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true, ExcelExport = true, ExcelAction = "birthday-detail-excel?id=" + Model.Id })
+    </div>
+    <table>
+        <colgroup>
+            <col class="width3" />
+            <col class="width3" />
+        </colgroup>
+        <tr>
+            <td>
+                <p>
+                    <label for="parentname" class="required">
+                        Parent Name:</label>
+                    @Html.ValidationMessageFor(m => m.ParentName)<br />
+                    @Html.TextBoxFor(m => m.ParentName, new { @class = "half" })
+                </p>
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <label for="chid" class="required">
+                        Child:</label>
+                    @Html.ValidationMessageFor(m => m.ChildName)<br />
+                    @Html.TextBoxFor(m => m.ChildName, new { @class = "half" })
+                </p>
+            </td>
+            <td>
+                <p>
+                    <label for="age" class="required">
+                        Age:</label>
+                    @Html.ValidationMessageFor(m => m.Age)<br />
+                    @Html.TextBoxFor(m => m.Age)
+                </p>
+            </td>
+        </tr>
+    </table>
+    <div class="tabs">
+        <ul>
+            <li><a class="corner-tl" href="#tabs-detail">Detail</a></li>
+            <li><a href="#tabs-contact">Contact</a></li>
+            <li><a href="#tabs-instructor">Instructor</a></li>
+            <li><a class="corner-tr" href="#tabs-notes">Notes</a></li>
+        </ul>
+        <div id="tabs-detail">
+            <table>
+                <colgroup>
+                    <col class="width3" />
+                    <col class="width3" />
+                </colgroup>
+                <tr>
+                    <td colspan='2'>
+                        <p>
+                            <label for="address" class="required">
+                                Address:</label>
+                            @Html.ValidationMessageFor(m => m.Address)<br />
+                            @Html.TextBoxFor(m => m.Address, new { @class = "full" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="partyDate" class="required">
+                                Date:</label>
+                            @Html.ValidationMessageFor(m => m.PartyDate)<br />
+                            @Html.EditorFor(m => m.PartyDate, new { @class = "date" })
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="partyTime" class="required">
+                                Time:</label>
+                            @Html.ValidationMessageFor(m => m.PartyTime)<br />
+                            @Html.EditorFor(m => m.PartyTime)
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="tabs-contact">
+            <table>
+                <colgroup>
+                    <col class="width3" />
+                    <col class="width3" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="contactnumber" class="required">
+                                Contact Number:</label>
+                            @Html.ValidationMessageFor(m => m.ContactNumber)<br />
+                            @Html.TextBoxFor(m => m.ContactNumber, new { @class = "input-phone-number half" })
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="email" class="required">
+                                Email:</label>
+                            @Html.ValidationMessageFor(m => m.Email)<br />
+                            @Html.TextBoxFor(m => m.Email, new { @class = "half" })
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="tabs-instructor">
+            <table>
+                <colgroup>
+                    <col class="width3" />
+                    <col class="width3" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="instructor" class="required">
+                                Instructor:</label>
+                            @Html.ValidationMessageFor(m => m.InstructorId)<br />
+                            @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(db), Constants.SELECT_INSTRUCTOR)
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="assistant">
+                                Assistant:</label>
+                            @Html.ValidationMessageFor(m => m.AssistantId)<br />
+                            @Html.DropDownListFor(m => m.AssistantId, SelectLists.Instructors(db), Constants.SELECT_ASSISTANT)
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="tabs-notes">
+            <p>
+                <label for="notes">
+                    Notes:</label>
+                @Html.ValidationMessageFor(m => m.Notes)<br />
+                @Html.TextAreaFor(m => m.Notes, new { @class = "wysiwyg small full" })
+            </p>
+        </div>
+    </div>
+}

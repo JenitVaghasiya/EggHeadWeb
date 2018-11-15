@@ -1,0 +1,33 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model UpdateEmailPasswordForm
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "Update Email";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var admin = ((EggheadWeb.Security.LoginUser)User).Admin;
+}
+@using (Html.BeginForm("email-update", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl(new { action = "email" })" />
+    </div>
+    <p>
+        Current email: <b>@admin.Email</b>
+    </p>
+    <p>
+        <label for="code" class="required">
+            New password:</label>
+        @Html.ValidationMessageFor(m => m.NewPassword)<br />
+        @Html.PasswordFor(m => m.NewPassword, new { @class = "width2" })
+    </p>
+    <p>
+        <label for="description" class="required">
+            Confirm password:</label>
+        @Html.ValidationMessageFor(m => m.ConfirmNewPassword)<br />
+        @Html.PasswordFor(m => m.ConfirmNewPassword, new { @class = "width2" })
+    </p>
+}

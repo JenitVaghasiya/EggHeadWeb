@@ -1,0 +1,46 @@
+﻿@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model SystemEmailSetting
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "Update System Email";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("system-email-setting", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+    </div>
+    <p>
+        <label for="code" class="required">
+            SMTP Host:</label>
+        @Html.ValidationMessageFor(m => m.SmtpHost)<br />
+        @Html.TextBoxFor(m => m.SmtpHost, new { @class = "width2" })
+    </p>
+    <p>
+        <label for="code" class="required">
+            SMTP Port:</label>
+        @Html.ValidationMessageFor(m => m.SmtpPort)<br />
+        @Html.TextBoxFor(m => m.SmtpPort, new { @class = "width2" })
+    </p>
+    <p>
+        <label for="code" class="required">
+            Use SSL:</label>
+        @Html.CheckBoxFor(m => m.UseSSL)
+        <br />
+        @Html.ValidationMessageFor(m => m.UseSSL)
+    </p>
+    <p>
+        <label for="description" class="required">
+            System Email:</label>
+        @Html.ValidationMessageFor(m => m.Email)<br />
+        @Html.TextBoxFor(m => m.Email, new { @class = "width2" })
+    </p>
+    <p>
+        <label for="description" class="required">
+            Password:</label>
+        @Html.ValidationMessageFor(m => m.Password)<br />
+        @Html.PasswordFor(m => m.Password, new { @class = "width2" })
+    </p>
+}

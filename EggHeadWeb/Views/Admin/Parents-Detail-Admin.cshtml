@@ -1,0 +1,198 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model Parent
+@{
+    ViewBag.BreadCrumbs = new string[] { "Contacts", "Parents" };
+    ViewBag.Title = Model.Id > 0 ? "Edit Parent" : "New Parent";
+    ViewBag.CurrentMenu = 3;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var db = new EggheadEntities();
+    var admin = EggheadWeb.Security.UserProvider.Current.Admin;
+
+    var calendarSearchForm = new CalendarSearchForm
+    {
+        ViewBy = CalendarViewType.Month,
+        Date = DateTime.Today,
+        ParentId = Model.Id,
+        ShowClasses = true,
+        ShowCamps = true,
+        ShowBirthdays = true,
+        ShowWorkshops = false,
+    };
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.nyroModalSettings({
+            width: 400,
+            height: 500,
+            windowResizing: true
+        });
+    });
+</script>
+@using (Html.BeginForm())
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @if (Model.Id <= 0)
+        {
+            Html.RenderPartial("MainTaskbar", new MainTaskbarItem { Save = true });
+        }
+        else
+        {
+            Html.RenderPartial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "parents-detail", Print = true, Email = true, ExcelAction = "parent-detail-excel?id=" + Model.Id, Save = true, EmailToAddress = Model.Email, EmailToName = Model.FirstName + " " + Model.LastName });
+        }
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl("Admin", new { action = "parents", research = "true" })" />
+    </div>
+    @Html.ValidationSummary(true)
+    <table>
+        <tr>
+            <td width="300px">
+                <p>
+                    <label class="required" for="area">
+                        Location:
+                    </label>
+                    @Html.ValidationMessageFor(m => m.LocationId)<br />
+                    @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "medium" })
+                </p>
+            </td>
+            <td width="300px">
+                @if (Model.Id <= 0)
+                {
+                    <p>
+                        <label class="required" for="password">
+                            Password:
+                        </label>
+                        @Html.ValidationMessageFor(m => m.Password)<br />
+                        @Html.TextBoxFor(m => m.Password)
+                    </p>
+                }
+            </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td width="300px">
+                <p>
+                    <label class="required" for="firstname">
+                        First Name:
+                    </label>
+                    @Html.ValidationMessageFor(m => m.FirstName)<br />
+                    @Html.TextBoxFor(m => m.FirstName, new { @class = "medium" })
+                </p>
+            </td>
+            <td width="300px">
+                <p>
+                    <label class="required" for="lastname">
+                        Last Name:
+                    </label>
+                    @Html.ValidationMessageFor(m => m.LastName)<br />
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "medium" })
+                </p>
+            </td>
+            <td></td>
+        </tr>
+        <!--Address-->
+        <tr>
+            <td colspan="3">
+                <p>
+                    <label class="required" for="address">
+                        Address:
+                    </label>
+                    @Html.ValidationMessageFor(mbox => mbox.Address)<br />
+                    @Html.TextBoxFor(m => m.Address, new { @id = "address", @name = "address", @class = "full" })
+                </p>
+
+            </td>
+        </tr>
+
+        <!--City-->
+        <tr>
+            <td width="300px">
+                <p>
+                    <label class="required" for="city">
+                        City:
+                    </label>
+                    @Html.ValidationMessageFor(mbox => mbox.City)<br />
+                    @Html.TextBoxFor(m => m.City, new { @id = "city", @name = "city", @class = "medium" })
+                </p>
+            </td>
+            <td width="300px">
+                <p>
+                    <label class="required" for="state">
+                        State:
+                    </label>
+                    @Html.ValidationMessageFor(mbox => mbox.State)<br />
+                    @Html.TextBoxFor(m => m.State, new { @id = "state", @name = "state", @class = "medium" })
+                </p>
+            </td>
+            <td width="300px">
+                <p>
+                    <label class="required" for="zip">
+                        Zip:
+                    </label>
+                    @Html.ValidationMessageFor(m => m.Zip)<br />
+                    @Html.TextBoxFor(m => m.Zip, new { @id = "zip", @name = "zip", @class = "medium" })
+                </p>
+            </td>
+        </tr>
+
+        <!--Phone-->
+        <tr>
+            <td width="300px">
+                <p>
+                    <label class="required" for="phoneNumer">
+                        Phone number:
+                    </label>
+                    @Html.ValidationMessageFor(m => m.PhoneNumer)<br />
+                    @Html.TextBoxFor(m => m.PhoneNumer, new { @id = "phonenumber", @name = "phonenumber", @class = "input-phone-number medium" })
+                </p>
+            </td>
+            <td width="300px">
+                <p>
+                    <label class="required" for="email">
+                        Email:
+                    </label>
+                    @Html.ValidationMessageFor(m => m.Email)<br />
+                    @Html.TextBoxFor(m => m.Email, new { @id = "email", @name = "email", @class = "medium" })
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                @if (Model.Id <= 0)
+                {
+                    <h4>
+                        You have to save parent info before add new child(ren).
+                    </h4>
+                }
+                else
+                {
+                    @Html.Partial("students", Model.Students, new ViewDataDictionary { { "ParentId", Model.Id } })
+                }
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                <p>
+                    <label for="notes">
+                        Notes:
+                    </label>
+                    @Html.ValidationMessageFor(m => m.Note)<br />
+                    @Html.TextAreaFor(m => m.Note, new { @id = "notes", @name = "notes", @class = "medium full" })
+                </p>
+            </td>
+        </tr>
+        <tr style="height:10px;">
+            <td colspan="4"></td>
+        </tr>
+        <tr>
+            <td colspan="3">
+                @if (Model.Id > 0)
+                {
+                    Html.RenderAction("calendar-schedule", new { form = calendarSearchForm });
+                }
+            </td>
+        </tr>
+    </table>
+    @Html.HiddenFor(m => m.Id)
+}

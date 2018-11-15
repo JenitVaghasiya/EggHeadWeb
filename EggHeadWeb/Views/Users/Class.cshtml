@@ -1,0 +1,61 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Utility;
+@model EggheadWeb.Models.Common.Class
+<style type="text/css">
+    .title-big
+    {
+        color: Orange;
+        font-size: 20px !important;
+        font-weight: bold;
+    }
+    
+    .class-name
+    {
+        margin-bottom: 10px;
+    }
+    
+    .title
+    {
+        display: inline-block;
+        min-width: 55px;
+        font-weight: bold;
+        margin-right: 10px;
+        color: Orange;
+    }
+</style>
+<div class="sch_main">
+    <div class="sch_left title-big">
+        <span>@Model.Location.Name</span>
+    </div>
+</div>
+<div class="sch_main enrl_txt3 title-big class-name">
+    <span>@Model.OnlineName</span>
+    @if (Model.MaxEnroll <= (Model.Enrolled.HasValue ? Model.Enrolled.Value : 0))
+    {
+        @:(<strong style="color: Red;">Class Full</strong>
+        @:)
+                                             }
+</div>
+<div class="sch_main enrl_txt3">
+    <span class="title">Enrollment Fees: </span>$ @Model.Cost
+</div>
+<div class="sch_main enrl_txt3">
+    <span class="title">Day: </span>@ScheduleUtil.GetDaysOfService(Model)
+</div>
+<div class="sch_main enrl_txt3">
+    <span class="title">Time: </span>@Model.TimeStart.To12HoursString() - @Model.TimeEnd.To12HoursString()
+</div>
+<div class="sch_main enrl_txt3">
+    <span class="title">Dates: </span>@ScheduleUtil.GetDateListText(Model)
+</div>
+<div class="sch_main enrl_txt3">
+    <span class="title">Grades: </span>@ScheduleUtil.GetGradeListText(Model)
+</div>
+<br />
+<div class="sch_main1 enrl_txt4">
+    @Html.Raw(@Model.OnlineDescription)
+</div>
+<br />
+<div class="sch_main1 enrl_txt4">
+    @Html.Raw(@Model.Notes)
+</div>

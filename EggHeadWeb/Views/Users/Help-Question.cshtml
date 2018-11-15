@@ -1,0 +1,18 @@
+﻿@using EggheadWeb.Models.UserModels;
+@model FrontendItem
+<style type="text/css">
+    .help-page-content
+    {
+        width: 100%;
+        overflow: auto;
+    }
+</style>
+<div class="twelve columns contact-form-wrapper">
+    @Html.Partial("_UserInformMessages")
+    <fieldset style="min-height: 320px;width:715px">
+        <legend>@Model.MenuName</legend>
+        <div class="help-page-content">
+            @Html.Raw(Model.PageContent)
+        </div>
+    </fieldset>
+</div>

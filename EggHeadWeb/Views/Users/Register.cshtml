@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_ParentLoginLayout.cshtml";
+}
+<style type="text/css">
+    .two-columns input
+    {
+        width: 250px !important;
+    }
+    .two-columns select
+    {
+        width: 259px !important;
+    }
+    .two-columns td:nth-child(2), .two-columns td:nth-child(4)
+    {
+        border-right: none;
+    }
+    .two-columns td
+    {
+        padding-top: 9px !important;
+        padding-bottom: 0 !important;
+    }
+    tr.validation-row td
+    {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(this).find(".input-phone-number").mask("(999) 999-9999");
+
+        $("#finish").attr("disabled", "disabled");
+
+        // Step 1
+        $("#step1-step2").live("click", function () {
+            $(this).closest("form").ajaxSubmit(function (html) {
+                $("#step1").hide();
+                $("#step2").show();
+                scrollToPageContent();
+            }, function (html) {
+                alert("Email address has been registed by other user.");
+            });
+        });
+
+        // Step 2
+        $("#step2-step3").live("click", function () {
+            $(this).closest("form").ajaxSubmit(function () {
+                $("#step2").hide();
+                $("#step3").show();
+                scrollToPageContent();
+            });
+        });
+        $("#step2-step2").live("click", function () {
+            var form = $(this).closest("form");
+            form.append($("<input type='hidden' name='Type'>").val('1'));
+            form.ajaxSubmit(function () {
+                scrollToPageContent();
+            });
+        });
+
+        $("#step2-step1").live("click", function () {
+            $("#step2").hide();
+            $("#step1").show();
+            scrollToPageContent();
+        });
+
+        //Step 3
+        $("#step3-step2").live("click", function () {
+            $("#step3").hide();
+            $("#step2").show();
+            scrollToPageContent();
+        });
+
+        $("#agree").change(function () {
+            if ($(this).is(":checked")) {
+                $("#finish").removeAttr("disabled");
+            }
+            else {
+                $("#finish").attr("disabled", "disabled");
+            }
+        });
+    });
+
+    function scrollToPageContent() {
+        // window.scrollTo(0, $("#page-content").closest(".content-wrapper").offset().top);
+    }
+
+    function resetValidation() {
+        $('form').removeData('validator');
+        $('form').removeData('unobtrusiveValidation');
+        $.validator.unobtrusive.parse('form');
+    }
+
+    $.fn.ajaxSubmit = function (success, error) {
+        var self = this;
+        if (this.valid()) {
+            $.ajax({
+                url: this.attr("action"),
+                type: this.attr("method"),
+                data: this.serialize(),
+                success: function (result) {
+                    self.closest(".ajax-container").html(result);
+                    if (success) { success(); }
+                    resetValidation();
+                },
+                error: function (jqXHR, status, errorThrow) {
+                    if (jqXHR.status >= 600) {
+                        var html = jqXHR.responseText;
+                        //self.closest(".ajax-container").html(html);
+                        if (error) { error(); }
+                    }
+                }
+            });
+        }
+        else {
+            //alert('ng');
+        }
+        return this;
+    };
+</script>
+<div id="step1" class="ajax-container">
+    @Html.Partial("SignupFrstStep", new EggheadWeb.Models.UserModels.ParentItem())
+</div>
+<div id="step2" class="ajax-container" style='display: none'>
+    @Html.Partial("SignupScndStep")
+</div>
+<div id="step3" class="ajax-container" style='display: none'>
+    @Html.Partial("SignupThrdStep")
+</div>

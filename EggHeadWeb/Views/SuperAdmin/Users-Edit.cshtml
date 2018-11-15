@@ -1,0 +1,168 @@
+﻿@using EggheadWeb.Models.AdminModels
+@using EggheadWeb.Models.Common
+@model Admin
+@{
+    ViewBag.BreadCrumbs = new string[] { "Users" };
+    ViewBag.Title = Model.Id > 0 ? "Edit user" : "New user";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var db = new EggheadEntities();
+}
+@using (Html.BeginForm("users-edit", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl(new { action = "users", research = Model.Id > 0 ? "true" : "false" })" />
+    </div>
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(m => m.Id)
+    <div class="colgroup leading">
+        <div class="column width2 first">
+            <h5>
+                Account Info</h5>
+            <hr />
+            <table>
+                <colgroup>
+                    <col class="width2" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="areaId" class="required">
+                                Territory:</label>
+                            @Html.ValidationMessageFor(m => m.AreaId)<br />
+                            @Html.DropDownListFor(m => m.AreaId, SelectLists.Areas(db), "-­‐Select Territory--", new { @class = "full" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="username" class="required">
+                                Username:</label>
+                            @Html.ValidationMessageFor(m => m.Username)<br />
+                            @Html.TextBoxFor(m => m.Username, new { @class = "full" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="password" class="@(Model.Id <= 0 ? "required" : "")">
+                                Password:</label>
+                            @Html.ValidationMessageFor(m => m.Password)<br />
+                            @Html.PasswordFor(m => m.Password, new { @class = "full" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="email" class="required">
+                                Email:</label>
+                            @Html.ValidationMessageFor(m => m.Email)<br />
+                            @Html.TextBoxFor(m => m.Email, new { @id = "email", @class = "full" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="email" class="@(Model.Id <= 0 ? "required" : "")">
+                                Email Passowrd:</label>
+                            @Html.ValidationMessageFor(m => m.EmailPassword)<br />
+                            @Html.PasswordFor(m => m.EmailPassword, new { @id = "emailPassword", @class = "full" })
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="column width2" style="margin-left: 50px;">
+            <h5>
+                Personal Info</h5>
+            <hr />
+            <table>
+                <colgroup>
+                    <col class="width1" />
+                    <col class="width1" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="firstname" class="required">
+                                First name:</label>
+                            @Html.ValidationMessageFor(m => m.FirstName)<br />
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "width1" })
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="lastname" class="required">
+                                Last name:</label>
+                            @Html.ValidationMessageFor(m => m.LastName)<br />
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "width1" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="phoneNumber" class="required">
+                                Phone:</label>
+                            @Html.ValidationMessageFor(m => m.PhoneNumber)<br />
+                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "width1 input-phone-number" })
+                        </p>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p>
+                            <label for="address" class="required">
+                                Address:</label>
+                            @Html.ValidationMessageFor(m => m.Address)<br />
+                            @Html.TextBoxFor(m => m.Address, new { @class = "width2" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="city" class="required">
+                                City:</label>
+                            @Html.ValidationMessageFor(m => m.City)<br />
+                            @Html.TextBoxFor(m => m.City, new { @class = "width1" })
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            <label for="state" class="required">
+                                State:</label>
+                            @Html.ValidationMessageFor(m => m.State)<br />
+                            @Html.TextBoxFor(m => m.State, new { @class = "width1" })
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>
+                            <label for="zip" class="required">
+                                Zip:</label>
+                            @Html.ValidationMessageFor(m => m.Zip)<br />
+                            @Html.TextBoxFor(m => m.Zip, new { @class = "width1" })
+                        </p>
+                    </td>
+                    <td style="vertical-align: bottom;">
+                        <p>
+                            @Html.CheckBoxFor(m => m.IsSuperAdmin, new { @disabled = "disabled" })
+                            <label for="isSuperAdmin">
+                                Super admin</label>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+}

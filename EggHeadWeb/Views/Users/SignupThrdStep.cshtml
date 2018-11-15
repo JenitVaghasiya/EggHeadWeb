@@ -1,0 +1,30 @@
+﻿@using (Html.BeginForm("Register", "Users", FormMethod.Post))
+{
+    <div class="page-wrapper">
+        <div class="process-state-step3">
+        </div>
+        <div class="contact-form-wrapper" style="width:800px; margin-left:90px">
+            <span style="font-weight:bold">TERMS AND CONDITIONS</span>
+                <div class="wt_bg">
+                    <div class="" style="border-bottom: none;">
+                        <div style="width: 100%; height: 200px; overflow: auto; font-weight: normal;">
+                            @Html.Raw(ViewBag.Terms)
+                        </div>
+                        <div class="mrgnbtm10" style="text-align: center; width: 100%; font-weight: normal;">
+                            <br />
+                            <input name="tc" id="agree" type="checkbox" /><label for="aggree" style="display: inline">
+                                I
+                                have <span class="bld">Read</span> and <span class="bld">Agree</span> to the <span class="bld">Terms and Conditions</span>.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div style="width: 100%;">
+                    <input type="button" class="btn btn-big" value="BACK" id="step3-step2" />
+                    <input type="submit" class="btn btn-big" style="float:right" value="FINISH" id="finish" />
+                </div>
+</div>
+    </div>
+    <br class="clear" />
+}

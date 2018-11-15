@@ -1,0 +1,131 @@
+﻿@using EggheadWeb.Models.Common
+@using EggheadWeb.Models.AdminModels
+@model CalendarSearchForm
+@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.CurrentMenu = 4;
+    var calendar = (Calendar)ViewBag.Calendar;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".nav").one("click", function () {
+            $("#hiddenDate").val($(this).data("date"));
+            $(this).closest("form").submit();
+        });
+        $(".day").one("click", function () {
+            $("#hiddenDate").val($(this).data("date"));
+            $("#viewType").val("@(CalendarViewType.Day)")
+                .closest("form").submit();
+        });
+        $("#viewType").change(function () {
+            $(this).closest("form").submit();
+        });
+
+        $("#allTypes").change(function () {
+            $(".serviceType").attr("checked", $(this).is(":checked"));
+            initCalendar();
+        });
+
+        $(".serviceType").change(function () {
+            $("#allTypes").attr("checked", $(".serviceType:not(:checked)").length == 0);
+            initCalendar();
+        });
+
+        function initCalendar() {
+            var types = [];
+            $(".serviceType:checked").each(function () {
+                types.push($(this).data("type"));
+            });
+            var calendar = $("#calendar .calendar-view").data("calendar");
+            calendar.update(types);
+        };
+
+        $("#allTypes").attr("checked", $(".serviceType:not(:checked)").length == 0);
+    });
+</script>
+@using (Html.BeginForm("", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Print = true, ExcelAction = "calendar-excel" })
+        <span style="float: right">
+            @if (calendar.Type == CalendarViewType.Day)
+            {
+                @calendar.FromDate.ToLongDateString()
+            }
+            else if (calendar.Type == CalendarViewType.Week)
+            {
+                if (calendar.FromDate.Year == calendar.ToDate.Year)
+                {
+                    if (calendar.FromDate.Month == calendar.ToDate.Month)
+                    {
+                @string.Format("{0:MMM dd} – {1:dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                    }
+                    else
+                    {
+                @string.Format("{0:MMM dd} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                    }
+                }
+                else
+                {
+                @string.Format("{0:MMM dd, yyyy} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                }
+            }
+            else if (calendar.Type == CalendarViewType.Month)
+            {
+                @calendar.FromDate.ToString("MMMM yyyy")
+            }
+            &nbsp;&nbsp;
+            <input id="prev" type="button" class="btn nav" value="<" data-date="@calendar.PreviousDate" />
+            <input id="today" type="button" class="btn nav" value="Today" data-date="@DateTime.Today" />
+            <input id="next" type="button" class="btn nav" value=">" data-date="@calendar.NextDate" />
+            @Html.HiddenFor(m => m.Date, new { @id = "hiddenDate" })
+            @Html.DropDownListFor(m => m.ViewBy, SelectLists.CalendarViewTypes(), new { @id = "viewType" })
+        </span>
+    </div>
+    <div style="float: right; margin-top: 10px;">
+        <table>
+            <colgroup>
+                <col width="60px;" />
+                <col width="110px;" />
+                <col width="110px;" />
+                <col width="110px;" />
+                <col width="110px;" />
+            </colgroup>
+            <tr>
+                <td>
+                    <input id="allTypes" type="checkbox" /><label for="allTypes">All</label>
+                </td>
+                <td>
+                    <div style="width: 100px; height: 18px; background-color: #FDADAA;">
+                        @Html.CheckBoxFor(m => m.ShowClasses, new { @class = "serviceType", @id = "showClasses", @data_type = ServiceType.Class })
+                        @Html.LabelFor(m => m.ShowClasses)
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 100px; height: 18px; background-color: #1BE0B2">
+                        @Html.CheckBoxFor(m => m.ShowCamps, new { @class = "serviceType", @id = "showCamps", @data_type = ServiceType.Camp })
+                        @Html.LabelFor(m => m.ShowCamps)
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 100px; height: 18px; background-color: #BADE83;">
+                        @Html.CheckBoxFor(m => m.ShowBirthdays, new { @class = "serviceType", @id = "showBirthdays", @data_type = ServiceType.Birthday })
+                        @Html.LabelFor(m => m.ShowBirthdays)
+                    </div>
+                </td>
+                <td>
+                    <div style="width: 100px; height: 18px; background-color: #C0DFE8;">
+                        @Html.CheckBoxFor(m => m.ShowWorkshops, new { @class = "serviceType", @id = "showWorkshops", @data_type = ServiceType.Workshop })
+                        @Html.LabelFor(m => m.ShowWorkshops)
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br />
+    <br />
+}
+<div id="calendar">
+    @Html.Partial("CalendarControl", calendar, new ViewDataDictionary { { "Id", "calendar" } })
+</div>

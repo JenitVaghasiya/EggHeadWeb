@@ -1,0 +1,238 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model  RosterDetailPdf
+@{
+    var bookings = Model.Bookings;
+    string[] dates = Model.Dates;
+    int no = 0;
+    int bookingCount = bookings.Count;
+
+    var bookingWithNotes = bookings.Where(t => !String.IsNullOrEmpty(t.Student.Notes)).OrderBy(t => t.Student.FirstName + " " + t.Student.LastName).ToList();
+    
+}
+<style type="text/css">
+    body
+    {
+        font-family: Calibri;
+        font-size: 11px;
+    }
+    
+    table.header
+    {
+        border-collapse: collapse;
+        border: 1pt solid;
+        margin-top: 15pt;
+        float: right;
+    }
+    
+    .header td
+    {
+        border: 1pt solid;
+        width: 183.15pt;
+        height: 16.2pt;
+        text-align: left;
+        vertical-align: middle;
+        padding-left: 5.4pt;
+    }
+    
+    table.detail
+    {
+        border-collapse: collapse;
+        margin-top: 15pt;
+        float: left;
+    }
+    
+    .detail th
+    {
+        height: 16.2pt;
+        border: 1pt solid;
+        text-align: center;
+        vertical-align: middle;
+        padding-left: 5.4pt;
+    }
+    
+    .detail td
+    {
+        height: 16.2pt;
+        border: 1pt solid;
+        text-align: left;
+        vertical-align: middle;
+        padding-left: 5.4pt;
+    }
+    
+    table.notes
+    {
+        width: 549pt;
+        border-collapse: collapse;
+        border: 1pt solid;
+        margin-top: 15pt;
+        float: left;
+    }
+    
+    table.notes tr
+    {
+        height: 96.2pt;
+    }
+    
+    .notes td
+    {
+        vertical-align: text-top;
+        padding-left: 5.4pt;
+        padding-top: 3pt;
+    }
+</style>
+<div class="width8" style="text-align: right; margin-top: 30pt;">
+    <span style="font-size: 18; font-weight: bold">EGGHEAD ATTENDANCE SHEET</span>
+</div>
+<table class="header">
+    <tr>
+        <td style="width: 183.15pt;">
+            <b>LOCATION: @Model.LocationName</b>
+        </td>
+        <td style="width: 173.25pt;">
+            <b>DAY: @Model.Days</b>
+        </td>
+        <td style="width: 173.25pt;">
+            <b>TIME: @Model.Time</b>
+        </td>
+        <td style="width: 173.25pt;">
+            <b>PRINTED: @DateTime.Today.ToString("MM/dd/yyyy")</b>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <b>ADDRESS: @Model.Address</b>
+        </td>
+        <td colspan="2">
+            <b>@Model.Type.ToString().ToUpper(): @Model.ClassName</b>
+        </td>
+    </tr>
+</table>
+<br style="clear: both;" />
+<table class="detail">
+    <tr>
+        <th style="width: 13.6pt; border-style: none; text-align: right; padding-left: 0;">
+        </th>
+        <th style="width: 153.6pt; font-size: 10px">
+            <b>Name/Age/Gender</b>
+        </th>
+        <th style="width: 98.5pt;">
+            <b>PARENT</b>
+        </th>
+        @foreach (var date in dates)
+        {
+            <th style="width: 40.75pt; font-size: 9px">
+                @date
+            </th>
+        }
+        @for (int i = 0; i < 11 - dates.Length; i++)
+        { 
+            <th style="width: 40.75pt; font-size: 9px">
+                &nbsp;
+            </th>
+        }
+    </tr>
+    @foreach (var t in bookings)
+    {
+        <tr>
+            <td style="border-style: none; text-align: right; padding-left: 0;">
+                @(++no)
+            </td>
+            <td>
+                @(string.Format("{0} {1} / {2} / {3}", t.Student.FirstName, t.Student.LastName, DisplayAge(t.Student.BirthDate), t.Student.GenderText[0]))
+            </td>
+            <td>
+                @StringUtil.GetFullName(t.Student.Parent.FirstName, t.Student.Parent.LastName)
+            </td>
+            @foreach (var date in dates)
+            {
+                <td>
+                </td>
+            }
+            @for (int i = 0; i < 11 - dates.Length; i++)
+            {
+                <td>
+                </td>
+            }
+        </tr>
+    }
+    @*Add blank rows*@
+    @for (var index = 1; index <= 16 - bookingCount; index++)
+    {
+        <tr>
+            <td style="border-style: none; text-align: right; padding-left: 0;">
+                @(no + index)
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            @foreach (var date in dates)
+            {
+                <td>
+                </td>
+            }
+            @for (int i = 0; i < 11 - dates.Length; i++)
+            {
+                <td>
+                </td>
+            }
+        </tr>
+    }
+</table>
+<br style="clear: both;" />
+<div style="margin-left: 15pt;">
+    <div style="float: left;">
+        <table class="notes">
+            <tr>
+                <td>
+                    <b>STUDENT NOTES:</b><br />
+                    <table style="border-collapse: collapse; border-style: none; margin-left: 20px;">
+                        <colgroup>
+                            <col width="350px" />
+                            <col width="350px" />
+                        </colgroup>
+                        @for (var i = 0; i < bookingWithNotes.Count; i += 2)
+                        {
+                            <tr>
+                                <td style="border-style: none;">
+                                    @(StringUtil.GetFullName(bookingWithNotes[i].Student.FirstName, bookingWithNotes[i].Student.LastName) + ": " + bookingWithNotes[i].Student.Notes)
+                                </td>
+                                @if (i + 1 < bookingWithNotes.Count())
+                                {
+                                    <td style="border-style: none;">
+                                        @(StringUtil.GetFullName(bookingWithNotes[i + 1].Student.FirstName, bookingWithNotes[i + 1].Student.LastName) + ": " + bookingWithNotes[i + 1].Student.Notes)
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td style="border-style: none;">
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="float: left; height: 96.2pt; position: relative;">
+        <img src='@Model.LogoUrl' alt="Logo" style="position: absolute;
+            top: 20pt; bottom: 0; margin: auto;" />
+    </div>
+</div>
+<div style="float: left; margin-left: 3pt; margin-top: 25pt; font-size: 9px;">
+    2012 © PROFESSOR EGGHEAD SCIENCE ACADEMY® ALL RIGHTS RESERVED.
+</div>
+@helper  DisplayAge(DateTime birthDate)
+    {
+        int age = DateTime.Today.Year - birthDate.Year;
+
+        if (DateTime.Today < birthDate.AddYears(age))
+        {
+            age--;
+        }
+
+    @age;
+}

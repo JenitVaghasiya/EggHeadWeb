@@ -1,0 +1,99 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model EggheadWeb.Models.Common.SearchResult<RosterSearchForm, Camp>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+<table class="display stylized search-result-table roster-camps">
+    <colgroup>
+        <col width="40px" />
+        <col class="c-location" />
+        <col class="c-location" />
+        <col class="c-name" />
+        <col class="c-date" />
+        <col class="c-pay" />
+        <col class="c-task-full" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="checkbox">
+                <input type="checkbox" class="checkall" />
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Camp
+            </th>
+            <th>
+                Instructor
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+                Enroll #
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" data-type = "Camp", data-id = '@item.Id' />
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
+                        @item.Location.DisplayName</a>
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "camp-detail", id = item.Id })'>
+                        @item.Name</a>
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
+                        @ScheduleUtil.GetShortInstructorName(item.Instructor)</a>
+                </td>
+                <td>
+                    @item.Assigns.Min(c => c.Date).ToString("M/dd/yyyy")
+                </td>
+                <td>
+                     @(item.Enrolled.HasValue ? item.Enrolled.Value : 0)
+                </td>
+                <td>
+                @{
+               var rosterPdfFilName = string.Format("ROSTER/Camp/{0}", item.Id);
+                    }
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "roster-detail", type = ServiceType.Camp, id = item.Id })' title="Go to Roster"
+                    class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;
+                    <input type="button" data-type = '@ServiceType.Camp' data-id = '@item.Id' title="Print" class="image-button image-button-print roster-detail-print" style="width: 16px;
+                        padding-left: 0px;" />
+                    &nbsp;
+                    <input type="button" title="Email to Instructor" class="image-button image-button-email" style="width: 16px;
+                        padding-left: 0px;" data-email-to-address='@item.Instructor.Email' data-email-to-name= '@item.Instructor.FirstName @item.Instructor.LastName'/
+                        data-pre-attach-file = '@rosterPdfFilName'>
+                    &nbsp;
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "roster-detail-excel", type = ServiceType.Camp, id = item.Id })' title="Export to Excel" class="image-button image-button-excel" style="width: 16px;
+                        padding-left: 0px;" />
+                    &nbsp;
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "roster-detail-pdf", type = ServiceType.Camp, id = item.Id })' title="Export to Pdf" class="image-button image-button-pdf" style="width: 16px;
+                        padding-left: 0px;" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.DisplayForModel("Paging", new
+{
+    PagingFormId = "rosterspaging",
+    UniqueId = "Camp",
+    PrePagingMethod = "setCampServiceType",
+})

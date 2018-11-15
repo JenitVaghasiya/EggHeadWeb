@@ -1,0 +1,22 @@
+﻿@using EggheadWeb.Models.Common;
+@model APVariable
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings", "FrontEnd" };
+    ViewBag.Title = "Edit Term & condition";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@using (Html.BeginForm("terms", "", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl(new { action = "frontend" })" />
+    </div>
+    <p>
+        @Html.HiddenFor(t => t.Name)
+        <label for="displayName" class="required">
+            Term & Condition:</label>
+        @Html.ValidationMessageFor(m => m.Value)<br />
+        @Html.TextAreaFor(m => m.Value, new { @class = "wysiwyg full" })
+    </p>
+}

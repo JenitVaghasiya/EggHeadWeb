@@ -1,0 +1,32 @@
+﻿@model ICollection<EggheadWeb.Models.Common.Student>
+<div class="contact-form-wrapper">
+    @Html.Partial("_UserInformMessages")
+    <fieldset style="min-height: 320px;">
+        <legend>STUDENT INFORMATION</legend>
+        <div class="fl txt_acc1" style="margin: 1px 10px 20px 20px;">
+            @foreach (var student in Model)
+            {
+                <div style="width: 320px; margin-top: 20px; position: relative" class="fl ">
+                    <div style="position: absolute; top: -7px;">
+                        <span>@student.FirstName @student.LastName </span>
+                    </div>
+                    <div>
+                        &nbsp;
+                    </div>
+                    <div class="txt_acc2">
+                        Grade : @student.Grade.Name
+                        <br />
+                        Gender :@(student.Gender == "M" ? "Male" : "Female")
+                        <br />
+                        Birthday : @student.BirthDate.ToString("MMMM dd, yyyy")
+                        <br />
+                        <a onclick="modifyStudent('@Url.Action("student-edit-init")', @student.Id);">Edit&nbsp;
+                        </a>|&nbsp;<a onclick="deleteStudent('@Url.Action("student-delete")', @student.Id);" style="color:Red">Delete
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </fieldset>
+    <br class='clear' />
+</div>

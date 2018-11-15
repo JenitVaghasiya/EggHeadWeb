@@ -1,0 +1,50 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Security;
+@model EmailTemplate
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings", "Email Templates" };
+    ViewBag.Title = Model.Id > 0 ? "Edit System Template" : "New System Template";
+    ViewBag.CurrentMenu = 6;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var admin = EggheadWeb.Security.UserProvider.Current.Admin;
+}
+@using (Html.BeginForm("system-template-detail", "SuperAdmin", FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true, Add = true, AddAction = "system-template-detail" })
+        <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl(new { action = "email" })" />
+    </div>
+    <br />
+    
+    @Html.HiddenFor(m => m.Id)
+    @Html.ValidationSummary(true)
+    
+    <p>
+        <label for="menuname">
+            Type :</label>
+        @Html.ValidationMessageFor(m => m.Type)<br />
+        @Html.DropDownListFor(m => m.Type, SelectLists.SystemEmailTemplateTypes(), Constants.SELECT_TYPE)
+    </p>
+    
+    <p>
+        <label for="menuname">
+            Template Name :</label>
+        @Html.ValidationMessageFor(m => m.Name)<br />
+        @Html.TextBoxFor(m => m.Name, new { @class = "half" })
+    </p>
+    <p>
+        <label for="subject" class="required">
+            Subject:</label>
+        @Html.ValidationMessageFor(m => m.MailSubject)<br />
+        @Html.TextBoxFor(m => m.MailSubject, new { @class = "half" })
+    </p>
+    <p>
+        <label for="dody" class="required">
+            Body:</label><br />
+        @Html.ValidationMessageFor(m => m.MailBody)<br />
+        @Html.TextAreaFor(m => m.MailBody, new { @class = "wysiwyg medium full" })
+    </p>
+}

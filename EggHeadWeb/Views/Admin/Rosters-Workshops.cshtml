@@ -1,0 +1,67 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@model EggheadWeb.Models.Common.SearchResult<RosterSearchForm, Workshop>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+<table class="display stylized">
+    <colgroup>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Location
+            </th>
+            <th>
+                Class
+            </th>
+            <th>
+                Instructor
+            </th>
+            <th>
+                Start Date
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            <tr>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
+                        @item.Location.Name</a>
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
+                        @ScheduleUtil.GetShortInstructorName(item.Instructor)</a>
+                </td>
+                <td>
+                    @item.Assigns.Min(c => c.Date).ToString("MM/dd/yyyy")
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" title="Email" class="image-button image-button-email" style="width: 16px;
+                        padding-left: 0px;" data-email= '@item.Instructor.Email' />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("roster-paging", "", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Form.LocationId)
+    @Html.HiddenFor(m => m.Form.InstructorId)
+    @Html.HiddenFor(m => m.Form.StartDate)
+    @Html.HiddenFor(m => m.Form.ClassName)
+}
+@Html.DisplayForModel("Paging")

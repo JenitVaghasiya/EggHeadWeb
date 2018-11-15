@@ -1,0 +1,47 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model Grade
+@{
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "Grades";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var grades = (SearchResult<object, Grade>)ViewBag.Grades;
+}
+@using (Html.BeginRouteForm("", new { action = "grades" }, FormMethod.Post))
+{
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.TextBoxFor(m => m.Name, new { @class = "half" })
+        @Html.ValidationMessageFor(m => m.Name)
+        &nbsp;&nbsp;
+        <input type="submit" class="btn btn-green big" value="New grade" />
+    </div>
+}
+<table class="display stylized scrolltable">
+    <colgroup>
+        <col width="*" />
+        <col width="40px" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in grades.PageItems)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <input type="button" data-post-delete ='@Url.RouteUrl(new { action = "grades-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,115 @@
+﻿@using EggheadWeb.Models.Common;
+@model EggheadWeb.Models.UserModels.ParentItem
+@{
+    var userLocations = this.ViewBag.Locations as SelectList;
+}
+<script type="text/javascript">
+$(document).ready(function() {
+    $(this).find(".input-phone-number").mask("(999) 999-9999");
+    });
+</script>
+<div class="twelve columns">
+    @using (Html.BeginForm("account-edit", "Users", FormMethod.Post))
+    {
+        @Html.Partial("_UserInformMessages")
+
+        <fieldset style="min-height: 320px;">
+            <legend>EDIT ACCOUNT INFORMATION</legend>
+            <table>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Location:
+                    </td>
+                    <td>
+                        @Model.LocationName
+                        @Html.HiddenFor(m => m.LocationId)
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        First Name:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.FirstName)
+                        @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Last Name:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.LastName)
+                        @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Phone Number:
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(model => model.PhoneNumer, new { @class = "input-phone-number" })
+                        @Html.ValidationMessageFor(model => model.PhoneNumer, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Address:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Address)
+                        @Html.ValidationMessageFor(model => model.Address, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        City:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.City)
+                        @Html.ValidationMessageFor(model => model.City, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                    <td style='vertical-align: middle; text-align: right'>
+                        State:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.State)
+                        @Html.ValidationMessageFor(model => model.State, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Zip:
+                    </td>
+                    <td>@Html.EditorFor(model => model.Zip)
+                        @Html.ValidationMessageFor(model => model.Zip, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                    <td style='vertical-align: middle; text-align: right'>
+                        Email:
+                    </td>
+                    <td>
+                        @Html.EditorFor(model => model.Email)
+                        @Html.ValidationMessageFor(model => model.Email, string.Empty, new { @style = "color:Red;" })
+                    </td>
+                </tr>
+                <tr>
+                    <td style='vertical-align: middle; text-align: right'>
+                    </td>
+                    <td>
+                    </td>
+                    <td style='vertical-align: middle; text-align: right'>
+                    </td>
+                    <td>
+                        <div style='text-align: right; margin-right: 4px;'>
+                            <a id="edit-account-info-change-password" action='@Url.Action("init-change-password")'>
+                                Chage password </a>&nbsp;&nbsp;
+                            <input type="button" class="btn btn-blue" id="edit-account-info-save" value="SAVE" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            @Html.HiddenFor(model => model.Id)
+            <br class="clear" />
+        </fieldset>
+    }
+</div>

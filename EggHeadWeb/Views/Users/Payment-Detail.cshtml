@@ -1,0 +1,113 @@
+﻿@using EggheadWeb.Models.Common;
+@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_ParentUserLayout.cshtml";
+}
+@model Payment
+<div class="page-wrapper">
+    @Html.Partial("_UserLeftMenu")
+    <div id="partialView" class="ajax-container">
+        <div class="twelve columns mb20">
+            <div class="enroll_container">
+                <fieldset style="min-height: 320px;">
+                    <legend>BILLING DETAIL</legend>
+                    <div style="padding-left: 0px;">
+                        <h4>@Model.PaymentMessage</h4>
+                        <p style="margin-top: 3px; font-style: italic;">
+                            (Your receipt is below. Please print this for your records.)
+                        </p>
+                        <br />
+                        <div>
+                            <table class="scheduletable">
+                                <colgroup>
+                                    <col width="120px" style=" padding-left:15px; vertical-align:middle; text-align:left;" />
+                                    <col width="400px;" style=" padding-left:15px; vertical-align:middle; text-align:left;" />
+                                </colgroup>
+                                <tr>
+                                    <td>
+                                        Auth Code:
+                                    </td>
+                                    <td>
+                                        <b>@Model.AuthCode</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        TransactionID:
+                                    </td>
+                                    <td>
+                                        <b>@Model.TransactionID</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        First Name:
+                                    </td>
+                                    <td style="width: 100px;">
+                                        @Model.Bill_FirstName
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Last Name:
+                                    </td>
+                                    <td>
+                                        @Model.Bill_LastName
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Addres:
+                                    </td>
+                                    <td>
+                                        @Model.Bill_Address
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        City:
+                                    </td>
+                                    <td>
+                                        @Model.Bill_LastName
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Zip:
+                                    </td>
+                                    <td>
+                                        @Model.Bill_Zip
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        State:
+                                    </td>
+                                    <td>
+                                        @Model.Bill_State
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Email:
+                                    </td>
+                                    <td>
+                                        @Model.Bill_Email
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <input type="button" value="Print" onclick="window.print();" style="float: right;" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br />
+                        </div>
+                    </div>
+                    <br class="clear" />
+                </fieldset>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+﻿@using EggheadWeb.Models.Common;
+@model Payment
+@{
+    ViewBag.BreadCrumbs = new string[] { "Charge" };
+    ViewBag.Title = "Charge Result";
+    ViewBag.CurrentMenu = 7;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var totalFrees = 0;
+}
+
+<div class="twelve columns contact-form-wrapper">
+    <div style="color:blue; text-align:center">
+        Your charge request have been process successfully.Transaction ID: @ViewBag.Reference
+    </div>
+</div>

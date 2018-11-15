@@ -1,0 +1,112 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Security;
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.BreadCrumbs = new string[] { "Settings" };
+    ViewBag.Title = "Email Templates";
+    ViewBag.CurrentMenu = 6;
+    var isSuperAdmin = this.User.IsInRole(UserRoleProvider.SUPER_ADMIN);
+    var userTemplates = (SearchResult<object, AdminEmailTemplate>)ViewBag.UserEmailTeplates;
+    var systemTemplates = (SearchResult<object, EmailTemplate>)ViewBag.SystemEmailTeplates;
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#system-emtail-table_wrapper").css("min-height", "100px");
+    });
+</script>
+<a href='@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "email-update" })'>
+    + Change email password</a>
+<br />
+@if (isSuperAdmin)
+{
+    <h5>
+        System templates</h5>
+    <hr />
+    <div class="box" style="margin-top: 0; margin-bottom: 0;">
+        @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "system-template-detail" })
+    </div>
+    <table id="system-emtail-table" class="display stylized search-result-table" style="height: 20px;">
+        <colgroup>
+            <col width="250px" />
+            <col width="*" />
+            <col width="100px" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th>
+                    Template Name
+                </th>
+                <th>
+                    Subject
+                </th>
+                <th class="taskes">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in systemTemplates.PageItems)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.MailSubject
+                    </td>
+                    <td>
+                        <input type="button" data-redirect ='@Url.RouteUrl("SuperAdmin", new { action = "system-template-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                        <input type="button" data-post-delete ='@Url.RouteUrl("SuperAdmin", new { action = "system-template-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@if (isSuperAdmin)
+{
+    <h5>
+        Personal templates</h5>
+    <hr />
+}
+<div class="box" style="margin-top: 0; margin-bottom: 0;">
+    @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "template-detail" })
+</div>
+<table class="display stylized search-result-table">
+    <colgroup>
+        <col width="250px" />
+        <col width="*" />
+        <col width="100px" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Template Name
+            </th>
+            <th>
+                Subject
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in userTemplates.PageItems)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.MailSubject
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "template-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "email-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

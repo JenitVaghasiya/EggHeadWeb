@@ -1,0 +1,101 @@
+﻿@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@model SearchResult<InstructorSearchForm, Instructor>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+}
+<style type="text/css">
+    div.icon-active
+    {
+        margin-left: 0;
+    }
+    td.center, th.center
+    {
+        text-align: center !important;
+    }
+    td.center div
+    {
+        text-align: center;
+        margin: auto;
+    }
+</style>
+<table class="display stylized search-result-table email-table">
+    <colgroup>
+        <col width="40px" />
+        <col width="200px" />
+        <col width="300px" />
+        <col width="150px" />
+        <col width="100px" />
+        <col width="80px" />
+        <col width="130px" />
+    </colgroup>
+    <thead>
+        <tr>
+            <th class="checkbox">
+                <input type="checkbox" class="checkall" />
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Pay
+            </th>
+            <th class="center">
+                Active
+            </th>
+            <th class="taskes">
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            <tr>
+                <td>
+                    <input type="checkbox" class="checkitem" data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName' />
+                </td>
+                <td>
+                    @item.FirstName @item.LastName
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @item.PhoneNumber
+                </td>
+                <td>
+                    @item.Pay
+                </td>
+                <td style="vertical-align: top;" class="center">
+                    @Html.DisplayFor(t => item.IsActive, "ActiveValue")
+                </td>
+                <td style="vertical-align: top;">
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "instructors-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" title="Email" class="image-button image-button-email" style="width: 16px; padding-left: 0px;" data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName' />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("instructors", "Admin", FormMethod.Get, new { @id = "instructorspaging" }))
+{
+    @Html.HiddenFor(m => m.Form.QuickSearch)
+    @Html.HiddenFor(m => m.Form.IsActive)
+}
+@Html.DisplayForModel("Paging", new
+{
+    Submit = true,
+    PagingFormId = "instructorspaging"
+})

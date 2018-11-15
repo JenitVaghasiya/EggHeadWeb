@@ -1,0 +1,206 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Models.AdminModels;
+@{
+    ViewBag.Title = "Send Email";
+    Layout = "~/Views/Shared/_AdminSendMailLayout.cshtml";
+    var isSuperAdmin = (bool)ViewBag.IsSuperAdmin;
+    
+}
+@model SendEmailForm
+<script src="@Url.Content("~/Content/ajaxupload/fileuploader.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#sending-message").hide();
+
+        // Hide send one email per address option if there is one email only.
+        var emails = $("#to").val().split(";");
+
+        if (emails.length == 1) {
+            $("#one-per-address").attr("checked", "checked");
+            $("#ext-sending-option").hide();
+            $("#one-per-address").hide();
+        }
+
+        $("#template").change(function () {
+            var id = $(this).val();
+
+            if (id == '') {
+                return;
+            }
+
+            $.ajax({
+                url: '@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "get-email-template" })',
+                type: 'POST',
+                data: { id: id },
+                success: function (result) {
+                    if (result.ReturnStatus = 'true') {
+                        $("#mailsubject").val(result.MailSubject);
+                        $("#mailbody" + 'IFrame').contents().find('body').html(result.MailBody);
+                        $("#mailbody").val(result.MailBody);
+                    }
+                    else {
+                        $("#mailsubject").val('');
+                        $("#mailbody").val('');
+                    }
+                },
+                error: function (jqXHR, status, errorThrow) {
+                    if (jqXHR.status >= 600) {
+                        var html = jqXHR.responseText;
+                    }
+                }
+            });
+        });
+
+        $("#send").click(function () {
+            var $this = $(this);
+
+            if (!$this.closest("form").valid()) {
+                return;
+            }
+
+            $this.attr('disabled', 'disabled');
+            $("#sending-message").show();
+
+            var filePaths = $("#messages").find("input:checked").map(function () {
+                return $.trim($(this).data('file-path'));
+            }).get().join(";");
+
+            $("#attachedFilePaths").val(filePaths);
+
+            $this.closest("form").ajaxSubmit(
+                function (html) {
+                    if (html.ReturnStatus == 'true') {
+                        $("#closeModal").trigger("click");
+                    }
+                    else {
+                        alert('Email(s) send fail, please re-check your email setting (Error: ' + html.ErrorMessage + ')');
+                        $("#closeModal").trigger("click");
+                    }
+
+                    $this.attr("disabled", false);
+                    $("#sending-message").hide();
+                },
+                function (html) {
+                    $(this).closest(".wrapper > div").html(html);
+                });
+        });
+
+        resetValidation();
+
+        //Upload
+        $fub = $('#attach-file');
+        $messages = $('#messages');
+
+        var uploader = new qq.FileUploaderBasic({
+            button: $fub[0],
+            action: '@Url.Action("upload-file")',
+            debug: true,
+            sizeLimit: 2048000,
+            forceMultipart: true,
+            onSubmit: function (id, fileName) {
+                $("#send").attr("disabled", "disabled");
+                $messages.append('<div id="file-' + id + '"></div>');
+                var folderId = $('#folderId').val();
+                uploader.setParams({
+                    folderId: folderId
+                });
+            },
+            onProgress: function (id, fileName, loaded, total) {
+                if (loaded < total) {
+                    progress = Math.round(loaded / total * 100) + '% of ' + Math.round(total / 1024) + ' kB';
+                    $('#file-' + id).removeClass('alert-info')
+                          .html('Uploading ' + '"' + fileName + '" ' + progress);
+                } else {
+                    $('#file-' + id).addClass('alert-info')
+                          .html('Saving ' + '"' + fileName + '"');
+                }
+            },
+            onComplete: function (id, fileName, responseJSON) {
+                if (responseJSON.ReturnStatus) {
+                    $("#folderId").val(responseJSON.FolderId);
+                    $('#file-' + id).removeClass('alert-info')
+                          .html('<input type="checkbox" class="file-select-checkbox" data-file-path="' + responseJSON.FilePath + '" checked="checked" />'
+                           + fileName);
+                } else {
+                    $('#file-' + id).removeClass('alert-info')
+                          .html('<i class="icon-exclamation-sign"></i> ' +
+                                'Error with ' +
+                                '"' + fileName + '": ' +
+                                responseJSON.ErrorMessage);
+                }
+
+                $("#send").removeAttr("disabled");
+            }
+        });
+    });
+</script>
+@using (Html.BeginRouteForm(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "send-email" }, FormMethod.Post))
+{
+    <p class="box" style="margin-top: 0; margin-bottom: 0;">
+        <input type="button" title="Send" class="btn btn-green medium" id="send" value="Send" />
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <label for="template">
+            Use Template</label>
+        @Html.DropDownList("template", SelectLists.AdminEmailTemplates(new EggheadEntities()), Constants.SELECT_TEMPLATE)
+        &nbsp;&nbsp;
+        <label id="ext-sending-option" for="oneperone">
+            Use one email per address</label>
+        @Html.CheckBoxFor(m => m.OnePerAddress, new { @id = "one-per-address" })
+        &nbsp;&nbsp;&nbsp;&nbsp; <span id="sending-message">Sending...</span>
+    </p>
+    @Html.HiddenFor(m => m.From)
+    @Html.HiddenFor(m => m.ToNames)
+    @Html.Hidden("preAttachFile", Model.PreAttachFile, new { @id = "preAttachFile" })
+    <fieldset style="padding: 0">
+        <legend>Send mail</legend>
+        <p>
+            <label class="required" for="to">
+                To</label>
+            @Html.ValidationMessageFor(m => m.ToAddress)
+            <br />
+            @Html.TextBoxFor(m => m.ToAddress, new { @id = "to", @class = "width6", @readonly = "readonly" })
+        </p>
+        <p>
+            <label class="required" for="subject">
+                Subject</label>
+            @Html.ValidationMessageFor(m => m.Subject)<br>
+            @Html.TextBoxFor(m => m.Subject, new { @id = "mailsubject", @class = "width6" })
+        </p>
+        <table style="margin-top: 5px; margin-left: 5px;">
+            <tr>
+                <td style="width: 100px;" valign="top">
+                    <div id="attach-file">
+                        <a href="">Attach file(s)</a></div>
+                </td>
+                <td>
+                    <div id="messages">
+                        @if (!string.IsNullOrEmpty(Model.PreAttachFile))
+                        {
+                            <div id="pre-file0">
+                                <input type="checkbox" class="file-select-checkbox" data-file-path='@Model.PreAttachFile' checked="checked" />
+                                @Model.PreAttachFile.Substring(Model.PreAttachFile.LastIndexOf("\\") + 1)
+                            </div>
+                        }
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <p>
+            <label class="required" for="body">
+                Body
+            </label>@Html.ValidationMessageFor(m => m.Body)<br>
+            <p>
+                <span class="box box-info">When you check [USE ONE EMAIL PER ADDRESS], you can specify
+                    the receiver's name when by using keyword [Name] (Dear [Name] etc)</span>
+            </p>
+            <br />
+            @Html.TextAreaFor(m => m.Body, new { @id = "mailbody", @class = "wysiwyg medium full" })
+        </p>
+    </fieldset>
+    <input type="hidden" id="folderId" name="FolderId" /> 
+    <input type="hidden" id="attachedFilePaths" name="AttachedFilePaths" />
+    <a href="#" id="closeModal" onclick="parent.$.nyroModalRemove(); return false;" style="display: none;">
+    </a>
+}

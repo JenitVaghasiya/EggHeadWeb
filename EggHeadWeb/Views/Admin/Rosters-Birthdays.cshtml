@@ -1,0 +1,76 @@
+﻿@using EggheadWeb.Common;
+@using EggheadWeb.Models.AdminModels;
+@using EggheadWeb.Models.Common;
+@using EggheadWeb.Utility;
+@model EggheadWeb.Models.Common.SearchResult<RosterSearchForm, Birthday>
+@{
+    if (Model == null)
+    {
+        return;
+    }
+    
+}
+<table class="display stylized">
+    <colgroup>
+    </colgroup>
+    <thead>
+        <tr>
+            <th>
+                Addess
+            </th>
+            <th>
+                Parent
+            </th>
+            <th>
+                Instructor
+            </th>
+            <th>
+                Date
+            </th>
+            <th>
+                Time
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PageItems)
+        {
+            var instructor = @item.Assigns.First().Instructor;
+            
+            <tr>
+                <td>
+                    @item.Address
+                </td>
+                <td>
+                    @item.ParentName
+                </td>
+                <td>
+                    <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = instructor.Id })'>
+                        @ScheduleUtil.GetShortInstructorName(instructor)</a>
+                </td>
+                <td>
+                    @item.PartyDate.ToOneDigitMonth()
+                </td>
+                <td>
+                    @item.PartyTime.To12HoursString()
+                </td>
+                <td>
+                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    &nbsp;&nbsp;
+                    <input type="button" title="Email" class="image-button image-button-email" style="width: 16px;
+                        padding-left: 0px;" data-email='@@item.Assigns.OrderBy(t => t.Date).First().Instructor.Email' />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@using (Html.BeginForm("roster-paging", "", FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.Form.LocationId)
+    @Html.HiddenFor(m => m.Form.InstructorId)
+    @Html.HiddenFor(m => m.Form.StartDate)
+    @Html.HiddenFor(m => m.Form.ClassName)
+}
+@Html.DisplayForModel("Paging")
