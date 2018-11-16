@@ -1,5 +1,6 @@
 using EggheadWeb.Common;
 using EggheadWeb.Mailers;
+using EggheadWeb.Models.Common;
 using EggheadWeb.Security;
 using EggheadWeb.Utility;
 using EggHeadWeb.DatabaseContext;

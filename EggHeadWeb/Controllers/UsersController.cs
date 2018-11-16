@@ -241,7 +241,7 @@ namespace EggheadWeb.Controllers
 
 		private bool CheckLocation()
 		{
-			string str = RouteData.Values["location"].ToString();
+			string str = Convert.ToString(RouteData.Values["location"]);
 			Area location = this.unitOfWork.AreaRepository.Get((Area t) => t.Name == str, null, "").FirstOrDefault<Area>();
 			if (location != null && location.Admins.Count != 0)
 			{
@@ -828,8 +828,8 @@ namespace EggheadWeb.Controllers
 
 		private Admin GetCurrentAdmin()
 		{
-			string str = RouteData.Values["location"].ToString();
-			return this.unitOfWork.AreaRepository.Get((Area t) => t.Name.ToLower() == str.ToLower(), null, "").FirstOrDefault<Area>().Admins.First<Admin>();
+			string str = Convert.ToString(RouteData.Values["location"]);
+			return this.unitOfWork.AreaRepository.Get(t => t.Name.ToLower() == str.ToLower(), null, "").FirstOrDefault<Area>()?.Admins.First<Admin>();
 		}
 
 		private Area GetCurrentArea()

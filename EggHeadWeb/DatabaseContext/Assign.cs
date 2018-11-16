@@ -41,39 +41,39 @@ namespace EggHeadWeb.DatabaseContext
         {
             get
             {
-                switch (this.Type)
+                switch (Type)
                 {
                     case ServiceType.Class:
                         {
-                            if (this.Class == null)
+                            if (Class == null)
                             {
                                 return new TimeSpan();
                             }
-                            return this.Class.TimeEnd;
+                            return Class.TimeEnd;
                         }
                     case ServiceType.Camp:
                         {
-                            if (this.Camp == null)
+                            if (Camp == null)
                             {
                                 return new TimeSpan();
                             }
-                            return this.Camp.TimeEnd;
+                            return Camp.TimeEnd;
                         }
                     case ServiceType.Workshop:
                         {
-                            if (this.Workshop == null)
+                            if (Workshop == null)
                             {
                                 return new TimeSpan();
                             }
-                            return this.Workshop.TimeEnd;
+                            return Workshop.TimeEnd;
                         }
                     case ServiceType.Birthday:
                         {
-                            if (this.Birthday == null)
+                            if (Birthday == null)
                             {
                                 return new TimeSpan();
                             }
-                            TimeSpan partyTime = this.Birthday.PartyTime;
+                            TimeSpan partyTime = Birthday.PartyTime;
                             return partyTime.Add(new TimeSpan(1, 0, 0));
                         }
                 }
@@ -85,39 +85,39 @@ namespace EggHeadWeb.DatabaseContext
         {
             get
             {
-                switch (this.Type)
+                switch (Type)
                 {
                     case ServiceType.Class:
                         {
-                            if (this.Class == null)
+                            if (Class == null)
                             {
                                 return new TimeSpan();
                             }
-                            return this.Class.TimeStart;
+                            return Class.TimeStart;
                         }
                     case ServiceType.Camp:
                         {
-                            if (this.Camp == null)
+                            if (Camp == null)
                             {
                                 return new TimeSpan();
                             }
-                            return this.Camp.TimeStart;
+                            return Camp.TimeStart;
                         }
                     case ServiceType.Workshop:
                         {
-                            if (this.Workshop == null)
+                            if (Workshop == null)
                             {
                                 return new TimeSpan();
                             }
-                            return this.Workshop.TimeStart;
+                            return Workshop.TimeStart;
                         }
                     case ServiceType.Birthday:
                         {
-                            if (this.Birthday == null)
+                            if (Birthday == null)
                             {
                                 return new TimeSpan();
                             }
-                            return this.Birthday.PartyTime;
+                            return Birthday.PartyTime;
                         }
                 }
                 return new TimeSpan();
@@ -128,24 +128,26 @@ namespace EggHeadWeb.DatabaseContext
         {
             get
             {
-                if (this.ClassId.HasValue)
+                if (ClassId.HasValue)
                 {
                     return ServiceType.Class;
                 }
-                if (this.CampId.HasValue)
+                if (CampId.HasValue)
                 {
                     return ServiceType.Camp;
                 }
-                if (this.BirthdayId.HasValue)
+                if (BirthdayId.HasValue)
                 {
                     return ServiceType.Birthday;
                 }
-                if (this.WorkshopId.HasValue)
+                if (WorkshopId.HasValue)
                 {
                     return ServiceType.Workshop;
                 }
                 return ServiceType.Birthday;
             }
         }
+
+        public string Name { get; set; }
     }
 }
