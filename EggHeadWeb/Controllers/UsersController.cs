@@ -840,8 +840,8 @@ namespace EggheadWeb.Controllers
 
 		private long GetCurrentAreaId()
 		{
-			string str = RouteData.Values["location"].ToString();
-			return this.unitOfWork.AreaRepository.Get((Area t) => t.Name.ToLower() == str.ToLower(), null, "").FirstOrDefault<Area>().Id;
+			string str = Convert.ToString(RouteData.Values["location"]);
+			return unitOfWork.AreaRepository.Get(t => t.Name.ToLower() == str.ToLower(), null, "").FirstOrDefault().Id;
 		}
 
 		private string GetPaymentDescription()
@@ -947,7 +947,7 @@ namespace EggheadWeb.Controllers
 		{
 			if (!this.CheckLocation())
 			{
-				return base.RedirectToRoute("Users", new { action = "area-not-found" });
+				return base.RedirectToAction("area-not-found");
 			}
 			((dynamic)ViewBag).LocationName = this.GetCurrentArea().DisplayName;
 			((dynamic)ViewBag).SelectedMenuItem = "Home";
