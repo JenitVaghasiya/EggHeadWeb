@@ -1,7 +1,8 @@
 ﻿@using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model EggheadWeb.Models.UserModels.StudentItem
 @{
-    var grades = SelectLists.Grades(new EggheadEntities());
+    var grades = SelectLists.Grades(new EggheadContext());
 }
 <div class="contact-form-wrapper">
     @using (Html.BeginForm("student-add", "Users", FormMethod.Post))
@@ -46,11 +47,13 @@
                         @Html.RadioButtonFor(model => model.Gender, "M", new { @id = "gender_male", @checked = "true" })
                         <label for="gender_male" style='display: inline; line-height: 16px; vertical-align: bottom;
                             margin-top: 15px;'>
-                            Male</label>
+                            Male
+                        </label>
                         @Html.RadioButtonFor(model => model.Gender, "F", new { @id = "gender_female" })
                         <label for="gender_female" style='display: inline; line-height: 16px; vertical-align: bottom;
                             margin-top: 15px;'>
-                            Female</label>
+                            Female
+                        </label>
                         @Html.ValidationMessageFor(model => model.Gender, string.Empty, new { @style = "color:Red;" })
                     </td>
                 </tr>
@@ -73,8 +76,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style='vertical-align: middle; text-align: right'>
-                    </td>
+                    <td style='vertical-align: middle; text-align: right'></td>
                     <td style="width: 100px;">
                         <div style="text-align: right; width: 410px;">
                             <input type="button" class="btn btn-blue" id="add-student-save-button" value="Save" />

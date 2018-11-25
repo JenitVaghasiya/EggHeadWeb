@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @using MVCControlsToolkit.Controls;
@@ -8,7 +9,7 @@
     ViewBag.Title = "Edit Birthday";
     ViewBag.CurrentMenu = 1;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var db = new EggheadEntities();
+    var db = new EggheadContext();
 
     var calendarSearchForm = new CalendarSearchForm
     {
@@ -36,19 +37,20 @@
             <td>
                 <p>
                     <label for="parentname" class="required">
-                        Parent Name:</label>
+                        Parent Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.ParentName)<br />
                     @Html.TextBoxFor(m => m.ParentName, new { @class = "half" })
                 </p>
             </td>
-            <td>
-            </td>
+            <td></td>
         </tr>
         <tr>
             <td>
                 <p>
                     <label for="chid" class="required">
-                        Child:</label>
+                        Child:
+                    </label>
                     @Html.ValidationMessageFor(m => m.ChildName)<br />
                     @Html.TextBoxFor(m => m.ChildName, new { @class = "half" })
                 </p>
@@ -56,7 +58,8 @@
             <td>
                 <p>
                     <label for="age" class="required">
-                        Age:</label>
+                        Age:
+                    </label>
                     @Html.ValidationMessageFor(m => m.Age)<br />
                     @Html.TextBoxFor(m => m.Age)
                 </p>
@@ -80,7 +83,8 @@
                     <td colspan='2'>
                         <p>
                             <label for="address" class="required">
-                                Address:</label>
+                                Address:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Address)<br />
                             @Html.TextBoxFor(m => m.Address, new { @class = "full" })
                         </p>
@@ -90,7 +94,8 @@
                     <td>
                         <p>
                             <label for="partyDate" class="required">
-                                Date:</label>
+                                Date:
+                            </label>
                             @Html.ValidationMessageFor(m => m.PartyDate)<br />
                             @Html.EditorFor(m => m.PartyDate, new { @class = "date" })
                         </p>
@@ -98,7 +103,8 @@
                     <td>
                         <p>
                             <label for="partyTime" class="required">
-                                Time:</label>
+                                Time:
+                            </label>
                             @Html.ValidationMessageFor(m => m.PartyTime)<br />
                             @Html.EditorFor(m => m.PartyTime)
                         </p>
@@ -116,7 +122,8 @@
                     <td>
                         <p>
                             <label for="contactnumber" class="required">
-                                Contact Number:</label>
+                                Contact Number:
+                            </label>
                             @Html.ValidationMessageFor(m => m.ContactNumber)<br />
                             @Html.TextBoxFor(m => m.ContactNumber, new { @class = "input-phone-number half" })
                         </p>
@@ -124,7 +131,8 @@
                     <td>
                         <p>
                             <label for="email" class="required">
-                                Email:</label>
+                                Email:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Email)<br />
                             @Html.TextBoxFor(m => m.Email, new { @class = "half" })
                         </p>
@@ -142,7 +150,8 @@
                     <td>
                         <p>
                             <label for="instructor" class="required">
-                                Instructor:</label>
+                                Instructor:
+                            </label>
                             @Html.ValidationMessageFor(m => m.InstructorId)<br />
                             @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(db), Constants.SELECT_INSTRUCTOR)
                         </p>
@@ -150,7 +159,8 @@
                     <td>
                         <p>
                             <label for="assistant">
-                                Assistant:</label>
+                                Assistant:
+                            </label>
                             @Html.ValidationMessageFor(m => m.AssistantId)<br />
                             @Html.DropDownListFor(m => m.AssistantId, SelectLists.Instructors(db), Constants.SELECT_ASSISTANT)
                         </p>
@@ -161,7 +171,8 @@
         <div id="tabs-notes">
             <p>
                 <label for="notes">
-                    Notes:</label>
+                    Notes:
+                </label>
                 @Html.ValidationMessageFor(m => m.Notes)<br />
                 @Html.TextAreaFor(m => m.Notes, new { @class = "wysiwyg small full" })
             </p>

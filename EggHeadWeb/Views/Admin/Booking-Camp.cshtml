@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Common;
 @using EggheadWeb.Models.AdminModels;
 @using MVCControlsToolkit.Controls;
@@ -8,11 +9,10 @@
     ViewBag.Title = "Camp";
     ViewBag.CurrentMenu = 5;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var db = new EggheadEntities();
+    var db = new EggheadContext();
 }
 <style type="text/css">
-    #grade-list div
-    {
+    #grade-list div {
         display: inline;
         margin-right: 10px;
     }
@@ -26,9 +26,11 @@
                 <option data-redirect="@(Url.RouteUrl("Admin", new { action = "booking-class" }))">Class</option>
                 <option selected="selected">Camp</option>
                 <option data-redirect="@(Url.RouteUrl("Admin", new { action = "booking-birthday" }))">
-                    Birthday</option>
+                    Birthday
+                </option>
                 <option data-redirect="@(Url.RouteUrl("Admin", new { action = "booking-workshop" }))">
-                    Workshop</option>
+                    Workshop
+                </option>
             </select>
         </div>
     </div>
@@ -41,19 +43,20 @@
             <td>
                 <p>
                     <label for="location" class="required">
-                        Location:</label>
+                        Location:
+                    </label>
                     @Html.ValidationMessageFor(m => m.LocationId)<br />
                     @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "half" })
                 </p>
             </td>
-            <td>
-            </td>
+            <td></td>
         </tr>
         <tr>
             <td>
                 <p>
                     <label for="name" class="required">
-                        Nickname:</label>
+                        Nickname:
+                    </label>
                     @Html.ValidationMessageFor(m => m.Name)<br />
                     @Html.TextBoxFor(m => m.Name, new { @class = "half" })
                 </p>
@@ -61,7 +64,8 @@
             <td>
                 <p>
                     <label for="onlineName" class="required">
-                        Online Name:</label>
+                        Online Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.OnlineName)<br />
                     @Html.TextBoxFor(m => m.OnlineName, new { @class = "half" })
                 </p>
@@ -85,7 +89,8 @@
                     <td colspan='2'>
                         <p>
                             <label for="grades" class="required">
-                                Grades:</label>
+                                Grades:
+                            </label>
                             @Html.ValidationMessageFor(m => m.GradeIds)<br />
                         </p>
                         <div id='grade-list'>
@@ -97,7 +102,8 @@
                     <td colspan='2'>
                         <p>
                             <label for="dates" class="required">
-                                Dates:</label>
+                                Dates:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Dates)<br />
                             @Html.TextAreaFor(m => m.Dates, new { @class = "multiple-date", @readonly = "readonly" })
                         </p>
@@ -107,7 +113,8 @@
                     <td>
                         <p>
                             <label for="timeStart" class="required">
-                                Time Start:</label>
+                                Time Start:
+                            </label>
                             @Html.ValidationMessageFor(m => m.TimeStart)<br />
                             @Html.EditorFor(m => m.TimeStart)
                         </p>
@@ -115,7 +122,8 @@
                     <td>
                         <p>
                             <label for="timeEnd" class="required">
-                                Time End:</label>
+                                Time End:
+                            </label>
                             @Html.ValidationMessageFor(m => m.TimeEnd)<br />
                             @Html.EditorFor(m => m.TimeEnd)
                         </p>
@@ -133,7 +141,8 @@
                     <td>
                         <p>
                             <label for="instructor" class="required">
-                                Instructor:</label>
+                                Instructor:
+                            </label>
                             @Html.ValidationMessageFor(m => m.InstructorId)<br />
                             @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(db), Constants.SELECT_INSTRUCTOR)
                         </p>
@@ -141,7 +150,8 @@
                     <td>
                         <p>
                             <label for="assistant">
-                                Assistant:</label>
+                                Assistant:
+                            </label>
                             @Html.ValidationMessageFor(m => m.AssistantId)<br />
                             @Html.DropDownListFor(m => m.AssistantId, SelectLists.Instructors(db), Constants.SELECT_ASSISTANT)
                         </p>
@@ -159,7 +169,8 @@
                     <td>
                         <p>
                             <label for="allowOnlineRegistration">
-                                Online Registration:</label>
+                                Online Registration:
+                            </label>
                             @Html.ValidationMessageFor(m => m.CanRegistOnline)<br />
                             @Html.CheckBoxFor(m => m.CanRegistOnline)
                         </p>
@@ -167,7 +178,8 @@
                     <td>
                         <p>
                             <label for="openTo">
-                                Open To All:</label>
+                                Open To All:
+                            </label>
                             @Html.ValidationMessageFor(m => m.IsOpen)<br />
                             @Html.CheckBoxFor(m => m.IsOpen)
                         </p>
@@ -177,19 +189,20 @@
                     <td>
                         <p>
                             <label for="onlineDeadline">
-                                Display Online Until:</label>
+                                Display Online Until:
+                            </label>
                             @Html.ValidationMessageFor(m => m.NDisplayUntil)<br />
                             @Html.EditorFor(m => m.NDisplayUntil)
                         </p>
                     </td>
-                    <td>
-                    </td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>
                         <p>
                             <label for="maxEnroll" class="required">
-                                Max Enroll #:</label>
+                                Max Enroll #:
+                            </label>
                             @Html.ValidationMessageFor(m => m.NMaxEnroll)<br />
                             @Html.TextBoxFor(m => m.NMaxEnroll)
                         </p>
@@ -197,7 +210,8 @@
                     <td>
                         <p>
                             <label for="totalCost" class="required">
-                                Total Cost ($):</label>
+                                Total Cost ($):
+                            </label>
                             @Html.ValidationMessageFor(m => m.NCost)<br />
                             @Html.TextBoxFor(m => m.NCost)
                         </p>
@@ -215,7 +229,8 @@
                     <td>
                         <p>
                             <label for="onlineDescription">
-                                Online Description:</label>
+                                Online Description:
+                            </label>
                             @Html.ValidationMessageFor(m => m.OnlineDescription)<br />
                             @Html.TextAreaFor(m => m.OnlineDescription, new { @class = "wysiwyg small width3" })
                         </p>
@@ -223,7 +238,8 @@
                     <td style='padding-left: 20px;'>
                         <p>
                             <label for="notes">
-                                Notes:</label>
+                                Notes:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Notes)<br />
                             @Html.TextAreaFor(m => m.Notes, new { @class = "wysiwyg small width4", @style = "height: 204px;" })
                         </p>

@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
 @model ParentSearchForm
@@ -8,7 +9,7 @@
     ViewBag.Title = "Parents";
     ViewBag.CurrentMenu = 3;
     ViewBag.NoRecordSelectMsg = "Please select parent(s).";
-    var db = new EggheadEntities();
+    var db = new EggheadContext();
     var parents = (SearchResult<ParentSearchForm, Parent>)ViewBag.Parents;
 }
 @using (Html.BeginForm("", "", FormMethod.Get))
@@ -24,7 +25,8 @@
         <tr>
             <td>
                 <label>
-                    Quick Search:</label>
+                    Quick Search:
+                </label>
             </td>
             <td>
                 @Html.TextBoxFor(m => m.QuickSearch, new { @class = "full" })
@@ -33,7 +35,8 @@
         <tr>
             <td>
                 <label>
-                    Location:</label>
+                    Location:
+                </label>
             </td>
             <td>
                 @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "width2 search-filter-location-dropdownlist" })

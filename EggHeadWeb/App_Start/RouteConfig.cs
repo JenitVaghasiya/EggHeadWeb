@@ -15,8 +15,8 @@ namespace EggHeadWeb
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Users", action = "Home", id = UrlParameter.Optional }
+                url: "{controller}/{action}/{location}",
+                defaults: new { controller = "Users", action = "Home", location = UrlParameter.Optional }
             );
         }
     }

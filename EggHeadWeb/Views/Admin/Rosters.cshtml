@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @model RosterSearchForm
@@ -8,7 +9,7 @@
     ViewBag.CurrentMenu = 1;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
-    var db = new EggheadEntities();
+    var db = new EggheadContext();
 
     var classes = (SearchResult<RosterSearchForm, Class>)ViewBag.Classes;
     var camps = (SearchResult<RosterSearchForm, Camp>)ViewBag.Camps;
@@ -109,7 +110,7 @@
 
         return { ClassIds: classIds, CampIds: campIds };
     }
-     
+
 </script>
 @using (Html.BeginForm("rosters", "Admin", FormMethod.Get, new { @id = "searchForm" }))
 {
@@ -119,7 +120,7 @@
     <div class="box" style="margin-top: 0; margin-bottom: 0;">
         @Html.Partial("MainTaskbar", new MainTaskbarItem { Print = true, ExcelExport = true, PdfExport = true })
     </div>
-    
+
     <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
         <colgroup>
             <col width="100px" />
@@ -130,14 +131,16 @@
         <tr>
             <td>
                 <label>
-                    Location:</label>
+                    Location:
+                </label>
             </td>
             <td>
                 @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "search-filter-location-dropdownlist" })
             </td>
             <td>
                 <label>
-                    Start Date:</label>
+                    Start Date:
+                </label>
             </td>
             <td>
                 @Html.EditorFor(m => m.StartDate)
@@ -146,14 +149,16 @@
         <tr>
             <td>
                 <label>
-                    Instructor:</label>
+                    Instructor:
+                </label>
             </td>
             <td>
                 @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(db), Constants.SELECT_INSTRUCTOR, new { @class = "search-filter-instructor-dropdown" })
             </td>
             <td>
                 <label>
-                    Class/Camp Name:</label>
+                    Class/Camp Name:
+                </label>
             </td>
             <td>
                 @Html.TextBoxFor(m => m.ClassName, new { @class = "full" })
@@ -214,6 +219,6 @@
     @Html.HiddenFor(m => m.InstructorId)
     @Html.HiddenFor(m => m.StartDate)
     @Html.HiddenFor(m => m.ClassName)
-    
+
     @Html.HiddenFor(m => m.Type, new { @id = "service-type" })
 }

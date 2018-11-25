@@ -1,7 +1,8 @@
-﻿@using EggheadWeb.Models.Common;
+﻿@using EggHeadWeb.DatabaseContext;
+@using EggheadWeb.Models.Common;
 @model EggheadWeb.Models.UserModels.StudentItem
 @{
-    var grades = SelectLists.Grades(new EggheadEntities());
+    var grades = SelectLists.Grades(new EggheadContext());
 }
 <div class="page-wrapper">
     <div class="process-state-step2">

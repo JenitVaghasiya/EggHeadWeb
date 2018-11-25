@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.AdminModels;
 @model Location
 @{
@@ -43,20 +44,21 @@
                 <td>
                     <p>
                         <label class="required" for="name">
-                            Area:</label>
+                            Area:
+                        </label>
                         @Html.ValidationMessageFor(m => m.AreaId)<br />
-                        @Html.DropDownListFor(m => m.AreaId, SelectLists.Areas(new EggheadEntities()), string.Empty)
+                        @Html.DropDownListFor(m => m.AreaId, SelectLists.Areas(new EggheadContext()), string.Empty)
                     </p>
                 </td>
-                <td>
-                </td>
+                <td></td>
             </tr>
         }
         <tr>
             <td>
                 <p>
                     <label class="required" for="name">
-                        Name:</label>
+                        Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.Name)<br />
                     @Html.TextBoxFor(m => m.Name, new { @class = "full" })
                 </p>
@@ -64,7 +66,8 @@
             <td style="padding-left: 20px">
                 <p>
                     <label for="isActive">
-                        Active:</label>
+                        Active:
+                    </label>
                     @Html.ValidationMessageFor(m => m.IsActive)<br />
                     @Html.CheckBoxFor(m => m.IsActive)
                 </p>
@@ -74,7 +77,8 @@
             <td>
                 <p>
                     <label class="required" for="name">
-                        Display Name:</label>
+                        Display Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.DisplayName)<br />
                     @Html.TextBoxFor(m => m.DisplayName, new { @class = "full" })
                 </p>
@@ -82,7 +86,8 @@
             <td style="padding-left: 20px">
                 <p>
                     <label for="canRegistOnline">
-                        Online:</label>
+                        Online:
+                    </label>
                     @Html.ValidationMessageFor(m => m.CanRegistOnline)<br />
                     @Html.CheckBoxFor(m => m.CanRegistOnline)
                 </p>
@@ -112,7 +117,8 @@
                     <td colspan='2'>
                         <p>
                             <label class="required" for="address">
-                                Address:</label>
+                                Address:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Address)<br />
                             @Html.TextBoxFor(m => m.Address, new { @class = "full" })
                         </p>
@@ -122,7 +128,8 @@
                     <td>
                         <p>
                             <label class="required" for="city">
-                                City:</label>
+                                City:
+                            </label>
                             @Html.ValidationMessageFor(m => m.City)<br />
                             @Html.TextBoxFor(m => m.City, new { @class = "half" })
                         </p>
@@ -130,7 +137,8 @@
                     <td>
                         <p>
                             <label class="required" for="state">
-                                State:</label>
+                                State:
+                            </label>
                             @Html.ValidationMessageFor(m => m.State)<br />
                             @Html.TextBoxFor(m => m.State, new { @class = "half" })
                         </p>
@@ -140,32 +148,35 @@
                     <td>
                         <p>
                             <label class="required" for="zip">
-                                Zip:</label>
+                                Zip:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Zip)<br />
                             @Html.TextBoxFor(m => m.Zip, new { @class = "half" })
                         </p>
                     </td>
-                    <td>
-                    </td>
+                    <td></td>
                 </tr>
             </table>
         </div>
         <div id="tabs-contact">
             <p>
                 <label class="required" for="phoneNumer">
-                    Phone:</label>
+                    Phone:
+                </label>
                 @Html.ValidationMessageFor(m => m.PhoneNumber)<br />
                 @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "input-phone-number half" })
             </p>
             <p>
                 <label class="required" for="email">
-                    Email:</label>
+                    Email:
+                </label>
                 @Html.ValidationMessageFor(m => m.Email)<br />
                 @Html.TextBoxFor(m => m.Email, new { @id = "email", @class = "half" })
             </p>
             <p>
                 <label class="required" for="contactPerson">
-                    Contact:</label>
+                    Contact:
+                </label>
                 @Html.ValidationMessageFor(m => m.ContactPerson)<br />
                 @Html.TextBoxFor(m => m.ContactPerson, new { @class = "half" })
             </p>
@@ -173,13 +184,14 @@
         <div id="tabs-notes">
             <p>
                 <label for="note">
-                    Note</label>
+                    Note
+                </label>
                 @Html.ValidationMessageFor(m => m.Note)<br />
                 @Html.TextAreaFor(m => m.Note, new { @class = "medium full" })
             </p>
         </div>
     </div>
-        
+
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.AreaId);
     @Html.HiddenFor(m => m.Id)}

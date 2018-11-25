@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @model Parent
@@ -8,7 +9,7 @@
     ViewBag.CurrentMenu = 3;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
-    var db = new EggheadEntities();
+    var db = new EggheadContext();
     var admin = EggheadWeb.Security.UserProvider.Current.Admin;
 
     var calendarSearchForm = new CalendarSearchForm
@@ -54,19 +55,20 @@
             <td>
                 <p>
                     <label class="required" for="area">
-                        Location:</label>
+                        Location:
+                    </label>
                     @Html.ValidationMessageFor(m => m.LocationId)<br />
                     @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "half" })
                 </p>
             </td>
-            <td>
-            </td>
+            <td></td>
         </tr>
         <tr>
             <td>
                 <p>
                     <label class="required" for="firstname">
-                        First Name:</label>
+                        First Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.FirstName)<br />
                     @Html.TextBoxFor(m => m.FirstName, new { @class = "half" })
                 </p>
@@ -74,7 +76,8 @@
             <td>
                 <p>
                     <label class="required" for="lastname">
-                        Last Name:</label>
+                        Last Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.LastName)<br />
                     @Html.TextBoxFor(m => m.LastName, new { @class = "half" })
                 </p>
@@ -86,13 +89,13 @@
                 <td>
                     <p>
                         <label class="required" for="password">
-                            Password:</label>
+                            Password:
+                        </label>
                         @Html.ValidationMessageFor(m => m.Password)<br />
                         @Html.TextBoxFor(m => m.Password)
                     </p>
                 </td>
-                <td>
-                </td>
+                <td></td>
             </tr>
         }
     </table>
@@ -113,25 +116,29 @@
         <div id="tabs-address">
             <p>
                 <label class="required" for="address">
-                    Address:</label>
+                    Address:
+                </label>
                 @Html.ValidationMessageFor(mbox => mbox.Address)<br />
                 @Html.TextBoxFor(m => m.Address, new { @id = "address", @name = "address", @class = "half" })
             </p>
             <p>
                 <label class="required" for="city">
-                    City:</label>
+                    City:
+                </label>
                 @Html.ValidationMessageFor(mbox => mbox.City)<br />
                 @Html.TextBoxFor(m => m.City, new { @id = "city", @name = "city", @class = "half" })
             </p>
             <p>
                 <label class="required" for="state">
-                    State:</label>
+                    State:
+                </label>
                 @Html.ValidationMessageFor(mbox => mbox.State)<br />
                 @Html.TextBoxFor(m => m.State, new { @id = "state", @name = "state", @class = "half" })
             </p>
             <p>
                 <label class="required" for="zip">
-                    Zip:</label>
+                    Zip:
+                </label>
                 @Html.ValidationMessageFor(m => m.Zip)<br />
                 @Html.TextBoxFor(m => m.Zip, new { @id = "zip", @name = "zip", @class = "half" })
             </p>
@@ -139,13 +146,15 @@
         <div id="tabs-contact">
             <p>
                 <label class="required" for="phoneNumer">
-                    Phone number:</label>
+                    Phone number:
+                </label>
                 @Html.ValidationMessageFor(m => m.PhoneNumer)<br />
                 @Html.TextBoxFor(m => m.PhoneNumer, new { @id = "phonenumber", @name = "phonenumber", @class = "input-phone-number half" })
             </p>
             <p>
                 <label class="required" for="email">
-                    Email:</label>
+                    Email:
+                </label>
                 @Html.ValidationMessageFor(m => m.Email)<br />
                 @Html.TextBoxFor(m => m.Email, new { @id = "email", @name = "email", @class = "half" })
             </p>
@@ -154,7 +163,8 @@
             @if (Model.Id <= 0)
             {
                 <h4>
-                    You have to save parent info before add new child(ren).</h4>
+                    You have to save parent info before add new child(ren).
+                </h4>
             }
             else
             {
@@ -164,7 +174,8 @@
         <div id="tabs-notes">
             <p>
                 <label for="notes">
-                    Notes:</label>
+                    Notes:
+                </label>
                 @Html.ValidationMessageFor(m => m.Note)<br />
                 @Html.TextAreaFor(m => m.Note, new { @id = "notes", @name = "notes", @class = "medium full" })
             </p>

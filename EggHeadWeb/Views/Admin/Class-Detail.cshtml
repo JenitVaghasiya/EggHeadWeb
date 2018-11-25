@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @using MVCControlsToolkit.Controls;
@@ -8,7 +9,7 @@
     ViewBag.Title = "Edit Class";
     ViewBag.CurrentMenu = 1;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var db = new EggheadEntities();
+    var db = new EggheadContext();
 
     var calendarSearchForm = new CalendarSearchForm
     {
@@ -49,15 +50,13 @@
     });
 </script>
 <style type="text/css">
-    #grade-list div
-    {
+    #grade-list div {
         display: inline;
         margin-right: 10px;
     }
-    
-    .instructor-dropdown
-    {
-        max-width : 150px;
+
+    .instructor-dropdown {
+        max-width: 150px;
     }
 </style>
 @using (Html.BeginForm())
@@ -74,19 +73,20 @@
             <td>
                 <p>
                     <label for="location" class="required">
-                        Location:</label>
+                        Location:
+                    </label>
                     @Html.ValidationMessageFor(m => m.LocationId)<br />
                     @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "half" })
                 </p>
             </td>
-            <td>
-            </td>
+            <td></td>
         </tr>
         <tr>
             <td>
                 <p>
                     <label for="name" class="required">
-                        Name:</label>
+                        Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.Name)<br />
                     @Html.TextBoxFor(m => m.Name, new { @class = "half" })
                 </p>
@@ -94,7 +94,8 @@
             <td>
                 <p>
                     <label for="onlineName" class="required">
-                        Online Name:</label>
+                        Online Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.OnlineName)<br />
                     @Html.TextBoxFor(m => m.OnlineName, new { @class = "half" })
                 </p>
@@ -102,7 +103,8 @@
             <td>
                 <p>
                     <label>
-                        Enroll:</label>
+                        Enroll:
+                    </label>
                     @Html.ValidationMessageFor(m => m.Enrolled)<br />
                     @Html.TextBoxFor(m => m.Enrolled, new { @class = "half" })
                 </p>
@@ -130,7 +132,8 @@
                     <td colspan='2'>
                         <p>
                             <label for="grades" class="required">
-                                Grades:</label>
+                                Grades:
+                            </label>
                             @Html.ValidationMessageFor(m => m.GradeIds)<br />
                         </p>
                         <div id='grade-list'>
@@ -142,7 +145,8 @@
                     <td>
                         <p>
                             <label for="timeStart" class="required">
-                                Time Start:</label>
+                                Time Start:
+                            </label>
                             @Html.ValidationMessageFor(m => m.TimeStart)<br />
                             @Html.EditorFor(m => m.TimeStart)
                         </p>
@@ -150,7 +154,8 @@
                     <td>
                         <p>
                             <label for="timeEnd" class="required">
-                                Time End:</label>
+                                Time End:
+                            </label>
                             @Html.ValidationMessageFor(m => m.TimeEnd)<br />
                             @Html.EditorFor(m => m.TimeEnd)
                         </p>
@@ -160,7 +165,8 @@
                     <td colspan='2'>
                         <p>
                             <label for="dates">
-                                Dates:</label>
+                                Dates:
+                            </label>
                             (Clear date value if you want to delete a record.)
                             @Html.ValidationMessageFor(m => m.Dates)<br />
                         </p>
@@ -205,7 +211,7 @@
                             <tbody>
                                 <tr id="templateRow" data-index="-1" style="display: none;">
                                     <td>
-                                        @Html.TextBox("date_temp_1", string.Empty, new { @id = "date_temp_1", @class="has-date", @style = "width:80px;"})
+                                        @Html.TextBox("date_temp_1", string.Empty, new { @id = "date_temp_1", @class = "has-date", @style = "width:80px;" })
                                     </td>
                                     <td>
                                         @Html.DropDownList("instructor_temp_1", SelectLists.Instructors(db, Model.InstructorId), Constants.SELECT_INSTRUCTOR, new { @id = "instructor_temp_1", @class = "instructor-dropdown" })
@@ -213,8 +219,7 @@
                                     <td>
                                         @Html.DropDownList("assistant_temp_1", SelectLists.Instructors(db, Model.AssistantId), Constants.SELECT_ASSISTANT, new { @id = "assistant_temp_1", @class = "instructor-dropdown" })
                                     </td>
-                                    <td>
-                                    </td>
+                                    <td></td>
                                     <td>
                                         @Html.TextBox("date_temp_2", string.Empty, new { @id = "date_temp_2", @class = "has-date", @style = "width:80px;" })
                                     </td>
@@ -227,7 +232,7 @@
                                 </tr>
                                 @for (var i = 0; i < Model.AssignList.Count; i += 2)
                                 {
-                                    <tr data-index = '@(i)'>
+                                    <tr data-index='@(i)'>
                                         <td>
                                             @Html.HiddenFor(m => m.AssignList[i].ClassId)
                                             @Html.EditorFor(m => m.AssignList[i].NDate)
@@ -238,32 +243,33 @@
                                         <td>
                                             @Html.DropDownListFor(m => m.AssignList[i].AssistantId, SelectLists.Instructors(db, Model.AssignList[i].AssistantId), Constants.SELECT_ASSISTANT, new { @class = "instructor-dropdown" })
                                         </td>
-                                        <td>
-                                        </td>
+                                        <td></td>
                                         @if (i + 1 < Model.AssignList.Count())
                                         {
                                             <td>
                                                 @Html.HiddenFor(m => m.AssignList[i + 1].ClassId)
                                                 @Html.EditorFor(m => m.AssignList[i + 1].NDate)
                                             </td>
-                                            <td>@Html.DropDownListFor(m => m.AssignList[i + 1].InstructorId, SelectLists.Instructors(db, Model.AssignList[i + 1].InstructorId), Constants.SELECT_INSTRUCTOR, new { @class = "instructor-dropdown" })
-                                            </td>
-                                            <td>@Html.DropDownListFor(m => m.AssignList[i + 1].AssistantId, SelectLists.Instructors(db, Model.AssignList[i + 1].AssistantId), Constants.SELECT_ASSISTANT, new { @class = "instructor-dropdown" })
-                                            </td>
-                                        }
-                                        else
-                                        {
                                             <td>
-                                                @Html.Hidden(string.Format("AssignList[{0}].ClassId", i + 1), Model.Id)
-                                                @Html.TextBox(string.Format("AssignList[{0}].NDate", i + 1), string.Empty, new { @id="extra-date", @style = "width:80px;", @class = "has-date" })
-                                            </td>
-                                            <td>
-                                                @Html.DropDownList(string.Format("AssignList[{0}].InstructorId", i + 1), SelectLists.Instructors(db, Model.InstructorId), Constants.SELECT_INSTRUCTOR,new { @class = "instructor-dropdown" })
-                                            </td>
-                                            <td>
-                                                @Html.DropDownList(string.Format("AssignList[{0}].AssistantId", i + 1), SelectLists.Instructors(db, Model.AssistantId), Constants.SELECT_ASSISTANT, new { @class = "instructor-dropdown" })
-                                            </td>
-                                        }
+                                                @Html.DropDownListFor(m => m.AssignList[i + 1].InstructorId, SelectLists.Instructors(db, Model.AssignList[i + 1].InstructorId), Constants.SELECT_INSTRUCTOR, new { @class = "instructor-dropdown" })
+                                        </td>
+                                        <td>
+                                            @Html.DropDownListFor(m => m.AssignList[i + 1].AssistantId, SelectLists.Instructors(db, Model.AssignList[i + 1].AssistantId), Constants.SELECT_ASSISTANT, new { @class = "instructor-dropdown" })
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        @Html.Hidden(string.Format("AssignList[{0}].ClassId", i + 1), Model.Id)
+                                        @Html.TextBox(string.Format("AssignList[{0}].NDate", i + 1), string.Empty, new { @id = "extra-date", @style = "width:80px;", @class = "has-date" })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList(string.Format("AssignList[{0}].InstructorId", i + 1), SelectLists.Instructors(db, Model.InstructorId), Constants.SELECT_INSTRUCTOR, new { @class = "instructor-dropdown" })
+                                    </td>
+                                    <td>
+                                        @Html.DropDownList(string.Format("AssignList[{0}].AssistantId", i + 1), SelectLists.Instructors(db, Model.AssistantId), Constants.SELECT_ASSISTANT, new { @class = "instructor-dropdown" })
+                                    </td>
+                                }
                                     </tr>
                                 }
                             </tbody>
@@ -283,7 +289,8 @@
                     <td>
                         <p>
                             <label for="instructor" class="required">
-                                Instructor:</label>
+                                Instructor:
+                            </label>
                             @Html.ValidationMessageFor(m => m.InstructorId)<br />
                             @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(db), Constants.SELECT_INSTRUCTOR)
                         </p>
@@ -291,7 +298,8 @@
                     <td>
                         <p>
                             <label for="assistant">
-                                Assistant:</label>
+                                Assistant:
+                            </label>
                             @Html.ValidationMessageFor(m => m.AssistantId)<br />
                             @Html.DropDownListFor(m => m.AssistantId, SelectLists.Instructors(db), Constants.SELECT_ASSISTANT)
                         </p>
@@ -309,7 +317,8 @@
                     <td>
                         <p>
                             <label for="allowOnlineRegistration">
-                                Online Registration:</label>
+                                Online Registration:
+                            </label>
                             @Html.ValidationMessageFor(m => m.CanRegistOnline)<br />
                             @Html.CheckBoxFor(m => m.CanRegistOnline)
                         </p>
@@ -317,7 +326,8 @@
                     <td>
                         <p>
                             <label for="openTo">
-                                Open To All:</label>
+                                Open To All:
+                            </label>
                             @Html.ValidationMessageFor(m => m.IsOpen)<br />
                             @Html.CheckBoxFor(m => m.IsOpen)
                         </p>
@@ -327,19 +337,20 @@
                     <td>
                         <p>
                             <label for="onlineDeadline" class="required">
-                                Display Online Until:</label>
+                                Display Online Until:
+                            </label>
                             @Html.ValidationMessageFor(m => m.NDisplayUntil)<br />
                             @Html.EditorFor(m => m.NDisplayUntil)
                         </p>
                     </td>
-                    <td>
-                    </td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>
                         <p>
                             <label for="maxEnroll" class="required">
-                                Max Enroll #:</label>
+                                Max Enroll #:
+                            </label>
                             @Html.ValidationMessageFor(m => m.NMaxEnroll)<br />
                             @Html.TextBoxFor(m => m.NMaxEnroll)
                         </p>
@@ -347,7 +358,8 @@
                     <td>
                         <p>
                             <label for="totalCost" class="required">
-                                Total Cost:</label>
+                                Total Cost:
+                            </label>
                             @Html.ValidationMessageFor(m => m.NCost)<br />
                             @Html.TextBoxFor(m => m.NCost)
                         </p>
@@ -365,7 +377,8 @@
                     <td>
                         <p>
                             <label for="onlineDescription" class="required">
-                                Online Description:</label>
+                                Online Description:
+                            </label>
                             @Html.ValidationMessageFor(m => m.OnlineDescription)<br />
                             @Html.TextAreaFor(m => m.OnlineDescription, new { @class = "wysiwyg small width3" })
                         </p>
@@ -373,7 +386,8 @@
                     <td style='padding-left: 20px;'>
                         <p>
                             <label for="notes">
-                                Notes:</label>
+                                Notes:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Notes)<br />
                             @Html.TextAreaFor(m => m.Notes, new { @class = " wysiwyg small width4", @style = "height: 204px;" })
                         </p>

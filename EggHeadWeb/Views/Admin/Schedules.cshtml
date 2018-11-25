@@ -1,9 +1,10 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @model EggheadWeb.Models.AdminModels.ScheduleSearchForm
 @{
-    var db = new EggheadEntities();
+    var db = new EggheadContext();
 
     ViewBag.BreadCrumbs = new string[] { "Reports" };
     ViewBag.Title = "Schedules";
@@ -59,8 +60,8 @@
 
     function setWorkshopServiceType(form) {
         form.find("#service-type").val('@ServiceType.Workshop');
-    } 
-    
+    }
+
 </script>
 @using (Html.BeginForm("schedules", "Admin", FormMethod.Get, new { @id = "searchForm" }))
 {
@@ -79,7 +80,8 @@
         <tr>
             <td class="width1">
                 <label>
-                    Dates range:</label>
+                    Dates range:
+                </label>
             </td>
             <td>
                 @Html.EditorFor(m => m.DateFrom)
@@ -90,12 +92,14 @@
         <tr>
             <td class="width1">
                 <label>
-                    Days:</label>
+                    Days:
+                </label>
             </td>
             <td>
                 <input id="alldays" type="checkbox" />
                 <label for="alldays">
-                    All</label>&nbsp;
+                    All
+                </label>&nbsp;
                 @Html.CheckBoxFor(m => m.Sunday, new { @class = "weekday" }) @Html.LabelFor(m => m.Sunday) &nbsp;
                 @Html.CheckBoxFor(m => m.Monday, new { @class = "weekday" }) @Html.LabelFor(m => m.Monday) &nbsp;
                 @Html.CheckBoxFor(m => m.Tuesday, new { @class = "weekday" }) @Html.LabelFor(m => m.Tuesday)&nbsp;
@@ -107,23 +111,23 @@
         </tr>
     </table>
     <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
-        <colgroup>
-
-        </colgroup>
+        <colgroup></colgroup>
         <tr>
-             <td class="width1">
+            <td class="width1">
                 <label>
-                    Location:</label>
+                    Location:
+                </label>
             </td>
-             <td class="width1">
+            <td class="width1">
                 @Html.DropDownListFor(m => m.LocationId, SelectLists.Locations(db), Constants.SELECT_LOCATION, new { @class = "search-filter-location-dropdownlist" })
             </td>
-             <td class="width1">
+            <td class="width1">
                 <label>
-                    Instructor:</label>
+                    Instructor:
+                </label>
             </td>
             <td>
-                @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(new EggheadEntities()), Constants.SELECT_INSTRUCTOR, new { @class = "search-filter-instructor-dropdown" })
+                @Html.DropDownListFor(m => m.InstructorId, SelectLists.Instructors(new EggheadContext()), Constants.SELECT_INSTRUCTOR, new { @class = "search-filter-instructor-dropdown" })
             </td>
         </tr>
     </table>
@@ -170,7 +174,7 @@
     @if (camps != null)
     {
         <div id="tabs-camps" class="paging-container">
-              @if (camps.TotalItems > 0)
+            @if (camps.TotalItems > 0)
             {
                 @Html.Partial("schedules-camps", camps)
             }

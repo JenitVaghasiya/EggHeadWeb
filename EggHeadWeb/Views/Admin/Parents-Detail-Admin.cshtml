@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @model Parent
@@ -8,7 +9,7 @@
     ViewBag.CurrentMenu = 3;
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
-    var db = new EggheadEntities();
+    var db = new EggheadContext();
     var admin = EggheadWeb.Security.UserProvider.Current.Admin;
 
     var calendarSearchForm = new CalendarSearchForm

@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common;
 @{
     ViewBag.Title = "Dashboard";
@@ -153,164 +154,176 @@
                 }
             }
         });
-    } 
+    }
 </script>
 <!-- Left column/section -->
 <aside class="column width2 first">
-<h4>Shortcuts</h4>
-            <hr />
+    <h4>Shortcuts</h4>
+    <hr />
     <div id="rightmenu">
         <dl class="first">
-        @if (!admin.IsSuperAdmin)
-        {
-            <dt>
-             <img width="16" height="16" alt="" src="../../Content/admin/img/location.png">
-            </dt>
-            <dd>
-                <a href='@Url.Action("locations-detail")'>Add Location</a></dd>
-            <dd class="last">
-                Add new location</dd>
-            <dt>
-             <img width="16" height="16" alt="" src="../../Content/admin/img/instructor.png">
-            </dt>
-            <dd>
-                <a href='@Url.Action("instructors-detail")'>Add Instructor</a></dd>
-            <dd class="last">
-                Add new instructor</dd>
-            <dt>
-             <img width="16" height="16" alt="" src="../../Content/admin/img/parent.png">
-            </dt>
-            <dd>
-                <a href='@Url.Action("parents-detail")'>Add Parent</a></dd>
-            <dd class="last">
-                Add new parent</dd>
-        }
-        else
-        {
-             <dt>
-                <img width="16" height="16" alt="" src="../../Content/admin/img/user.png">
-            </dt>
-            <dd>
-                <a href='@Url.Action("users-edit")'>Add User</a></dd>
-            <dd class="last">
-                Add new user</dd>
-             <dt>
-                <img width="16" height="16" alt="" src="../../Content/admin/img/territory.png">
-            </dt>
-            <dd>
-                <a href='@Url.Action("territories-detail")'>Add Territory</a></dd>
-            <dd class="last">
-                Add new territory</dd>
-        }
-        
+            @if (!admin.IsSuperAdmin)
+            {
+                <dt>
+                    <img width="16" height="16" alt="" src="../../Content/admin/img/location.png">
+                </dt>
+                <dd>
+                    <a href='@Url.Action("locations-detail")'>Add Location</a>
+                </dd>
+                <dd class="last">
+                    Add new location
+                </dd>
+                <dt>
+                    <img width="16" height="16" alt="" src="../../Content/admin/img/instructor.png">
+                </dt>
+                <dd>
+                    <a href='@Url.Action("instructors-detail")'>Add Instructor</a>
+                </dd>
+                <dd class="last">
+                    Add new instructor
+                </dd>
+                <dt>
+                    <img width="16" height="16" alt="" src="../../Content/admin/img/parent.png">
+                </dt>
+                <dd>
+                    <a href='@Url.Action("parents-detail")'>Add Parent</a>
+                </dd>
+                <dd class="last">
+                    Add new parent
+                </dd>
+            }
+            else
+            {
+                <dt>
+                    <img width="16" height="16" alt="" src="../../Content/admin/img/user.png">
+                </dt>
+                <dd>
+                    <a href='@Url.Action("users-edit")'>Add User</a>
+                </dd>
+                <dd class="last">
+                    Add new user
+                </dd>
+                <dt>
+                    <img width="16" height="16" alt="" src="../../Content/admin/img/territory.png">
+                </dt>
+                <dd>
+                    <a href='@Url.Action("territories-detail")'>Add Territory</a>
+                </dd>
+                <dd class="last">
+                    Add new territory
+                </dd>
+            }
+
         </dl>
     </div>
     <br />
     @Html.Partial("Profile-info", admin)
 </aside>
 <section class="column width6">
-<div class="colgroup leading">
-    <div class="column width6 first">
-    <h4>Area Status</h4>
-        <hr />
-        <div class="column width5 first">
-            <div class="width5" style="height: 20px;" >
-                <div id="chart-legend" style="float:right;" ></div>
+    <div class="colgroup leading">
+        <div class="column width6 first">
+            <h4>Area Status</h4>
+            <hr />
+            <div class="column width5 first">
+                <div class="width5" style="height: 20px;">
+                    <div id="chart-legend" style="float:right;"></div>
+                </div>
+                <div id="placeholder" class="width5" style="height: 190px"></div>
+                <input id="clearSelection" type="button" class="btn" value="Zoom out" style="float:right;display:none" />
             </div>
-            <div  id="placeholder" class="width5" style="height: 190px"></div>
-            <input id="clearSelection" type="button" class="btn" value="Zoom out" style="float:right;display:none"/>
-        </div>
-        <div class="column width1" style="padding-top:20px;">
-        <form id="task-form" action = '@Url.RouteUrl(admin.IsSuperAdmin ? "SuperAdmin" : "Admin", new { action = "update-bar" })'  method="post">
+            <div class="column width1" style="padding-top:20px;">
+                <form id="task-form" action='@Url.RouteUrl(admin.IsSuperAdmin ? "SuperAdmin" : "Admin", new { action = "update-bar" })' method="post">
 
-        @if (admin.IsSuperAdmin)
-        {
-            <label>Admin</label><br />
-            @Html.DropDownList("adminId", SelectLists.AdminsForBarChars(new EggheadEntities()), "Average", new { @style = "width:105px;" })<br />
-        }
-        else
-        {
-            @Html.Hidden("adminId", admin.Id)
-        }
-        <label>From Date</label><br />
-        <input id="bar-from-date" name="fromDate" class="date" style="width:100px;" value="@ViewBag.BarChartFromDate" /> <br />
-            <label>To Date</label><br />
-        <input id="bar-to-date" name="toDate" class="date" style="width:100px;" value="@ViewBag.BarChartToDate"  />
-        &nbsp;
-        <input type="button" class="btn" id="update-bar" value="Update" style="float:right; margin-top:5px;" />
-        </form>
+                    @if (admin.IsSuperAdmin)
+                    {
+                        <label>Admin</label><br />
+                        @Html.DropDownList("adminId", SelectLists.AdminsForBarChars(new EggheadContext()), "Average", new { @style = "width:105px;" })<br />
+                    }
+                    else
+                    {
+                        @Html.Hidden("adminId", admin.Id)
+                    }
+                    <label>From Date</label><br />
+                    <input id="bar-from-date" name="fromDate" class="date" style="width:100px;" value="@ViewBag.BarChartFromDate" /> <br />
+                    <label>To Date</label><br />
+                    <input id="bar-to-date" name="toDate" class="date" style="width:100px;" value="@ViewBag.BarChartToDate" />
+                    &nbsp;
+                    <input type="button" class="btn" id="update-bar" value="Update" style="float:right; margin-top:5px;" />
+                </form>
+            </div>
         </div>
-</div>
     </div>
-<div class="colgroup leading">
+    <div class="colgroup leading">
         <div class="column width3 first">
             <h4>
                 Messages:
                 <a href='@Url.RouteUrl(admin.IsSuperAdmin ? "SuperAdmin" : "Admin", new { action = "private-message-display" })' class="pm-count">@ViewBag.PMCount</a>
-                                        
-                </h4>
-                <hr />
-                <table class="stylized" style="margin-top:22px;">
+
+            </h4>
+            <hr />
+            <table class="stylized" style="margin-top:22px;">
+                <colgroup>
+                    <col width="150px" />
+                    <col width="350px" />
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>
+                            From
+                        </th>
+                        <th>
+                            Message
+                        </th>
+                    </tr>
+                </thead>
+            </table>
+            <div id="inbox" style="height: 300px; overflow: auto">
+                <table>
                     <colgroup>
                         <col width="150px" />
                         <col width="350px" />
                     </colgroup>
-                    <thead>
-                        <tr>
-                            <th>
-                                From
-                            </th>
-                            <th>
-                                Message
-                            </th>
-                        </tr>
-                    </thead>
-                </table>
-                <div id="inbox" style="height: 300px; overflow: auto">
-                    <table>
-                        <colgroup>
-                            <col width="150px" />
-                            <col width="350px" />
-                        </colgroup>
-                        <tbody>
-                            @foreach (var message in inboxMessages)
-                            {
-                                <tr>
-                                    <td style="padding-left:10px;">
-                                        <p>
-                                            @if (message.FromAdminId.HasValue)
-                                            { @StringUtil.GetFullName(message.Admin.FirstName, message.Admin.LastName)
-                                            }
-                                            else
-                                            {
-                                                 @message.FromAdminName <span style="color: Red;">[Deleted]</span> 
-                                            }
-                                            <br />
-                                            <span>@message.SendDate.ToString("M/dd/yyyy")</span>
-                                        </p>
-                                    </td>
-                                    <td style="padding-right:10px;">
-                                        <p>
+                    <tbody>
+                        @foreach (var message in inboxMessages)
+                        {
+                            <tr>
+                                <td style="padding-left:10px;">
+                                    <p>
+                                        @if (message.FromAdminId.HasValue)
+                                        {@StringUtil.GetFullName(message.Admin.FirstName, message.Admin.LastName)
+                                    }
+                                    else
+                                    {
+                                        @message.FromAdminName <span style="color: Red;">[Deleted]</span>
+                                    }
+                                        <br />
+                                        <span>@message.SendDate.ToString("M/dd/yyyy")</span>
+                                    </p>
+                                </td>
+                                <td style="padding-right:10px;">
+                                    <p>
                                         <span><b>@message.MessageSubject</b></span>
-                                        <hr style = "margin:0 0 0 0;" />
+                                        <hr style="margin:0 0 0 0;" />
                                         <span>@message.MessageContent</span>
-                                        </p>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                                    </p>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="column width3">
             <h4>
-                To-Do List</h4>
+                To-Do List
+            </h4>
             <hr />
             <p id="task-container">
-                 @Html.Partial("AdminTasks", new AdminTask())
+                @Html.Partial("AdminTasks", new AdminTask())
             </p>
         </div>
-   </div>
+    </div>
     <div class="clear">
-        &nbsp;</div>
+        &nbsp;
+    </div>
 </section>

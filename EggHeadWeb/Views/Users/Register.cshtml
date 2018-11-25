@@ -26,6 +26,8 @@
         padding-bottom: 0 !important;
     }
 </style>
+@section scripts
+{
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -120,6 +122,7 @@
         return this;
     };
 </script>
+    }
 <div id="step1" class="ajax-container">
     @Html.Partial("SignupFrstStep", new EggheadWeb.Models.UserModels.ParentItem())
 </div>

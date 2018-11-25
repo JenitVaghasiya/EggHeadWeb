@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Models.UserModels
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common;
 @model Student
 @{ ViewBag.Title = "Edit child inforation"; }
@@ -23,20 +24,19 @@
     });
 </script>
 <style type="text/css">
-    .dialog-title
-    {
-        background: -moz-linear-gradient(center bottom , #5092DC 20%, #6BA3E2 80%) repeat scroll 0 0 transparent;
+    .dialog-title {
+        background: -moz-linear-gradient(center bottom, #5092DC 20%, #6BA3E2 80%) repeat scroll 0 0 transparent;
     }
-    .dialog-title h1
-    {
-        color: #FFFFFF;
-        font-size: 1.6em;
-        line-height: 1.2em;
-        margin: 0;
-        padding: 12px 0;
-        text-shadow: 0 -1px 1px #2A7AD2;
-        top: 0;
-    }
+
+        .dialog-title h1 {
+            color: #FFFFFF;
+            font-size: 1.6em;
+            line-height: 1.2em;
+            margin: 0;
+            padding: 12px 0;
+            text-shadow: 0 -1px 1px #2A7AD2;
+            top: 0;
+        }
 </style>
 <div class='dialog-title'>
     <h1>@(Model.Id <= 0 ? "New student" : "Edit student")</h1>
@@ -57,7 +57,8 @@
             <td colspan='2'>
                 <p>
                     <label class="required">
-                        First Name:</label>
+                        First Name:
+                    </label>
                     @Html.ValidationMessageFor(m => m.FirstName)<br />
                     @Html.TextBoxFor(m => m.FirstName, new { @class = "full" })
                 </p>
@@ -66,12 +67,13 @@
         <tr>
             <td colspan='2'>
                 <p>
-                    <p>
-                        <label class="required">
-                            Last Name:</label>
-                        @Html.ValidationMessageFor(m => m.LastName)<br />
-                        @Html.TextBoxFor(m => m.LastName, new { @class = "full" })
-                    </p>
+                <p>
+                    <label class="required">
+                        Last Name:
+                    </label>
+                    @Html.ValidationMessageFor(m => m.LastName)<br />
+                    @Html.TextBoxFor(m => m.LastName, new { @class = "full" })
+                </p>
                 </p>
             </td>
         </tr>
@@ -79,7 +81,8 @@
             <td>
                 <p>
                     <label class="Required">
-                        Gender:</label>
+                        Gender:
+                    </label>
                     @Html.ValidationMessageFor(m => m.Gender)<br />
                     @Html.DropDownListFor(m => m.Gender, SelectLists.Genders(), string.Empty)
                 </p>
@@ -87,9 +90,10 @@
             <td>
                 <p>
                     <label class="Required">
-                        Grade:</label>
+                        Grade:
+                    </label>
                     @Html.ValidationMessageFor(m => m.GradeId)<br />
-                    @Html.DropDownListFor(m => m.GradeId, SelectLists.Grades(new EggheadEntities()), string.Empty)
+                    @Html.DropDownListFor(m => m.GradeId, SelectLists.Grades(new EggheadContext()), string.Empty)
                 </p>
             </td>
         </tr>
@@ -97,7 +101,8 @@
             <td colspan='2'>
                 <p>
                     <label class="Required">
-                        BirthDate:</label>
+                        BirthDate:
+                    </label>
                     @Html.ValidationMessageFor(m => m.BirthDate)<br />
                     @Html.EditorFor(m => m.BirthDate, "TrippleDDLDateTime")
                 </p>
@@ -107,7 +112,8 @@
             <td colspan='2'>
                 <p>
                     <label for="area">
-                        Special Notes:</label>
+                        Special Notes:
+                    </label>
                     @Html.ValidationMessageFor(m => m.Notes)<br />
                     @Html.TextAreaFor(m => m.Notes, new { @class = "small full" })
                 </p>
