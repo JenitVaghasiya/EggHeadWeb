@@ -20,7 +20,7 @@
                                         <div class="sch_main">
                                             <div>
                                                 Select Child :
-                                                @Html.DropDownList("studentDropDownList" + camp.Id,
+                                                @Html.DropDownList("studentDropDownList" + Convert.ToString(camp.Id),
                                                 new SelectList(ViewBag.Students as System.Collections.IEnumerable, "StudentId", "Name"), new { @class = "studentsdropdownlist sel_child", @style = "display:inline;" })
                                                 &nbsp;&nbsp;&nbsp;
                                                 <input type="button" data-action='@Url.Action("enroll-camp")' data-id = "@camp.Id" value="Enroll Now" class="enroll-button button1"/>

@@ -37,6 +37,10 @@ namespace EggHeadWeb.DatabaseContext
 
         public DateTime? NDate { get; set; }
 
+        public DateTime DateTimeStart { get; set; }
+
+        public DateTime DateTimeEnd { get; set; }
+
         public TimeSpan TimeEnd
         {
             get

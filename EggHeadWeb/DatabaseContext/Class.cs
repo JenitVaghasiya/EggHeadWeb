@@ -71,6 +71,7 @@ namespace EggHeadWeb.DatabaseContext
 
         public virtual Location Location { get; set; }
 
+        public string DateListText { get; set; }
 
         public decimal? NCost
         {

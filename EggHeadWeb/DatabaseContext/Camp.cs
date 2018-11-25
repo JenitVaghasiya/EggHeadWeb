@@ -91,6 +91,8 @@ namespace EggHeadWeb.DatabaseContext
             set;
         }
 
+        public string DateListText { get; set; }
+
         public void UpdateCustomProperties()
         {
             AssignList = (
@@ -98,8 +100,8 @@ namespace EggHeadWeb.DatabaseContext
                 orderby t.Date
                 select t).ToList();
             AssignList.ForEach(t => t.NDate = new DateTime?(t.Date));
-            this.GradeIds = GradeGroup.Grades.Select(t=> (int)t.Id).ToList();
-            this.Dates = string.Join(", ", (
+            GradeIds = GradeGroup.Grades.Select(t => (int)t.Id).ToList();
+            Dates = string.Join(", ", (
                 from a in Assigns
                 select a.Date.ToShortDateString()).ToArray<string>());
             NDisplayUntil = DisplayUntil;

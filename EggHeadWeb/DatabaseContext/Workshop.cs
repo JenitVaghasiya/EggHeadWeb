@@ -62,6 +62,7 @@ namespace EggHeadWeb.DatabaseContext
 
         public string Dates { get; set; }
 
+        public string DateListText { get; set; }
 
         public void UpdateCustomProperties()
         {
