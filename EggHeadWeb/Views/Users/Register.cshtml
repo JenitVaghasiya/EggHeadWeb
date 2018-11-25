@@ -31,12 +31,12 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $(this).find(".input-phone-number").mask("(999) 999-9999");
+        // $(this).find(".input-phone-number").mask("(999) 999-9999");
 
         $("#finish").attr("disabled", "disabled");
 
         // Step 1
-        $("#step1-step2").live("click", function () {
+        $("#step1-step2").on("click", function () {
             $(this).closest("form").ajaxSubmit(function (html) {
                 $("#step1").hide();
                 $("#step2").show();
@@ -47,14 +47,14 @@
         });
 
         // Step 2
-        $("#step2-step3").live("click", function () {
+        $("#step2-step3").on("click", function () {
             $(this).closest("form").ajaxSubmit(function () {
                 $("#step2").hide();
                 $("#step3").show();
                 scrollToPageContent();
             });
         });
-        $("#step2-step2").live("click", function () {
+        $("#step2-step2").on("click", function () {
             var form = $(this).closest("form");
             form.append($("<input type='hidden' name='Type'>").val('1'));
             form.ajaxSubmit(function () {
@@ -62,14 +62,14 @@
             });
         });
 
-        $("#step2-step1").live("click", function () {
+        $("#step2-step1").on("click", function () {
             $("#step2").hide();
             $("#step1").show();
             scrollToPageContent();
         });
 
         //Step 3
-        $("#step3-step2").live("click", function () {
+        $("#step3-step2").on("click", function () {
             $("#step3").hide();
             $("#step2").show();
             scrollToPageContent();
@@ -97,6 +97,7 @@
 
     $.fn.ajaxSubmit = function (success, error) {
         var self = this;
+        debugger
         if (this.valid()) {
             $.ajax({
                 url: this.attr("action"),

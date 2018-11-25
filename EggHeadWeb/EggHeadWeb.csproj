@@ -285,6 +285,11 @@
     <Compile Include="Mailers\IAdminMailer.cs" />
     <Compile Include="Mailers\IUserMailer.cs" />
     <Compile Include="Mailers\UserMailer.cs" />
+    <Compile Include="Migrations\201811251435075_InitialMigration.cs" />
+    <Compile Include="Migrations\201811251435075_InitialMigration.Designer.cs">
+      <DependentUpon>201811251435075_InitialMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models.AdminModels\AreaSearchForm.cs" />
     <Compile Include="Models.AdminModels\BirthdayItem.cs" />
     <Compile Include="Models.AdminModels\Calendar.cs" />
@@ -622,6 +627,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Common\Messages.resx" />
+    <EmbeddedResource Include="Migrations\201811251435075_InitialMigration.resx">
+      <DependentUpon>201811251435075_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
