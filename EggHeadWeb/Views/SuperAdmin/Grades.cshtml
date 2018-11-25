@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
+@using EggHeadWeb.DatabaseContext;
 @model Grade
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings" };
@@ -39,7 +40,7 @@
                     @item.Name
                 </td>
                 <td>
-                    <input type="button" data-post-delete ='@Url.RouteUrl(new { action = "grades-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-post-delete='@Url.RouteUrl(new { action = "grades-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                 </td>
             </tr>
         }

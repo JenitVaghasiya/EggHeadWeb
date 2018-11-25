@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model AdminPaymentInfo
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings" };
@@ -17,13 +18,15 @@
     @Html.HiddenFor(m => m.AdminId)
     <p>
         <label for="apiloginid" class="required">
-            User Name:</label>
+            User Name:
+        </label>
         @Html.ValidationMessageFor(m => m.APILoginID)<br />
         @Html.TextBoxFor(m => m.APILoginID, new { @class = "half" })
     </p>
     <p>
         <label for="transactionkey" class="required">
-            Password:</label>
+            Password:
+        </label>
         @Html.ValidationMessageFor(m => m.TransactionKey)<br />
         @Html.TextBoxFor(m => m.TransactionKey, new { @type = "password", @class = "half" })
     </p>

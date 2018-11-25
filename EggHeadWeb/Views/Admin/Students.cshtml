@@ -1,8 +1,10 @@
 ﻿@using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model IEnumerable<Student>
 <p>
     <a href='@Url.RouteUrl("Admin", new { action = "students-detail", parentId = ViewBag.ParentId })' class="nyroModal" rev="modal">
-        + Add new child</a>
+        + Add new child
+    </a>
 </p>
 <table class="display stylized search-result-table">
     <colgroup>
@@ -54,9 +56,9 @@
                     @item.Notes
                 </td>
                 <td>
-                    <input type="button" href ='@Url.RouteUrl("Admin", new { action = "students-detail", id = @item.Id, parentId = @item.ParentId })' value="Detail" class="nyroModal image-button image-button-modify" rev="modal" />
+                    <input type="button" href='@Url.RouteUrl("Admin", new { action = "students-detail", id = @item.Id, parentId = @item.ParentId })' value="Detail" class="nyroModal image-button image-button-modify" rev="modal" />
                     &nbsp;&nbsp;
-                    <input type="button" data-delete ='@Url.RouteUrl("Admin", new { action = "students-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" />
+                    <input type="button" data-delete='@Url.RouteUrl("Admin", new { action = "students-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" />
                 </td>
             </tr>
         }

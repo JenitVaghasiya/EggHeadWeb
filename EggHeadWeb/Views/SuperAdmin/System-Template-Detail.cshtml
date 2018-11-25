@@ -2,6 +2,7 @@
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Security;
+@using EggHeadWeb.DatabaseContext;
 @model EmailTemplate
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings", "Email Templates" };
@@ -18,32 +19,36 @@
         <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl(new { action = "email" })" />
     </div>
     <br />
-    
+
     @Html.HiddenFor(m => m.Id)
     @Html.ValidationSummary(true)
-    
+
     <p>
         <label for="menuname">
-            Type :</label>
+            Type :
+        </label>
         @Html.ValidationMessageFor(m => m.Type)<br />
         @Html.DropDownListFor(m => m.Type, SelectLists.SystemEmailTemplateTypes(), Constants.SELECT_TYPE)
     </p>
-    
+
     <p>
         <label for="menuname">
-            Template Name :</label>
+            Template Name :
+        </label>
         @Html.ValidationMessageFor(m => m.Name)<br />
         @Html.TextBoxFor(m => m.Name, new { @class = "half" })
     </p>
     <p>
         <label for="subject" class="required">
-            Subject:</label>
+            Subject:
+        </label>
         @Html.ValidationMessageFor(m => m.MailSubject)<br />
         @Html.TextBoxFor(m => m.MailSubject, new { @class = "half" })
     </p>
     <p>
         <label for="dody" class="required">
-            Body:</label><br />
+            Body:
+        </label><br />
         @Html.ValidationMessageFor(m => m.MailBody)<br />
         @Html.TextAreaFor(m => m.MailBody, new { @class = "wysiwyg medium full" })
     </p>

@@ -1,11 +1,11 @@
 ﻿@using EggheadWeb.Models.Common
 @using EggheadWeb.Common;
 @using EggheadWeb.Utility;
-
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.AdminModels
 
 @model SearchResult<ScheduleSearchForm, Workshop>
-           
+
 @{
     if (Model == null)
     {
@@ -70,47 +70,50 @@
 
             foreach (var item in list.Value)
             {
-            <tr>
-                <td>
-                    @Convert.ToInt32(list.Key)
-                </td>
-                <td>
-                    @list.Key.ToString()
-                </td>
-                <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
-                        @item.Location.DisplayName</a>
-                </td>
-                <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })'>
-                        @item.Name</a>
-                </td>
-                <td>
-                    @item.TimeStart.To12HoursString()
-                </td>
-                <td>
-                    @item.TimeEnd.To12HoursString()
-                </td>
-                <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
-                        @ScheduleUtil.GetShortInstructorName(item.Instructor)</a>
-                </td>
-                <td>
-                    @item.Cost
-                </td>
-                <td>
-                    @ScheduleUtil.GetGradeListText(item)
-                </td>
-                <td>
-                    @ScheduleUtil.GetDateListText(item)
-                </td>
-                <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
-                    &nbsp;&nbsp;
-                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "workshop-delete" })'  data-id = '@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
-                    &nbsp;&nbsp;
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Convert.ToInt32(list.Key)
+                    </td>
+                    <td>
+                        @list.Key.ToString()
+                    </td>
+                    <td>
+                        <a href='@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
+                            @item.Location.DisplayName
+                        </a>
+                    </td>
+                    <td>
+                        <a href='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })'>
+                            @item.Name
+                        </a>
+                    </td>
+                    <td>
+                        @item.TimeStart.To12HoursString()
+                    </td>
+                    <td>
+                        @item.TimeEnd.To12HoursString()
+                    </td>
+                    <td>
+                        <a href='@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
+                            @ScheduleUtil.GetShortInstructorName(item.Instructor)
+                        </a>
+                    </td>
+                    <td>
+                        @item.Cost
+                    </td>
+                    <td>
+                        @ScheduleUtil.GetGradeListText(item)
+                    </td>
+                    <td>
+                        @ScheduleUtil.GetDateListText(item)
+                    </td>
+                    <td>
+                        <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                        <input type="button" data-post-delete='@Url.RouteUrl("Admin", new { action = "workshop-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                    </td>
+                </tr>
             }
         }
     </tbody>

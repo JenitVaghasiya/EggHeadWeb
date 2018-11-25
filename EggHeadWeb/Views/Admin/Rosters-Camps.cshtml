@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Common;
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model EggheadWeb.Models.Common.SearchResult<RosterSearchForm, Camp>
 @{
     if (Model == null)
@@ -47,44 +48,47 @@
         {
             <tr>
                 <td>
-                    <input type="checkbox" data-type = "Camp", data-id = '@item.Id' />
+                    <input type="checkbox" data-type="Camp" , data-id='@item.Id' />
                 </td>
                 <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
-                        @item.Location.DisplayName</a>
+                    <a href='@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
+                        @item.Location.DisplayName
+                    </a>
                 </td>
                 <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "camp-detail", id = item.Id })'>
-                        @item.Name</a>
+                    <a href='@Url.RouteUrl("Admin", new { action = "camp-detail", id = item.Id })'>
+                        @item.Name
+                    </a>
                 </td>
                 <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
-                        @ScheduleUtil.GetShortInstructorName(item.Instructor)</a>
+                    <a href='@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
+                        @ScheduleUtil.GetShortInstructorName(item.Instructor)
+                    </a>
                 </td>
                 <td>
                     @item.Assigns.Min(c => c.Date).ToString("M/dd/yyyy")
                 </td>
                 <td>
-                     @(item.Enrolled.HasValue ? item.Enrolled.Value : 0)
+                    @(item.Enrolled.HasValue ? item.Enrolled.Value : 0)
                 </td>
                 <td>
-                @{
-               var rosterPdfFilName = string.Format("ROSTER/Camp/{0}", item.Id);
+                    @{
+                        var rosterPdfFilName = string.Format("ROSTER/Camp/{0}", item.Id);
                     }
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "roster-detail", type = ServiceType.Camp, id = item.Id })' title="Go to Roster"
-                    class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "roster-detail", type = ServiceType.Camp, id = item.Id })' title="Go to Roster"
+                           class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;
-                    <input type="button" data-type = '@ServiceType.Camp' data-id = '@item.Id' title="Print" class="image-button image-button-print roster-detail-print" style="width: 16px;
+                    <input type="button" data-type='@ServiceType.Camp' data-id='@item.Id' title="Print" class="image-button image-button-print roster-detail-print" style="width: 16px;
                         padding-left: 0px;" />
                     &nbsp;
                     <input type="button" title="Email to Instructor" class="image-button image-button-email" style="width: 16px;
-                        padding-left: 0px;" data-email-to-address='@item.Instructor.Email' data-email-to-name= '@item.Instructor.FirstName @item.Instructor.LastName'/
-                        data-pre-attach-file = '@rosterPdfFilName'>
+                        padding-left: 0px;" data-email-to-address='@item.Instructor.Email' data-email-to-name='@item.Instructor.FirstName @item.Instructor.LastName'/
+                    data-pre-attach-file = '@rosterPdfFilName'>
                     &nbsp;
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "roster-detail-excel", type = ServiceType.Camp, id = item.Id })' title="Export to Excel" class="image-button image-button-excel" style="width: 16px;
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "roster-detail-excel", type = ServiceType.Camp, id = item.Id })' title="Export to Excel" class="image-button image-button-excel" style="width: 16px;
                         padding-left: 0px;" />
                     &nbsp;
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "roster-detail-pdf", type = ServiceType.Camp, id = item.Id })' title="Export to Pdf" class="image-button image-button-pdf" style="width: 16px;
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "roster-detail-pdf", type = ServiceType.Camp, id = item.Id })' title="Export to Pdf" class="image-button image-button-pdf" style="width: 16px;
                         padding-left: 0px;" />
                 </td>
             </tr>

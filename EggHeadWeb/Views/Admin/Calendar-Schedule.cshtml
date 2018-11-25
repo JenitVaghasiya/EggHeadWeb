@@ -79,16 +79,16 @@
                 {
                     if (calendar.FromDate.Month == calendar.ToDate.Month)
                     {
-                @string.Format("{0:MMM dd} – {1:dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                        string.Format("{0:MMM dd} – {1:dd, yyyy}", calendar.FromDate, calendar.ToDate);
                     }
                     else
                     {
-                @string.Format("{0:MMM dd} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                        string.Format("{0:MMM dd} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate);
                     }
                 }
                 else
                 {
-                @string.Format("{0:MMM dd, yyyy} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                    string.Format("{0:MMM dd, yyyy} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate);
                 }
             }
             else if (calendar.Type == CalendarViewType.Month)
@@ -136,43 +136,43 @@
                 @Html.CheckBoxFor(m => m.ShowCamps, new { @class = "serviceType", @id = "showCamps", @data_type = ServiceType.Camp })
                 @Html.LabelFor(m => m.ShowCamps)
             </div>
-       
-           if (Model.InstructorId.HasValue)
-           {
-            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #BADE83;
+
+            if (Model.InstructorId.HasValue)
+            {
+                <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #BADE83;
                 float: left;">
-                @Html.CheckBoxFor(m => m.ShowBirthdays, new { @class = "serviceType", @id = "showBirthdays", @data_type = ServiceType.Birthday })
-                @Html.LabelFor(m => m.ShowBirthdays)
-            </div>
-            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #C0DFE8;
+                    @Html.CheckBoxFor(m => m.ShowBirthdays, new { @class = "serviceType", @id = "showBirthdays", @data_type = ServiceType.Birthday })
+                    @Html.LabelFor(m => m.ShowBirthdays)
+                </div>
+                <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #C0DFE8;
                 float: left;">
-                @Html.CheckBoxFor(m => m.ShowWorkshops, new { @class = "serviceType", @id = "showWorkshops", @data_type = ServiceType.Workshop })
-                @Html.LabelFor(m => m.ShowWorkshops)
-            </div>
-           }
-           else if (Model.ParentId.HasValue)
-           {
-            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #BADE83;
+                    @Html.CheckBoxFor(m => m.ShowWorkshops, new { @class = "serviceType", @id = "showWorkshops", @data_type = ServiceType.Workshop })
+                    @Html.LabelFor(m => m.ShowWorkshops)
+                </div>
+            }
+            else if (Model.ParentId.HasValue)
+            {
+                <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #BADE83;
                 float: left;">
-                @Html.CheckBoxFor(m => m.ShowBirthdays, new { @class = "serviceType", @id = "showBirthdays", @data_type = ServiceType.Birthday })
-                @Html.LabelFor(m => m.ShowBirthdays)
-            </div>
-            @Html.HiddenFor(m => m.ShowWorkshops)
-           }
-           else if (Model.LocationId.HasValue)
-           {
-            @Html.HiddenFor(m => m.ShowBirthdays)
-            <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #C0DFE8;
+                    @Html.CheckBoxFor(m => m.ShowBirthdays, new { @class = "serviceType", @id = "showBirthdays", @data_type = ServiceType.Birthday })
+                    @Html.LabelFor(m => m.ShowBirthdays)
+                </div>
+                @Html.HiddenFor(m => m.ShowWorkshops)
+            }
+            else if (Model.LocationId.HasValue)
+            {
+                @Html.HiddenFor(m => m.ShowBirthdays)
+                <div style="margin-left: 10px; width: 100px; height: 18px; background-color: #C0DFE8;
                 float: left;">
-                @Html.CheckBoxFor(m => m.ShowWorkshops, new { @class = "serviceType", @id = "showWorkshops", @data_type = ServiceType.Workshop })
-                @Html.LabelFor(m => m.ShowWorkshops)
-            </div>
-           }
-           else
-           {
-            @Html.HiddenFor(m => m.ShowBirthdays)
-            @Html.HiddenFor(m => m.ShowWorkshops)
-           }
+                    @Html.CheckBoxFor(m => m.ShowWorkshops, new { @class = "serviceType", @id = "showWorkshops", @data_type = ServiceType.Workshop })
+                    @Html.LabelFor(m => m.ShowWorkshops)
+                </div>
+            }
+            else
+            {
+                @Html.HiddenFor(m => m.ShowBirthdays)
+                @Html.HiddenFor(m => m.ShowWorkshops)
+            }
         }
         else
         {

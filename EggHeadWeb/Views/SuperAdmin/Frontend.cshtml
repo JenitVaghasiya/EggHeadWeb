@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Security;
+@using EggHeadWeb.DatabaseContext;
 @{
     var isSuperAdmin = this.User.IsInRole(UserRoleProvider.SUPER_ADMIN);
     ViewBag.BreadCrumbs = new string[] { "Settings" };
@@ -9,10 +10,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
     var grades = (SearchResult<object, Frontend>)ViewBag.Frontends;
-   
+
 }
-<a href='@Url.RouteUrl("SuperAdmin", new { action = "terms" })'>Edit Frontend Terms
-    & Condition</a>
+<a href='@Url.RouteUrl("SuperAdmin", new { action = "terms" })'>
+    Edit Frontend Terms
+    & Condition
+</a>
 <br />
 <br />
 <div class="box" style="margin-top: 0; margin-bottom: 0;">
@@ -62,9 +65,9 @@
                     @Html.DisplayFor(i => item.IsActive, "ActiveValue")
                 </td>
                 <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl(new { action = "frontend-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl(new { action = "frontend-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
-                    <input type="button" data-post-delete ='@Url.RouteUrl(new { action = "frontend-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-post-delete='@Url.RouteUrl(new { action = "frontend-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                 </td>
             </tr>
         }

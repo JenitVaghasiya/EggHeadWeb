@@ -1,4 +1,5 @@
-﻿@using EggheadWeb.Models.Common;
+﻿@using EggHeadWeb.DatabaseContext;
+@using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Security;
 @{
@@ -16,12 +17,14 @@
     });
 </script>
 <a href='@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "email-update" })'>
-    + Change email password</a>
+    + Change email password
+</a>
 <br />
 @if (isSuperAdmin)
 {
     <h5>
-        System templates</h5>
+        System templates
+    </h5>
     <hr />
     <div class="box" style="margin-top: 0; margin-bottom: 0;">
         @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "system-template-detail" })
@@ -55,9 +58,9 @@
                         @item.MailSubject
                     </td>
                     <td>
-                        <input type="button" data-redirect ='@Url.RouteUrl("SuperAdmin", new { action = "system-template-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-redirect='@Url.RouteUrl("SuperAdmin", new { action = "system-template-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                         &nbsp;&nbsp;
-                        <input type="button" data-post-delete ='@Url.RouteUrl("SuperAdmin", new { action = "system-template-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-post-delete='@Url.RouteUrl("SuperAdmin", new { action = "system-template-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                     </td>
                 </tr>
             }
@@ -67,7 +70,8 @@
 @if (isSuperAdmin)
 {
     <h5>
-        Personal templates</h5>
+        Personal templates
+    </h5>
     <hr />
 }
 <div class="box" style="margin-top: 0; margin-bottom: 0;">
@@ -102,9 +106,9 @@
                     @item.MailSubject
                 </td>
                 <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "template-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "template-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
-                    <input type="button" data-post-delete ='@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "email-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-post-delete='@Url.RouteUrl(isSuperAdmin ? "SuperAdmin" : "Admin", new { action = "email-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                 </td>
             </tr>
         }

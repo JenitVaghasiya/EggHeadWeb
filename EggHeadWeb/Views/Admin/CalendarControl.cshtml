@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.Common
 @using EggheadWeb.Models.AdminModels
 @using EggheadWeb.Utility;
@@ -33,17 +34,16 @@
     }
 }
 <style type="text/css">
-    .calendar-month, .calendar-day
-    {
+    .calendar-month, .calendar-day {
         position: relative;
     }
-    .calendar-month table.calendar-table, .calendar-day table.calendar-table
-    {
-        width: 100%;
-        table-layout: fixed;
-    }
-    .calendar-table td, .calendar-table th
-    {
+
+        .calendar-month table.calendar-table, .calendar-day table.calendar-table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+    .calendar-table td, .calendar-table th {
         border-collapse: collapse;
         border: 1px solid #CCCCCC;
         padding: 5px !important;
@@ -51,26 +51,26 @@
         overflow: hidden;
         white-space: nowrap;
     }
-    .calendar-day .calendar-table th
-    {
+
+    .calendar-day .calendar-table th {
         text-align: center;
         border: none;
         border-left: 1px solid white;
         border-top: 1px solid white;
     }
-    .day
-    {
+
+    .day {
         cursor: pointer;
     }
-    .calendar-month .calendar-table th
-    {
+
+    .calendar-month .calendar-table th {
         text-align: left;
         border: none;
         border-left: 1px solid white;
         border-top: 1px solid white;
     }
-    .calendar-day .event
-    {
+
+    .calendar-day .event {
         overflow: hidden;
         position: absolute;
         box-sizing: border-box;
@@ -80,63 +80,60 @@
         background-color: #FFAABB;
         cursor: pointer;
     }
-    .calendar-day .event .inner
-    {
-        padding: 2px;
-        width: 100%;
-        height: 100%;
-    }
-    .event
-    {
+
+        .calendar-day .event .inner {
+            padding: 2px;
+            width: 100%;
+            height: 100%;
+        }
+
+    .event {
         display: none;
         margin-bottom: 2px;
     }
-    .event.Class
-    {
-        background-color: #FDADAA;
-    }
-    .event.Camp
-    {
-        background-color: #1BE0B2;
-    }
-    .event.Birthday
-    {
-        background-color: #BADE83;
-    }
-    .event.Workshop
-    {
-        background-color: #c0dFe8;
-    }
-    
-    .calendar-day .time
-    {
+
+        .event.Class {
+            background-color: #FDADAA;
+        }
+
+        .event.Camp {
+            background-color: #1BE0B2;
+        }
+
+        .event.Birthday {
+            background-color: #BADE83;
+        }
+
+        .event.Workshop {
+            background-color: #c0dFe8;
+        }
+
+    .calendar-day .time {
         font-size: 10px;
     }
-    .today
-    {
+
+    .today {
         background-color: #EEEEEE;
         font-weight: bold;
     }
-    .calendar-day th.today
-    {
+
+    .calendar-day th.today {
         border-top: 1px solid #CCCCCC;
         border-right: 1px solid #CCCCCC;
         border-left: 1px solid #CCCCCC;
         font-weight: bold;
     }
-    
-    .calendar-month td.month
-    {
+
+    .calendar-month td.month {
         height: 80px;
         padding: 5px;
     }
-    .calendar-month td.disabled
-    {
+
+    .calendar-month td.disabled {
         color: #AAAAAA;
     }
-    
-    .event-detail
-    {
+
+    .event-detail {
         display: none;
         border: 1px solid #CCCCCC;
         position: absolute;
@@ -144,17 +141,16 @@
         background-color: #FFFFFF;
         color: Black;
     }
-    .event-detail .event-name
-    {
-        font-weight: bold;
-        font-size: 14px;
-    }
-    .event-detail .event-time
-    {
-    }
-    
-    .event-list
-    {
+
+        .event-detail .event-name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .event-detail .event-time {
+        }
+
+    .event-list {
         display: none;
         border: 1px solid #CCCCCC;
         position: absolute;
@@ -382,7 +378,7 @@
             $('body').click(function(e) {
                 $(".event-detail", self.element).hide();
             });
-            
+
             return self;
         };
         this.getY = function (offset) {
@@ -438,11 +434,11 @@
                                             @if (e.Id > 0)
                                             {
                                                 @:<span class="event-time">@e.DateTimeStart.TimeOfDay.To12HoursString()</span>-<a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a>
-                                             }
+                                            }
                                             else
                                             {
                                                 @:<span class="event-time">@e.Name</span>
-                                                                                                                                                                                                                                                                        }
+                                            }
                                         </div>
                                     }
                                 </div>
@@ -457,12 +453,12 @@
                                             else
                                             {
                                                 @:<span class="event-time">@e.Name</span>
-                                                                                                                                                                                                                                                                                                                    }
+                                            }
                                         </div>
                                     }
                                 </div>
                             </td>
-                                    day = day.AddDays(1);
+                            day = day.AddDays(1);
                         }
                     </tr>
                 }
@@ -480,11 +476,11 @@ else
                 {
                     if (day == DateTime.Today)
                     {
-                    <col class="today" />
+                        <col class="today" />
                     }
                     else
                     {
-                    <col />
+                        <col />
                     }
                 }
             </colgroup>
@@ -507,22 +503,23 @@ else
                     var h = i / 2;
                     if (h >= 5 && h <= 22)
                     {
-                    <tr>
-                        @if (i % 2 == 0)
-                        {
+                        <tr>
+                            @if (i % 2 == 0)
+                            {
 
-                            TimeSpan time = new TimeSpan(i / 2, i % 2 == 0 ? 0 : 30, 0);
-                            
-                            <td style="text-align: right;" rowspan="2">@time.To12HoursString()
+                                TimeSpan time = new TimeSpan(i / 2, i % 2 == 0 ? 0 : 30, 0);
+
+                                <td style="text-align: right;" rowspan="2">
+                                    @time.To12HoursString()
                             </td>
                         }
-                        @for (var day = Model.FromDate; day <= Model.ToDate; day = day.AddDays(1))
-                        {
-                            <td>
-                                &nbsp;
-                            </td>
-                        }
-                    </tr>
+                            @for (var day = Model.FromDate; day <= Model.ToDate; day = day.AddDays(1))
+                            {
+                                <td>
+                                    &nbsp;
+                                </td>
+                            }
+                        </tr>
                     }
                 }
             </tbody>
@@ -532,38 +529,40 @@ else
             {
                 foreach (var e in Model.Events)
                 {
-                <div id="event-@(e.Id)" class="event @e.Type" data-id="@e.Id" data-start-time="@e.TimeStart.TotalMinutes" data-end-time="@e.TimeEnd.TotalMinutes" data-event-type="@e.Type" data-visibled="@Model.ServiceTypes.Contains(e.Type)" data-day="@e.Date.Subtract(Model.FromDate).TotalDays" data-date="@e.Date">
-                    <div class="inner">
-                        <br />
+                    <div id="event-@(e.Id)" class="event @e.Type" data-id="@e.Id" data-start-time="@e.TimeStart.TotalMinutes" data-end-time="@e.TimeEnd.TotalMinutes" data-event-type="@e.Type" data-visibled="@Model.ServiceTypes.Contains(e.Type)" data-day="@e.Date.Subtract(Model.FromDate).TotalDays" data-date="@e.Date">
+                        <div class="inner">
+                            <br />
+                            @if (e.Id > 0)
+                            {
+                                <span class="time">
+                                    @e.TimeStart.To12HoursString()
+                                    - @e.TimeEnd.To12HoursString()
+                                </span>
+                                <a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a>
+                            }
+                            else
+                            {
+                                @e.Name
+                            }
+                        </div>
+                    </div>
+                    <div id="event-detail-@(e.Id)" class="event-detail">
                         @if (e.Id > 0)
                         {
-                            <span class="time">
-                            @e.TimeStart.To12HoursString()
-                            - @e.TimeEnd.To12HoursString()
+                            <span class="event-name"><a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a></span>
+                            <br />
+                            <span class="event-time">
+                                @(string.Format("{0:ddd, MMMM dd}", e.Date)), @e.DateTimeStart.TimeOfDay.To12HoursString()
+                                – @e.DateTimeEnd.TimeOfDay.To12HoursString()
                             </span>
-                            <a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a>
                         }
                         else
                         {
-                        @e.Name
+                            <span class="event-name">@e.Name</span>
+                            <br />
+                            <span class="event-time">@(string.Format("{0:ddd, MMMM dd}", e.Date))</span>
                         }
                     </div>
-                </div>
-                <div id="event-detail-@(e.Id)" class="event-detail">
-                    @if (e.Id > 0)
-                    {
-                        <span class="event-name"><a href="@Url.RouteUrl("Admin", new { action = GetDetailAction(e.Type), id = GetId(e) })">@e.Name</a></span>
-                        <br />
-                    <span class="event-time">@(string.Format("{0:ddd, MMMM dd}", e.Date)), @e.DateTimeStart.TimeOfDay.To12HoursString()
-                        – @e.DateTimeEnd.TimeOfDay.To12HoursString()</span>
-                    }
-                    else
-                    {
-                        <span class="event-name">@e.Name</span>
-                        <br />
-                        <span class="event-time">@(string.Format("{0:ddd, MMMM dd}", e.Date))</span>
-                    }
-                </div>
                 }
             }
         </div>

@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Security;
+@using EggHeadWeb.DatabaseContext;
 @model AdminEmailTemplate
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -8,36 +9,39 @@
     ViewBag.Title = Model.Id > 0 ? "Edit Template" : "New Template";
     ViewBag.CurrentMenu = 6;
     var admin = ((EggheadWeb.Security.LoginUser)User).Admin;
-    
+
 }
 @using (Html.BeginForm("template-detail", "", FormMethod.Post))
 {
     <div class="box" style="margin-top: 0; margin-bottom: 0;">
         @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true, Add = true, AddAction = "template-detail" })
-        <input type="button" class="btn" style="float: right" value="Cancel" 
-        data-redirect="@Url.RouteUrl(new { action = "email" })" />
+        <input type="button" class="btn" style="float: right" value="Cancel"
+               data-redirect="@Url.RouteUrl(new { action = "email" })" />
     </div>
     <br />
-    
+
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.AdminId)
     @Html.ValidationSummary(true)
-    
+
     <p>
         <label for="menuname">
-            Template Name :</label>
+            Template Name :
+        </label>
         @Html.ValidationMessageFor(m => m.Name)<br />
         @Html.TextBoxFor(m => m.Name, new { @class = "half" })
     </p>
     <p>
         <label for="subject" class="required">
-            Subject:</label>
+            Subject:
+        </label>
         @Html.ValidationMessageFor(m => m.MailSubject)<br />
         @Html.TextBoxFor(m => m.MailSubject, new { @class = "half" })
     </p>
     <p>
         <label for="dody" class="required">
-            Body:</label>
+            Body:
+        </label>
         @Html.ValidationMessageFor(m => m.MailBody)<br />
         @Html.TextAreaFor(m => m.MailBody, new { @class = "wysiwyg medium full" })
     </p>

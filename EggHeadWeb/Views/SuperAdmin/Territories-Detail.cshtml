@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model Area
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings", "Territories" };
@@ -12,31 +13,35 @@
     <div class="box" style="margin-top: 0; margin-bottom: 0;">
         @Html.Partial("MainTaskbar", new MainTaskbarItem { Save = true })
         <input type="button" class="btn" style="float: right" value="Cancel"
-        data-redirect="@Url.RouteUrl("", new { action = "territories", research = "true" })" />
+               data-redirect="@Url.RouteUrl("", new { action = "territories", research = "true" })" />
     </div>
     @Html.HiddenFor(m => m.Id)
     @Html.ValidationSummary(true)
     <p>
         <label for="displayName" class="required">
-            Territory Name:</label>
+            Territory Name:
+        </label>
         @Html.ValidationMessageFor(m => m.DisplayName)<br />
         @Html.TextBoxFor(m => m.DisplayName, new { @class = "half" })
     </p>
     <p>
         <label for="name" class="required">
-            URL Name:</label>
+            URL Name:
+        </label>
         @Html.ValidationMessageFor(m => m.Name)<br />
         @Html.TextBoxFor(m => m.Name, new { @class = "half" })
     </p>
     <p>
         <label for="state" class="required">
-            State:</label>
+            State:
+        </label>
         @Html.ValidationMessageFor(m => m.State)<br />
         @Html.TextBoxFor(m => m.State, new { @class = "half" })
     </p>
     <p>
         <label class="required">
-            Description:</label>
+            Description:
+        </label>
         @Html.ValidationMessageFor(m => m.Description)<br />
         @Html.TextAreaFor(m => m.Description, new { @class = "half" })
     </p>

@@ -1,37 +1,39 @@
 ﻿@using EggheadWeb.Models.AdminModels
 @using EggheadWeb.Models.Common
+@using EggHeadWeb.DatabaseContext;
 @model Admin
 <div class="content-box">
     <header style="cursor: s-resize;">
-							<h3>&nbsp;Admin Info</h3>
-						</header>
+        <h3>&nbsp;Admin Info</h3>
+    </header>
     <section style="width: 200px;">
         <dl style="margin-left:15px;">
             @if (!Model.IsSuperAdmin)
             {
                 <fieldset>
-                <legend>&nbsp;Territory</legend>
-                <dd>@(Model.Area != null? Model.Area.DisplayName : string.Empty)</dd>
+                    <legend>&nbsp;Territory</legend>
+                    <dd>@(Model.Area != null ? Model.Area.DisplayName : string.Empty)</dd>
                 </fieldset>
             }
-            
-             <fieldset>
+
+            <fieldset>
                 <legend>&nbsp;Account Info</legend>
-			    <dd>@Model.Username</dd>
+                <dd>@Model.Username</dd>
                 <dd>@Model.Email</dd>
-              </fieldset>
-             <fieldset>
-                <legend>&nbsp;Personal Info</legend>
-			    <dd>@Model.FirstName @Model.LastName</dd>
-                <dd>@Model.PhoneNumber</dd>
-                <dd>@Model.Address<br />
-                    @Model.City, @Model.State @Model.Zip
-                </dd>
-                <hr />
-                <dd >
-                    <a href="@Url.Action("profile")">Update Profile</a>
-                </dd>
             </fieldset>
-        </dl>
-    </section>
+            <fieldset>
+                <legend>&nbsp;Personal Info</legend>
+                <dd>@Model.FirstName @Model.LastName</dd>
+                <dd>@Model.PhoneNumber</dd>
+                <dd>
+                    @Model.Address<br />
+                @Model.City, @Model.State @Model.Zip
+            </dd>
+            <hr />
+            <dd>
+                <a href="@Url.Action("profile")">Update Profile</a>
+            </dd>
+        </fieldset>
+    </dl>
+</section>
 </div>

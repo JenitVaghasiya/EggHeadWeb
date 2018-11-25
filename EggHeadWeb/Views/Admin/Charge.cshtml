@@ -1,4 +1,4 @@
-﻿@using EggheadWeb.Models.Common;
+﻿@using EggHeadWeb.DatabaseContext;
 @model Payment
 @{
     ViewBag.BreadCrumbs = new string[] { "Charge" };
@@ -17,11 +17,11 @@
         @Html.AntiForgeryToken()
         @Html.Hidden(AuthorizeNet.ApiFields.Amount, totalFrees);
 
-        if (!string.IsNullOrEmpty(Model.PaymentMessage)) 
-        { 
-        <div style="color:red">
-            @Model.PaymentMessage
-        </div>
+        if (!string.IsNullOrEmpty(Model.PaymentMessage))
+        {
+            <div style="color:red">
+                @Model.PaymentMessage
+            </div>
         }
         <h6>
             Payment information

@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Common;
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model EggheadWeb.Models.Common.SearchResult<RosterSearchForm, Workshop>
 @{
     if (Model == null)
@@ -9,8 +10,7 @@
     }
 }
 <table class="display stylized">
-    <colgroup>
-    </colgroup>
+    <colgroup></colgroup>
     <thead>
         <tr>
             <th>
@@ -34,24 +34,26 @@
         {
             <tr>
                 <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
-                        @item.Location.Name</a>
+                    <a href='@Url.RouteUrl("Admin", new { action = "locations-detail", id = item.LocationId })'>
+                        @item.Location.Name
+                    </a>
                 </td>
                 <td>
                     @item.Name
                 </td>
                 <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
-                        @ScheduleUtil.GetShortInstructorName(item.Instructor)</a>
+                    <a href='@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Instructor.Id })'>
+                        @ScheduleUtil.GetShortInstructorName(item.Instructor)
+                    </a>
                 </td>
                 <td>
                     @item.Assigns.Min(c => c.Date).ToString("MM/dd/yyyy")
                 </td>
                 <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
                     <input type="button" title="Email" class="image-button image-button-email" style="width: 16px;
-                        padding-left: 0px;" data-email= '@item.Instructor.Email' />
+                        padding-left: 0px;" data-email='@item.Instructor.Email' />
                 </td>
             </tr>
         }

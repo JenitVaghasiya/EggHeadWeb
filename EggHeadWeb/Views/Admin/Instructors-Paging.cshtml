@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
+@using EggHeadWeb.DatabaseContext;
 @model SearchResult<InstructorSearchForm, Instructor>
 @{
     if (Model == null)
@@ -8,19 +9,18 @@
     }
 }
 <style type="text/css">
-    div.icon-active
-    {
+    div.icon-active {
         margin-left: 0;
     }
-    td.center, th.center
-    {
+
+    td.center, th.center {
         text-align: center !important;
     }
-    td.center div
-    {
-        text-align: center;
-        margin: auto;
-    }
+
+        td.center div {
+            text-align: center;
+            margin: auto;
+        }
 </style>
 <table class="display stylized search-result-table email-table">
     <colgroup>
@@ -61,7 +61,7 @@
         {
             <tr>
                 <td>
-                    <input type="checkbox" class="checkitem" data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName' />
+                    <input type="checkbox" class="checkitem" data-email-to-address='@item.Email' data-email-to-name='@item.FirstName @item.LastName' />
                 </td>
                 <td>
                     @item.FirstName @item.LastName
@@ -79,11 +79,11 @@
                     @Html.DisplayFor(t => item.IsActive, "ActiveValue")
                 </td>
                 <td style="vertical-align: top;">
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "instructors-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
-                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "instructors-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-post-delete='@Url.RouteUrl("Admin", new { action = "instructors-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
-                    <input type="button" title="Email" class="image-button image-button-email" style="width: 16px; padding-left: 0px;" data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName' />
+                    <input type="button" title="Email" class="image-button image-button-email" style="width: 16px; padding-left: 0px;" data-email-to-address='@item.Email' data-email-to-name='@item.FirstName @item.LastName' />
                 </td>
             </tr>
         }

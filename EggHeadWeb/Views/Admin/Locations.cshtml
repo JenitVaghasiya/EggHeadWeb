@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Common;
 @using EggheadWeb.Models.AdminModels
 @using EggheadWeb.Models.Common
+@using EggHeadWeb.DatabaseContext;
 @model LocationSearchForm
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -15,14 +16,14 @@
     <div class="box" style="margin-top: 0; margin-bottom: 0;">
         @Html.Partial("MainTaskbar", new MainTaskbarItem { Print = true, Email = true, Add = true, ExcelExport = true, ExcelAction = "locations-excel", AddAction = "locations-detail" })
     </div>
-     <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
+    <table class="stylized full" style="margin-top: 0; margin-bottom: 0">
         <colgroup>
             <col width="150px" />
-            <col width="*"/>
+            <col width="*" />
         </colgroup>
         <tr>
             <td>
-               <label> Quick Search:</label>
+                <label> Quick Search:</label>
             </td>
             <td>
                 @Html.TextBoxFor(m => m.QuickSearch, new { @class = "full" })
@@ -40,7 +41,7 @@
         </tr>
         <tr>
             <td>
-                 <label>Online Enrollment:</label>
+                <label>Online Enrollment:</label>
             </td>
             <td>
                 @Html.DropDownListFor(m => m.CanEnrollOnline, SelectLists.BooleanStatus(), Constants.SELECT)

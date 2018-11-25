@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.Common
 @using EggheadWeb.Models.AdminModels
+@using EggHeadWeb.DatabaseContext;
 @model SearchResult<UserSearchForm, Admin>
 @{
     if (Model == null)
@@ -8,8 +9,7 @@
     }
 }
 <style type="text/css">
-    div.icon-active
-    {
+    div.icon-active {
         margin-left: 0;
     }
 </style>
@@ -56,7 +56,7 @@
         {
             <tr>
                 <td>
-                    <input type="checkbox" class="checkitem" data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName' />
+                    <input type="checkbox" class="checkitem" data-email-to-address='@item.Email' data-email-to-name='@item.FirstName @item.LastName' />
                 </td>
                 <td>
                     @item.FirstName @item.LastName
@@ -72,9 +72,10 @@
                 </td>
                 <td>
                     @if (item.Area != null)
-                    { 
-                        <a href= '@Url.RouteUrl("SuperAdmin", new { action = "territories-detail", id = item.AreaId })'>
-                            @item.Area.DisplayName</a> 
+                    {
+                        <a href='@Url.RouteUrl("SuperAdmin", new { action = "territories-detail", id = item.AreaId })'>
+                            @item.Area.DisplayName
+                        </a>
                     }
                 </td>
                 <td align="center">
@@ -83,14 +84,14 @@
                 <td>
                     @if (!item.IsSuperAdmin)
                     {
-                        <input type="button" data-redirect ='@Url.RouteUrl(new { action = "users-edit", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-redirect='@Url.RouteUrl(new { action = "users-edit", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                         @:&nbsp; &nbsp;
-                        <input type="button" data-redirect ='@Url.RouteUrl(new { action = "users-resetpass", id = item.Id })' title="Reset Password" class="image-button image-button-key" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-redirect='@Url.RouteUrl(new { action = "users-resetpass", id = item.Id })' title="Reset Password" class="image-button image-button-key" style="width: 16px; padding-left: 0px;" />
                         @:&nbsp; &nbsp;
-                        <input type="button" data-post-delete ='@Url.RouteUrl(new { action = "users-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-post-delete='@Url.RouteUrl(new { action = "users-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                         @:&nbsp; &nbsp;
                         <input type="button" title="Email" class="image-button image-button-email" style="width: 16px;
-                        padding-left: 0px;" data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName' />
+                        padding-left: 0px;" data-email-to-address='@item.Email' data-email-to-name='@item.FirstName @item.LastName' />
                     }
                 </td>
             </tr>

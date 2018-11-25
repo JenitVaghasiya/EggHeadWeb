@@ -2,17 +2,17 @@
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Utility;
+@using EggHeadWeb.DatabaseContext;
 @model EggheadWeb.Models.Common.SearchResult<RosterSearchForm, Birthday>
 @{
     if (Model == null)
     {
         return;
     }
-    
+
 }
 <table class="display stylized">
-    <colgroup>
-    </colgroup>
+    <colgroup></colgroup>
     <thead>
         <tr>
             <th>
@@ -38,7 +38,7 @@
         @foreach (var item in Model.PageItems)
         {
             var instructor = @item.Assigns.First().Instructor;
-            
+
             <tr>
                 <td>
                     @item.Address
@@ -47,8 +47,9 @@
                     @item.ParentName
                 </td>
                 <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = instructor.Id })'>
-                        @ScheduleUtil.GetShortInstructorName(instructor)</a>
+                    <a href='@Url.RouteUrl("Admin", new { action = "instructors-detail", id = instructor.Id })'>
+                        @ScheduleUtil.GetShortInstructorName(instructor)
+                    </a>
                 </td>
                 <td>
                     @item.PartyDate.ToOneDigitMonth()
@@ -57,7 +58,7 @@
                     @item.PartyTime.To12HoursString()
                 </td>
                 <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
                     <input type="button" title="Email" class="image-button image-button-email" style="width: 16px;
                         padding-left: 0px;" data-email='@@item.Assigns.OrderBy(t => t.Date).First().Instructor.Email' />

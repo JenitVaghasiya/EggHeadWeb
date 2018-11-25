@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Common;
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model  Booking
 @{
     ViewBag.BreadCrumbs = new string[] { "Rosters" };
@@ -12,7 +13,7 @@
     var unRegistStudents = ViewBag.UnregistStudents as SelectList;
 }
 <div class="box" style="margin-top: 0; margin-bottom: 0;">
-    @Html.Partial("MainTaskbar", new MainTaskbarItem { Email = true, Print = true, ExcelAction = "roster-detail-excel?id=" + @ViewBag.Service.Id + "&type=" + (Model.ClassId.HasValue ? "Class" : "Camp"),  
+    @Html.Partial("MainTaskbar", new MainTaskbarItem { Email = true, Print = true, ExcelAction = "roster-detail-excel?id=" + @ViewBag.Service.Id + "&type=" + (Model.ClassId.HasValue ? "Class" : "Camp"),
     PdfExport = true, PdfAction = "roster-detail-pdf?id=" + @ViewBag.Service.Id + "&type=" + (Model.ClassId.HasValue ? "Class" : "Camp")})
 </div>
 <table class="stylized half " style="margin-top: 0; margin-bottom: 0">
@@ -25,8 +26,9 @@
             Name:
         </td>
         <td>
-            <a href= '@Url.RouteUrl("Admin", new { action = "class-detail", id = @ViewBag.Service.Id })'>
-                @ViewBag.Service.Name</a>
+            <a href='@Url.RouteUrl("Admin", new { action = "class-detail", id = @ViewBag.Service.Id })'>
+                @ViewBag.Service.Name
+            </a>
         </td>
     </tr>
     <tr>
@@ -34,8 +36,9 @@
             Location:
         </td>
         <td>
-            <a href= '@Url.RouteUrl("Admin", new { action = "locations-detail", id = @ViewBag.Service.LocationId })'>
-                @ViewBag.Service.Location.DisplayName</a>
+            <a href='@Url.RouteUrl("Admin", new { action = "locations-detail", id = @ViewBag.Service.LocationId })'>
+                @ViewBag.Service.Location.DisplayName
+            </a>
         </td>
     </tr>
     <tr>
@@ -43,13 +46,15 @@
             Instructor:
         </td>
         <td>
-            <a href= '@Url.RouteUrl("Admin", new { action = "instructors-detail", id = @ViewBag.Service.Instructor.Id })'>
-                @ScheduleUtil.GetShortInstructorName(@ViewBag.Service.Instructor)</a>
+            <a href='@Url.RouteUrl("Admin", new { action = "instructors-detail", id = @ViewBag.Service.Instructor.Id })'>
+                @ScheduleUtil.GetShortInstructorName(@ViewBag.Service.Instructor)
+            </a>
         </td>
     </tr>
 </table>
 <h5>
-    Student List</h5>
+    Student List
+</h5>
 @using (Html.BeginRouteForm("Admin", new { action = "roster-detail" }, FormMethod.Post))
 {
     <div class="box" style="margin-top: 0; margin-bottom: 0;">
@@ -107,21 +112,21 @@
         @foreach (var booking in bookings)
         {
             var item = booking.Student;
-            
+
             <tr>
                 <td>
-                    <input type="checkbox" data-email-to-address='@item.Parent.Email' data-email-to-name= '@item.Parent.FirstName @item.Parent.LastName'  />
+                    <input type="checkbox" data-email-to-address='@item.Parent.Email' data-email-to-name='@item.Parent.FirstName @item.Parent.LastName' />
                 </td>
                 <td>
                     @item.FirstName @item.LastName
                 </td>
                 <td>
                     @{
-                               int age = DateTime.Today.Year - item.BirthDate.Year;
-                               if (DateTime.Today < item.BirthDate.AddYears(age))
-                               {
-                                   age--;
-                               }
+                        int age = DateTime.Today.Year - item.BirthDate.Year;
+                        if (DateTime.Today < item.BirthDate.AddYears(age))
+                        {
+                            age--;
+                        }
                     }
                     @age
                 </td>
@@ -129,8 +134,9 @@
                     @item.GenderText
                 </td>
                 <td>
-                    <a href= '@Url.RouteUrl("Admin", new { action = "parents-detail", id = item.ParentId })'>
-                        @item.Parent.FirstName @item.Parent.LastName</a>
+                    <a href='@Url.RouteUrl("Admin", new { action = "parents-detail", id = item.ParentId })'>
+                        @item.Parent.FirstName @item.Parent.LastName
+                    </a>
                 </td>
                 <td>
                     @item.Parent.PhoneNumer
@@ -142,7 +148,7 @@
                     @booking.BookDate.ToString("MM/dd/yyyy")
                 </td>
                 <td>
-                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "roster-delete" })' data-id='@booking.Id' title="Delete" class="image-button image-button-delete" />
+                    <input type="button" data-post-delete='@Url.RouteUrl("Admin", new { action = "roster-delete" })' data-id='@booking.Id' title="Delete" class="image-button image-button-delete" />
                 </td>
             </tr>
         }

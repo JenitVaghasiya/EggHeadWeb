@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @{
     var classes = ViewBag.ReletatedClasses as List<Class>;
     var camps = ViewBag.ReletatedCamps as List<Camp>;
@@ -11,8 +12,7 @@
         Classes:
     </h5>
     <table class="display stylized">
-        <colgroup>
-        </colgroup>
+        <colgroup></colgroup>
         <thead>
             <tr>
                 <th>
@@ -60,7 +60,7 @@
                         @item.DateListText
                     </td>
                     <td>
-                        <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "class-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "class-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                         &nbsp;&nbsp;
                     </td>
                 </tr>
@@ -75,8 +75,7 @@
         Camps:
     </h5>
     <table class="display stylized">
-        <colgroup>
-        </colgroup>
+        <colgroup></colgroup>
         <thead>
             <tr>
                 <th>
@@ -124,7 +123,7 @@
                         @item.DateListText
                     </td>
                     <td>
-                        <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "camp-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "camp-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                         &nbsp;&nbsp;
                     </td>
                 </tr>
@@ -139,8 +138,7 @@
         Workshops:
     </h5>
     <table class="display stylized">
-        <colgroup>
-        </colgroup>
+        <colgroup></colgroup>
         <thead>
             <tr>
                 <th>
@@ -188,7 +186,7 @@
                         @item.DateListText
                     </td>
                     <td>
-                        <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "workshop-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                         &nbsp;&nbsp;
                     </td>
                 </tr>
@@ -203,66 +201,65 @@
         Birthdays:
     </h5>
     <table class="display stylized">
-    <colgroup>
-    </colgroup>
-    <thead>
-        <tr>
-            <th>
-                Parent Names
-            </th>
-            <th>
-                Contact Number
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Child
-            </th>
-            <th>
-                Age
-            </th>
-            <th>
-                Party Date
-            </th>
-            <th>
-                Time
-            </th>
-            <th>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var c in birthdays)
-        {
+        <colgroup></colgroup>
+        <thead>
             <tr>
-                <td>
-                    @c.ParentName
-                </td>
-                <td>
-                    @c.ContactNumber
-                </td>
-                <td>
-                    @c.Email
-                </td>
-                <td>
-                    @c.ChildName
-                </td>
-                <td>
-                    @c.Age
-                </td>
-                <td>
-                    @c.PartyDate.ToString("MM/dd/yyyy")
-                </td>
-                <td>
-                    @c.PartyTime.ToString("hh\\:mm")
-                </td>
-                <td>
-                     <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = c.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
-                    &nbsp;&nbsp;
-                </td>
+                <th>
+                    Parent Names
+                </th>
+                <th>
+                    Contact Number
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Child
+                </th>
+                <th>
+                    Age
+                </th>
+                <th>
+                    Party Date
+                </th>
+                <th>
+                    Time
+                </th>
+                <th>
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var c in birthdays)
+            {
+                <tr>
+                    <td>
+                        @c.ParentName
+                    </td>
+                    <td>
+                        @c.ContactNumber
+                    </td>
+                    <td>
+                        @c.Email
+                    </td>
+                    <td>
+                        @c.ChildName
+                    </td>
+                    <td>
+                        @c.Age
+                    </td>
+                    <td>
+                        @c.PartyDate.ToString("MM/dd/yyyy")
+                    </td>
+                    <td>
+                        @c.PartyTime.ToString("hh\\:mm")
+                    </td>
+                    <td>
+                        <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = c.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }

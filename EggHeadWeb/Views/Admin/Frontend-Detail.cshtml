@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Security;
+@using EggHeadWeb.DatabaseContext;
 @model AdminFrontend
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings", "FrontEnd" };
@@ -19,33 +20,37 @@
         <input type="button" class="btn" style="float: right" value="Cancel" data-redirect="@Url.RouteUrl("Admin", new { action = "frontend" })" />
     </div>
     <br />
-    
+
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.FrontendId)
     @Html.ValidationSummary(true)
-    
+
     <p>
         <label for="menuname">
-            Frontend Name :</label>
+            Frontend Name :
+        </label>
         @Html.ValidationMessageFor(m => m.Name)<br />
         @Html.TextBoxFor(m => m.Name, new { @class = "half" })
     </p>
-    
+
     <p>
         <label for="name">
-            Menu Text:</label>
+            Menu Text:
+        </label>
         @Html.ValidationMessageFor(m => m.MenuName)<br />
         @Html.TextBoxFor(m => m.MenuName, new { @class = "half" })
     </p>
     <p>
         <label for="active" class="required">
-            Active:</label>
+            Active:
+        </label>
         @Html.ValidationMessageFor(m => m.IsActive)<br />
         @Html.CheckBoxFor(m => m.IsActive)
     </p>
     <p>
         <label for="content" class="required">
-            Content:</label>
+            Content:
+        </label>
         @Html.ValidationMessageFor(m => m.OverridePageContent)<br />
         @Html.TextAreaFor(m => m.OverridePageContent, new { @class = "wysiwyg medium full" })
     </p>

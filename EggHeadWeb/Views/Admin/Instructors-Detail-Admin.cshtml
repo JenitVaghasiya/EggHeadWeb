@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model Instructor
 @{
     ViewBag.BreadCrumbs = new string[] { "Instructors" };
@@ -137,7 +138,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="3"> 
+            <td colspan="3">
                 <p>
                     <label for="notes">
                         Notes:
@@ -159,7 +160,7 @@
             </td>
         </tr>
     </table>
-    
+
     @Html.HiddenFor(m => m.Id)
     @Html.HiddenFor(m => m.AreaId);
 }

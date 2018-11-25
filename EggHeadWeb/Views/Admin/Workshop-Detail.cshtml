@@ -115,7 +115,7 @@
                             @Html.ValidationMessageFor(m => m.GradeIds)<br />
                         </p>
                         <div id='grade-list'>
-                            @(Html.CheckBoxListFor<Workshop, Grade, byte, string>(m => m.GradeIds, ChoiceLists.Grades(db)))
+                            @(Html.CheckBoxListFor<Workshop, Grade, int, string>(m => m.GradeIds, ChoiceLists.Grades(db)))
                         </div>
                     </td>
                 </tr>

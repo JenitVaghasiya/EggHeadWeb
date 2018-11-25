@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model CouponSearchForm
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings" };
@@ -22,7 +23,8 @@
         <tr>
             <td>
                 <label>
-                    Quick Search:</label>
+                    Quick Search:
+                </label>
             </td>
             <td>
                 @Html.TextBoxFor(m => m.QuickSearch, new { @class = "full" })

@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Common;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model AdminTask
 @{
     var admin = ((EggheadWeb.Security.LoginUser)User).Admin;
@@ -54,29 +55,29 @@
                             {
                                 style = "style=color:Red;";
                             }
-                        
-                        <tr @(style) >
-                            <td style="vertical-align:top;" title="@item.Notes">
-                                <div style="padding-top: 2px;">
-                                    <img src="../../Content/admin/img/information.png" />
-                                </div>
-                            </td>
-                            <td style="word-wrap: break-word;">
-                                @item.Name
-                            </td>
-                            <td>
-                                @(((TaskPriority)item.Priority).ToString())
-                            </td>
-                            <td>
-                                @(item.DueDate.HasValue ? item.DueDate.Value.ToString("MM/dd/yy") : string.Empty)
-                            </td>
-                            <td>
-                                <input type="checkbox" class="mark-completed" onchange="updateTaskStatus(@item.Id, @((byte)TaksStatus.Completed));" />
-                            </td>
-                            <td>
-                                <input type="button" title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;"  onclick="deleteTask(@item.Id);"/>
-                            </td>
-                        </tr>
+
+                            <tr @(style)>
+                                <td style="vertical-align:top;" title="@item.Notes">
+                                    <div style="padding-top: 2px;">
+                                        <img src="../../Content/admin/img/information.png" />
+                                    </div>
+                                </td>
+                                <td style="word-wrap: break-word;">
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @(((TaskPriority)item.Priority).ToString())
+                                </td>
+                                <td>
+                                    @(item.DueDate.HasValue ? item.DueDate.Value.ToString("MM/dd/yy") : string.Empty)
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="mark-completed" onchange="updateTaskStatus(@item.Id, @((byte)TaksStatus.Completed));" />
+                                </td>
+                                <td>
+                                    <input type="button" title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" onclick="deleteTask(@item.Id);" />
+                                </td>
+                            </tr>
                         }
                     }
                 </tbody>
@@ -122,28 +123,28 @@
                             {
                                 style = "style=color:Red;";
                             }
-                        <tr @(style)>
-                            <td style="vertical-align: top;" title="@item.Notes">
-                                <div>
-                                    <img src="../../Content/admin/img/information.png" />
-                                </div>
-                            </td>
-                            <td style="word-wrap: break-word;">
-                                @item.Name
-                            </td>
-                            <td>
-                                @(((TaskPriority)item.Priority).ToString())
-                            </td>
-                            <td>
-                                @(item.DueDate.HasValue ? item.DueDate.Value.ToString("MM/dd/yy") : string.Empty)
-                            </td>
-                            <td>
-                                <input type="checkbox"  class="mark-inprogress" onchange="updateTaskStatus(@item.Id, @((byte)TaksStatus.InProgress));" />
-                            </td>
-                            <td>
-                                <input type="button" title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;"  onclick="deleteTask(@item.Id);"/>
-                            </td>
-                        </tr>
+                            <tr @(style)>
+                                <td style="vertical-align: top;" title="@item.Notes">
+                                    <div>
+                                        <img src="../../Content/admin/img/information.png" />
+                                    </div>
+                                </td>
+                                <td style="word-wrap: break-word;">
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @(((TaskPriority)item.Priority).ToString())
+                                </td>
+                                <td>
+                                    @(item.DueDate.HasValue ? item.DueDate.Value.ToString("MM/dd/yy") : string.Empty)
+                                </td>
+                                <td>
+                                    <input type="checkbox" class="mark-inprogress" onchange="updateTaskStatus(@item.Id, @((byte)TaksStatus.InProgress));" />
+                                </td>
+                                <td>
+                                    <input type="button" title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" onclick="deleteTask(@item.Id);" />
+                                </td>
+                            </tr>
                         }
                     }
                 </tbody>
@@ -158,7 +159,8 @@
                     <td colspan="2">
                         <p>
                             <label class="required">
-                                Task:</label>
+                                Task:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Name)<br />
                             @Html.TextBoxFor(m => m.Name, new { @style = "width:300px;" })
                         </p>
@@ -168,7 +170,8 @@
                     <td>
                         <p>
                             <label class="required">
-                                Priority:</label>
+                                Priority:
+                            </label>
                             @Html.ValidationMessageFor(m => m.Priority)<br />
                             @Html.DropDownListFor(m => m.Priority, SelectLists.TaksPriorities(), Constants.SELECT, new { @style = "width:150px;" })
                         </p>
@@ -176,7 +179,8 @@
                     <td>
                         <p>
                             <label class="required">
-                                Due:</label>
+                                Due:
+                            </label>
                             @Html.ValidationMessageFor(m => m.DueDate)<br />
                             @Html.TextBoxFor(m => m.DueDate, new { @class = "date", @style = "width:80px;" })
                         </p>
@@ -186,7 +190,8 @@
                     <td colspan="2">
                         <p>
                             <label class="required">
-                                Notes</label>
+                                Notes
+                            </label>
                             @Html.ValidationMessageFor(m => m.Notes)<br />
                             @Html.TextAreaFor(m => m.Notes, new { @class = "small", @style = "width:300px;" })
                         </p>

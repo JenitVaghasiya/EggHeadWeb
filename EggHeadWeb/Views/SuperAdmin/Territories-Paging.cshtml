@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Common;
 @using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
+@using EggHeadWeb.DatabaseContext;
 @model SearchResult<AreaSearchForm, Area>
 @{
     if (Model == null)
@@ -53,18 +54,19 @@
                 </td>
                 <td>
                     @if (item.Admins.Count > 0)
-                    { 
-                        <a href= '@Url.RouteUrl("SuperAdmin", new { action = "users-edit", id = item.Admins.First().Id })'>
-                            @StringUtil.GetFullName(item.Admins.First().FirstName, item.Admins.First().LastName)</a> 
+                    {
+                        <a href='@Url.RouteUrl("SuperAdmin", new { action = "users-edit", id = item.Admins.First().Id })'>
+                            @StringUtil.GetFullName(item.Admins.First().FirstName, item.Admins.First().LastName)
+                        </a>
                     }
                 </td>
                 <td>
                     @item.Description
                 </td>
                 <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl(new { action = "territories-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl(new { action = "territories-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
-                    <input type="button" data-post-delete ='@Url.RouteUrl(new { action = "territories-delete" })' data-id = '@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-post-delete='@Url.RouteUrl(new { action = "territories-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                 </td>
             </tr>
         }

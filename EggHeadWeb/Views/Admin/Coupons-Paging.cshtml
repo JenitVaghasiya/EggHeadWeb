@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @using EggheadWeb.Models.AdminModels;
 @model SearchResult<CouponSearchForm, Coupon>
 @{
@@ -67,14 +68,15 @@
                     else
                     {
                         @item.DiscountAmount.Value.ToString("00.00") @:(%)
-                                                                                                                                                                                                                                                                    }
+                    }
                 </td>
                 <td align="center">
                     @item.MaxAvailable
                 </td>
                 <td align="center">
                     <a href='@Url.RouteUrl("Admin", new { action = "coupons-detail", id = item.Id })#status'>
-                        @bookingInfo.Count()</a>
+                        @bookingInfo.Count()
+                    </a>
                 </td>
                 <td align="center">
                     @if (bookingInfo.Count() == 0)
@@ -90,9 +92,9 @@
                     @item.ExpDate.ToString("MM/dd/yyyy")
                 </td>
                 <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "coupons-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "coupons-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
-                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "coupons-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-post-delete='@Url.RouteUrl("Admin", new { action = "coupons-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                 </td>
             </tr>
         }

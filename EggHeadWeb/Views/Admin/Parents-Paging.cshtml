@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
+@using EggHeadWeb.DatabaseContext;
 @model SearchResult<ParentSearchForm, Parent>
 @{
     if (Model == null)
@@ -8,7 +9,7 @@
     }
 }
 <table class="display stylized search-result-table email-table" data-fixed-left="1"
-    data-fixed-right="1">
+       data-fixed-right="1">
     <colgroup>
         <col class="c-checkbox" />
         <col class="c-name" />
@@ -47,7 +48,7 @@
         {
             <tr>
                 <td>
-                    <input type="checkbox" class="checkitem" data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName'  />
+                    <input type="checkbox" class="checkitem" data-email-to-address='@item.Email' data-email-to-name='@item.FirstName @item.LastName' />
                 </td>
                 <td>
                     @item.FirstName @item.LastName
@@ -65,12 +66,12 @@
                     @(item.LastLoginDateTime.HasValue ? item.LastLoginDateTime.Value.ToString("MM/dd/yyyy") : string.Empty)
                 </td>
                 <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "parents-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "parents-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
-                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "parents-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-post-delete='@Url.RouteUrl("Admin", new { action = "parents-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
                     <input type="button" title="Email" class="image-button image-button-email" style="width: 16px;
-                        padding-left: 0px;"  data-email-to-address='@item.Email' data-email-to-name= '@item.FirstName @item.LastName'/>
+                        padding-left: 0px;" data-email-to-address='@item.Email' data-email-to-name='@item.FirstName @item.LastName' />
                 </td>
             </tr>
         }

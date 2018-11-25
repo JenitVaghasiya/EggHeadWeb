@@ -1,4 +1,5 @@
-﻿@using EggheadWeb.Common;
+﻿@using EggHeadWeb.DatabaseContext;
+@using EggheadWeb.Common;
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
 @model InstructorSearchForm
@@ -24,7 +25,8 @@
         <tr>
             <td>
                 <label>
-                    Quick Search:</label>
+                    Quick Search:
+                </label>
             </td>
             <td>
                 @Html.TextBoxFor(m => m.QuickSearch, new { @class = "full" })
@@ -33,7 +35,8 @@
         <tr>
             <td>
                 <label>
-                    Is Active:</label>
+                    Is Active:
+                </label>
             </td>
             <td>
                 @Html.DropDownListFor(m => m.IsActive, SelectLists.BooleanStatus(), Constants.SELECT)

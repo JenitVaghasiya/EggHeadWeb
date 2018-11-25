@@ -1,4 +1,5 @@
 ﻿@using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model APVariable
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings", "FrontEnd" };
@@ -15,7 +16,8 @@
     <p>
         @Html.HiddenFor(t => t.Name)
         <label for="displayName" class="required">
-            Term & Condition:</label>
+            Term & Condition:
+        </label>
         @Html.ValidationMessageFor(m => m.Value)<br />
         @Html.TextAreaFor(m => m.Value, new { @class = "wysiwyg full" })
     </p>

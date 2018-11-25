@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @model Coupon
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings", "Coupons" };
@@ -26,43 +27,50 @@
             @Html.ValidationSummary(true)
             <p>
                 <label for="code" class="required">
-                    Code:</label>
+                    Code:
+                </label>
                 @Html.ValidationMessageFor(m => m.Code)<br />
                 @Html.TextBoxFor(m => m.Code, new { @class = "width1" })
             </p>
             <p>
                 <label for="description" class="required">
-                    Description:</label>
+                    Description:
+                </label>
                 @Html.ValidationMessageFor(m => m.Description)<br />
                 @Html.TextBoxFor(m => m.Description, new { @class = "half" })
             </p>
             <p>
                 <label for="type" class="required">
-                    Type:</label>
+                    Type:
+                </label>
                 @Html.ValidationMessageFor(m => m.Type)<br />
                 @Html.DropDownListFor(m => m.Type, SelectLists.CouponTypes(), string.Empty)
             </p>
             <p>
                 <label for="bypercent" class="required">
-                    Amount:</label>
+                    Amount:
+                </label>
                 @Html.ValidationMessageFor(m => m.DiscountAmount)<br />
                 @Html.TextBoxFor(m => m.DiscountAmount, new { @class = "width1" })
             </p>
             <p>
                 <label for="expDate" class="required">
-                    Expiration Date:</label>
+                    Expiration Date:
+                </label>
                 @Html.ValidationMessageFor(m => m.NExpDate)<br />
                 @Html.EditorFor(m => m.NExpDate)
             </p>
             <p>
                 <label for="expDate" class="required">
-                    Number Available:</label>
+                    Number Available:
+                </label>
                 @Html.ValidationMessageFor(m => m.MaxAvailable)<br />
                 @Html.TextBoxFor(m => m.MaxAvailable, new { @class = "width1" })
             </p>
             <p>
                 <label for="expDate" class="required">
-                    Max Uses Per Parent:</label>
+                    Max Uses Per Parent:
+                </label>
                 @Html.ValidationMessageFor(m => m.MaxUsesPerCustomer)<br />
                 @Html.TextBoxFor(m => m.MaxUsesPerCustomer, new { @class = "width1" })
             </p>
@@ -72,7 +80,7 @@
                 <colgroup>
                     <col class="c-name" />
                     <col class="c-date" />
-                    <col  />
+                    <col />
                 </colgroup>
                 <thead>
                     <tr>
@@ -92,26 +100,26 @@
                     {
                         foreach (var item in BookingInfo)
                         {
-                        <tr>
-                            <td>
-                                @item.Parent.FirstName @item.Parent.LastName
-                            </td>
-                            <td>
-                                @item.BookDate.ToString("MM/dd/yyyy")
-                            </td>
-                            <td>
-                                @if (!string.IsNullOrWhiteSpace(@item.Classes))
-                                {
-                                    <b>Classes:</b> @:&nbsp; @item.Classes
-                                    <br />
-                                }
-                                @if (!string.IsNullOrWhiteSpace(@item.Camps))
-                                {
-                                    
-                                    <b>Camps:</b> @:&nbsp; @item.Camps
-                                                                                                }
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @item.Parent.FirstName @item.Parent.LastName
+                                </td>
+                                <td>
+                                    @item.BookDate.ToString("MM/dd/yyyy")
+                                </td>
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(@item.Classes))
+                                    {
+                                        <b>Classes:</b> @:&nbsp; @item.Classes
+                                        <br />
+                                    }
+                                    @if (!string.IsNullOrWhiteSpace(@item.Camps))
+                                    {
+
+                                        <b>Camps:</b> @:&nbsp; @item.Camps
+                                    }
+                                </td>
+                            </tr>
                         }
                     }
                 </tbody>

@@ -1,5 +1,6 @@
 ﻿@using EggheadWeb.Common;
 @using EggheadWeb.Models.Common;
+@using EggHeadWeb.DatabaseContext;
 @{
     var inboxMessages = this.ViewBag.InboxMessages as List<PrivateMessage>;
     var sentMessages = this.ViewBag.SentMessages as List<PrivateMessage>;
@@ -24,23 +25,23 @@
                     <tr @(style)>
                         <td>
                             @if (message.FromAdminId.HasValue)
-                            { @StringUtil.GetFullName(message.Admin.FirstName, message.Admin.LastName)
-                            }
-                            else
-                            { @message.FromAdminName <span style="color: Red;">[Deleted]</span> }
+                            {@StringUtil.GetFullName(message.Admin.FirstName, message.Admin.LastName)
+                        }
+                        else
+                        { @message.FromAdminName <span style="color: Red;">[Deleted]</span>}
                         </td>
                         <td>
                             @if (@message.Unread)
-                            { <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
-                            }
-                            else
-                            { <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
-                            }
+                            {<a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
+                        }
+                        else
+                        { <a href="#" class="message-link" data-id='@message.Id'>@message.MessageSubject</a>
+                    }
                         </td>
                         <td>
                             @message.SendDate.ToString("M/dd/yyyy")
                             @if (@message.Unread)
-                            { <span style="color: Green;">&nbsp;&nbsp;New! </span> }
+                            {<span style="color: Green;">&nbsp;&nbsp;New! </span>}
                         </td>
                     </tr>
                 }
@@ -65,7 +66,7 @@
                             }
                             else
                             {
-                                @message.ToAdminName 
+                                @message.ToAdminName
                                 <span style="color: Red;">[Deleted]</span>
                             }
                         </td>
@@ -80,5 +81,5 @@
             </tbody>
         </table>
     </div>
-    <input type="hidden" id="pm-count" value="@ViewBag.PMCount" >
+    <input type="hidden" id="pm-count" value="@ViewBag.PMCount">
 </div>

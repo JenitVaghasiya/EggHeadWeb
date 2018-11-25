@@ -59,16 +59,16 @@
                 {
                     if (calendar.FromDate.Month == calendar.ToDate.Month)
                     {
-                @string.Format("{0:MMM dd} – {1:dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                        string.Format("{0:MMM dd} – {1:dd, yyyy}", calendar.FromDate, calendar.ToDate);
                     }
                     else
                     {
-                @string.Format("{0:MMM dd} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                        string.Format("{0:MMM dd} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate);
                     }
                 }
                 else
                 {
-                @string.Format("{0:MMM dd, yyyy} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate)
+                    string.Format("{0:MMM dd, yyyy} – {1:MMM dd, yyyy}", calendar.FromDate, calendar.ToDate);
                 }
             }
             else if (calendar.Type == CalendarViewType.Month)

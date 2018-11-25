@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var classCamp in ViewBag.Classes as List<EggheadWeb.Models.Common.Class>)
+                    @foreach (var classCamp in ViewBag.Classes as List<EggHeadWeb.DatabaseContext.Class>)
                     {
                         <tr>
                             <td>
@@ -86,7 +86,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var classCamp in ViewBag.Camps as List<EggheadWeb.Models.Common.Camp>)
+                    @foreach (var classCamp in ViewBag.Camps as List<EggHeadWeb.DatabaseContext.Camp>)
                     {
                         <tr>
                             <td>

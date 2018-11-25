@@ -1,6 +1,7 @@
 ﻿@using EggheadWeb.Models.Common;
 @using EggheadWeb.Models.AdminModels;
 @using EggheadWeb.Security;
+@using EggHeadWeb.DatabaseContext;
 @{
     ViewBag.BreadCrumbs = new string[] { "Settings" };
     ViewBag.Title = "Frontend";
@@ -8,7 +9,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
     var grades = (SearchResult<object, AdminFrontend>)ViewBag.Frontends;
-   
+
 }
 <div class="box" style="margin-top: 0; margin-bottom: 0;">
     @Html.Partial("MainTaskbar", new MainTaskbarItem { Add = true, AddAction = "frontend-detail" })
@@ -57,11 +58,11 @@
                     @Html.DisplayFor(i => item.IsActive, "ActiveValue")
                 </td>
                 <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "frontend-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                    <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "frontend-detail", id = item.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
                     &nbsp;&nbsp;
                     @if (!item.FrontendId.HasValue)
                     {
-                        <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "frontend-delete" })' data-id = '@item.Id'  title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                        <input type="button" data-post-delete='@Url.RouteUrl("Admin", new { action = "frontend-delete" })' data-id='@item.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
                     }
                 </td>
             </tr>

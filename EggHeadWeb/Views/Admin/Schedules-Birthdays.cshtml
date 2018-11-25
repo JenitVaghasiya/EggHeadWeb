@@ -1,7 +1,8 @@
 ﻿@using EggheadWeb.Models.Common
 @using EggheadWeb.Common;
 @using EggheadWeb.Utility;
-@using EggheadWeb.Models.AdminModels
+@using EggheadWeb.Models.AdminModels;
+@using EggHeadWeb.DatabaseContext;
 @model SearchResult<ScheduleSearchForm, Birthday>
 @{
     if (Model == null)
@@ -67,44 +68,44 @@
 
             foreach (var c in list.Value)
             {
-            <tr>
-                <td>
-                    @Convert.ToInt32(list.Key)
-                </td>
-                <td>
-                    @list.Key.ToString()
-                </td>
-                <td>
-                    @c.ParentName
-                </td>
-                <td>
-                    @c.ContactNumber
-                </td>
-                <td>
-                    @c.Email
-                </td>
-                <td>
-                    @c.Address
-                </td>
-                <td>
-                    @c.ChildName
-                </td>
-                <td>
-                    @c.Age
-                </td>
-                <td>
-                    @StringUtil.GetFullDate(c.PartyDate)
-                </td>
-                <td>
-                    @c.PartyTime.To12HoursString()
-                </td>
-                <td>
-                    <input type="button" data-redirect ='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = c.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
-                    &nbsp;&nbsp;
-                    <input type="button" data-post-delete ='@Url.RouteUrl("Admin", new { action = "birthday-delete" })'  data-id = '@c.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
-                    &nbsp;&nbsp;
-                </td>
-            </tr>
+                <tr>
+                    <td>
+                        @Convert.ToInt32(list.Key)
+                    </td>
+                    <td>
+                        @list.Key.ToString()
+                    </td>
+                    <td>
+                        @c.ParentName
+                    </td>
+                    <td>
+                        @c.ContactNumber
+                    </td>
+                    <td>
+                        @c.Email
+                    </td>
+                    <td>
+                        @c.Address
+                    </td>
+                    <td>
+                        @c.ChildName
+                    </td>
+                    <td>
+                        @c.Age
+                    </td>
+                    <td>
+                        @StringUtil.GetFullDate(c.PartyDate)
+                    </td>
+                    <td>
+                        @c.PartyTime.To12HoursString()
+                    </td>
+                    <td>
+                        <input type="button" data-redirect='@Url.RouteUrl("Admin", new { action = "birthday-detail", id = c.Id })' title="Edit" class="image-button image-button-modify" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                        <input type="button" data-post-delete='@Url.RouteUrl("Admin", new { action = "birthday-delete" })' data-id='@c.Id' title="Delete" class="image-button image-button-delete" style="width: 16px; padding-left: 0px;" />
+                        &nbsp;&nbsp;
+                    </td>
+                </tr>
             }
         }
     </tbody>
